@@ -19,7 +19,7 @@ class LoginPage extends Component {
     render() {
         return (
             <div>
-                Login Page
+                Login Page testest
             </div>
         )
     }
