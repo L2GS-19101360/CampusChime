@@ -19,7 +19,7 @@ class RegisterPage extends Component {
     render() {
         return (
             <div>
-                Register Page
+                Register Page Hello World
             </div>
         )
     }
