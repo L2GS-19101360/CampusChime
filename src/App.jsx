@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        Landing Page
+        Opening/Landing Page
       </div>
     )
   }
