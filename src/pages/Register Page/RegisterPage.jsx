@@ -10,7 +10,14 @@ class RegisterPage extends Component {
     constructor() {
         super();
         this.state = {
-            showPassword: false
+            showPassword: false,
+
+            newLname: "",
+            newFname: "",
+            newContact: null,
+            newEmail: "",
+            newPassword: "",
+            conPassword: ""
         }
     }
 
@@ -25,6 +32,12 @@ class RegisterPage extends Component {
         this.setState((prevState) => ({
             showPassword: !prevState.showPassword
         }));
+    }
+
+    handleRegisterAccount = (event) => {
+        event.preventDefault();
+
+        
     }
 
     render() {
