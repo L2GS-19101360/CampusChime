@@ -27,6 +27,24 @@ if ($isValid){
     }
 }
 
+//Insert Data
+if ($isValid){
+    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+    try{
+        $stmt = $conn->prepare("INSERT INTO customer(lastname, firstname, contactnumber, email, password) VALUES (?,?,?,?,?)");
+        $stmt->bind_param("ssiss", $newLname, $newFname, $newContact, $newEmail, $hashedPassword);
+        $stmt->execute();
+        $stmt->close();
+
+        $data = $conn->insert_id;
+        $status = 200;
+        $retVal = "User account added.";
+    }catch (Exception $e){
+        $retVal = $e->getMessage();
+    }
+}
+
 $response = array(
     'status' => $status,
     'data' => $data,

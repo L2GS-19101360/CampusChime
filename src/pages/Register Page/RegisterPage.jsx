@@ -48,10 +48,20 @@ class RegisterPage extends Component {
             xhttp.open("POST", `http://localhost/campuschime/PHP%20files/register.php?lastname=${this.state.newLname}&firstname=${this.state.newFname}&contactnumber=${this.state.newContact}&email=${this.state.newEmail}&password=${this.state.newPassword}`, true);
             xhttp.send();
 
-            xhttp.onreadystatechange = function () {
+            xhttp.onreadystatechange = () => {
                 if (xhttp.status === 200 && xhttp.readyState === 4){
-                    var response = JSON.parse(this.responseText);
+                    var response = JSON.parse(xhttp.responseText);
                     console.log(response);
+            
+                    if (response.message === "Email already exists."){
+                        this.setState({
+                            warning: <div className="alert alert-danger" role="alert">
+                                Email already Exist!
+                            </div>
+                        });
+                    } else {
+                        window.location.reload(); //Waiting on Home Page
+                    }
                 }
             }
         } else {
