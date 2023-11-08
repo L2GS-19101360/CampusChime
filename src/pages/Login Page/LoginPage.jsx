@@ -65,7 +65,6 @@ class LoginPage extends Component {
 
             <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} />  CampusChime
 
-             <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime
             </a>
             <button
               className="navbar-toggler"
