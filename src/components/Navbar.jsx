@@ -30,10 +30,10 @@ class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item" style={{ color: 'white' }}>
-                                    Home
+                                    <a href="/" style={{textDecoration: 'none', color: 'white'}}>Home</a>
                                 </li>
                                 <li className="nav-item" style={{ color: 'white' }}>
-                                    About Us
+                                    <a href="/AboutUsPage" style={{textDecoration: 'none', color: 'white'}}>About Us</a>
                                 </li>
                                 <li className="nav-item" style={{ color: 'white' }}>
                                     Entrepreneur
