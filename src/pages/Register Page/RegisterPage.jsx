@@ -4,6 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../Register Page/RegisterDesign.css'
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import WebLogo from '../../assets/CampusChimePurple.png'
 
 class RegisterPage extends Component {
 
@@ -48,7 +49,9 @@ class RegisterPage extends Component {
             <div>
                 <nav className="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
                     <div className="container-fluid">
-                        <a className="navbar-brand" href="#">CampusChime</a>
+                        <a className="navbar-brand" href="/">
+                            <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime
+                        </a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>

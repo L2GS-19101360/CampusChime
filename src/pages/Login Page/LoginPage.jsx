@@ -4,6 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../Login Page/LoginDesign.css'
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import WebLogo from '../../assets/CampusChimePurple.png'
 
 class LoginPage extends Component {
   constructor(props) {
@@ -29,8 +30,8 @@ class LoginPage extends Component {
           <div>
               <nav className="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
                   <div className="container-fluid">
-                      <a className="navbar-brand" href="#">
-                          CampusChime
+                      <a className="navbar-brand" href='/'>
+                        <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime
                       </a>
                       <button
                           className="navbar-toggler"
