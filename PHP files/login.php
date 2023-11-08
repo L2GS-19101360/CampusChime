@@ -5,7 +5,7 @@ include 'db_connection.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['loginEmail'];
     $password = $_POST['loginPassword'];
-  
+
     $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
     $result = $conn->query($sql);
 

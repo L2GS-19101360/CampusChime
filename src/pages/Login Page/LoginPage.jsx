@@ -2,7 +2,6 @@ import { Component, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../Login Page/LoginDesign.css";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from '../../assets/CampusChimePurple.png'
 import Logo from '../../assets/CampusChime.png'
@@ -22,11 +21,10 @@ class LoginPage extends Component {
     }));
   };
 
+ handleSubmit = async (event) => {
+    event.preventDefault(); 
 
-  loginSubmit = async (event) => {
-    event.preventDefault();
-
-    const username = event.target.elements.loginUsername.value;
+    const email = event.target.elements.loginEmail.value;
     const password = event.target.elements.loginPassword.value;
 
     try {
@@ -39,11 +37,9 @@ class LoginPage extends Component {
       });
 
       if (response.ok) {
-        // Successful login, you can redirect or do other actions here
         console.log('Login successful');
 
       } else {
-        // Failed login, handle the error
         console.error('Login failed');
       }
     } catch (error) {
@@ -66,7 +62,10 @@ class LoginPage extends Component {
         >
           <div className="container-fluid">
             <a className="navbar-brand" href="/">
-              <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime
+
+            <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} />  CampusChime
+
+             <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime
             </a>
             <button
               className="navbar-toggler"
@@ -88,9 +87,10 @@ class LoginPage extends Component {
         </nav>
 
         <div
-          class="card mb-3"
+          className="card mb-3"
           style={{
-            maxWidth: "30%",
+            maxWidth: "40%",
+           width: "40%",
             position: "relative",
             left: "33%",
             top: "250px",
@@ -107,7 +107,7 @@ class LoginPage extends Component {
                   <label htmlFor="loginEmail">Email</label>
                   <input
                     name="loginEmail"
-                    class="form-control"
+                    className="form-control"
                     type="email"
                     placeholder="Enter your Email"
                     aria-label="default input example"
@@ -118,8 +118,10 @@ class LoginPage extends Component {
                   <div className="showPassword">
                     <input
                       name="loginPassword"
-                      class="form-control"
-                      type={inputType}
+
+                      className="form-control"
+                      type={inputType}  
+
                       placeholder="Enter your Password"
                       aria-label="default input example"
                     />
@@ -128,11 +130,11 @@ class LoginPage extends Component {
                   <br />
 
                   <br />
-                  <button type="submit" class="btn btn-secondary">
+                  <button type="submit" className="btn btn-secondary">
                     Login
                   </button>
                 </form>
-                Don't have an account? <Link to="/register">Register here</Link>
+                Don't have an account? <Link to="/RegisterPage">Register here</Link>
               </div>
             </div>
           </div>
