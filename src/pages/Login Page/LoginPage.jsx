@@ -106,7 +106,7 @@ class LoginPage extends Component {
                               </form>
 
                               Don't have an account?{' '}
-                              <Link to="/register">Register here</Link>
+                              <Link to="/RegisterPage">Register here</Link>
                           </div>
                       </div>
                   </div>
