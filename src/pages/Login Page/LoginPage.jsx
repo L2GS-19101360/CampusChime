@@ -21,15 +21,14 @@ class LoginPage extends Component {
     }));
   };
 
-  
-  handleSubmit = async (event) => {
+ handleSubmit = async (event) => {
     event.preventDefault(); 
 
     const email = event.target.elements.loginEmail.value;
     const password = event.target.elements.loginPassword.value;
 
     try {
-        const response = await fetch('http://localhost/campuschime/PHP%20files/login.php', {
+      const response = await fetch('http://localhost/campuschime/PHP%20files/login.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +38,7 @@ class LoginPage extends Component {
 
       if (response.ok) {
         console.log('Login successful');
-        
+
       } else {
         console.error('Login failed');
       }
@@ -63,8 +62,10 @@ class LoginPage extends Component {
         >
           <div className="container-fluid">
             <a className="navbar-brand" href="/">
-            <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} />
-              CampusChime
+
+            <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} />  CampusChime
+
+             <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime
             </a>
             <button
               className="navbar-toggler"
@@ -95,13 +96,12 @@ class LoginPage extends Component {
             top: "250px",
           }}
         >
-          <div className="row g-0">
-          <div class="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
-              <img src={Logo} alt="" style={{ height: '200px', width: '200px'}} />
-          </div>
-
-            <div className="col-md-8">
-              <div className="card-body">
+          <div class="row g-0">
+            <div class="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
+              <img src={Logo} alt="" style={{ height: '160px', width: '160px' }} />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
                 <h1>Login Page</h1>
                 <form action="" method="post">
                   <label htmlFor="loginEmail">Email</label>
@@ -118,8 +118,10 @@ class LoginPage extends Component {
                   <div className="showPassword">
                     <input
                       name="loginPassword"
+
                       className="form-control"
                       type={inputType}  
+
                       placeholder="Enter your Password"
                       aria-label="default input example"
                     />
