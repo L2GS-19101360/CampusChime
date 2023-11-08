@@ -115,7 +115,7 @@ class LoginPage extends Component {
                     <input
                       name="loginPassword"
                       class="form-control"
-                      type={inputType}  
+                      type="password"
                       placeholder="Enter your Password"
                       aria-label="default input example"
                     />
