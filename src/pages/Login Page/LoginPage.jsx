@@ -4,6 +4,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../Login Page/LoginDesign.css";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import WebLogo from '../../assets/CampusChimePurple.png'
+import Logo from '../../assets/CampusChime.png'
 
 class LoginPage extends Component {
   constructor(props) {
@@ -20,7 +22,7 @@ class LoginPage extends Component {
     }));
   };
 
-  
+
   loginSubmit = async (event) => {
     event.preventDefault();
 
@@ -28,7 +30,7 @@ class LoginPage extends Component {
     const password = event.target.elements.loginPassword.value;
 
     try {
-        const response = await fetch('http://localhost/campuschime/PHP%20files/login.php', {
+      const response = await fetch('http://localhost/campuschime/PHP%20files/login.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +41,7 @@ class LoginPage extends Component {
       if (response.ok) {
         // Successful login, you can redirect or do other actions here
         console.log('Login successful');
-        
+
       } else {
         // Failed login, handle the error
         console.error('Login failed');
@@ -63,8 +65,8 @@ class LoginPage extends Component {
           data-bs-theme="dark"
         >
           <div className="container-fluid">
-            <a className="navbar-brand" href="#">
-              CampusChime
+            <a className="navbar-brand" href="/">
+              <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime
             </a>
             <button
               className="navbar-toggler"
@@ -95,7 +97,9 @@ class LoginPage extends Component {
           }}
         >
           <div class="row g-0">
-            <div class="col-md-4" style={{ backgroundColor: "gray" }}></div>
+            <div class="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
+              <img src={Logo} alt="" style={{ height: '160px', width: '160px' }} />
+            </div>
             <div class="col-md-8">
               <div class="card-body">
                 <h1>Login Page</h1>
@@ -115,7 +119,7 @@ class LoginPage extends Component {
                     <input
                       name="loginPassword"
                       class="form-control"
-                      type={inputType}  
+                      type={inputType}
                       placeholder="Enter your Password"
                       aria-label="default input example"
                     />
