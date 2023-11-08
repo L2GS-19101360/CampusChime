@@ -3,6 +3,7 @@ import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Navbar from './components/Navbar';
 
 class App extends Component {
 
@@ -20,7 +21,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        Opening/Landing Page
+        <Navbar />
       </div>
     )
   }
