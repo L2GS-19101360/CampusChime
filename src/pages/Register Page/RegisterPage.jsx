@@ -4,13 +4,22 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../Register Page/RegisterDesign.css'
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import WebLogo from '../../assets/CampusChimePurple.png'
+import Logo from '../../assets/CampusChime.png'
 
 class RegisterPage extends Component {
 
     constructor() {
         super();
         this.state = {
-            showPassword: false
+            showPassword: false,
+
+            newLname: "",
+            newFname: "",
+            newContact: null,
+            newEmail: "",
+            newPassword: "",
+            conPassword: ""
         }
     }
 
@@ -27,15 +36,23 @@ class RegisterPage extends Component {
         }));
     }
 
+    handleRegisterAccount = (event) => {
+        event.preventDefault();
+
+
+    }
+
     render() {
-        var inputType = this.state.showPassword? "text" : "password";
-        var eyeIcons = this.state.showPassword? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill';
+        var inputType = this.state.showPassword ? "text" : "password";
+        var eyeIcons = this.state.showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill';
 
         return (
             <div>
                 <nav className="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
                     <div className="container-fluid">
-                        <a className="navbar-brand" href="#">CampusChime</a>
+                        <a className="navbar-brand" href="/">
+                            <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime
+                        </a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
@@ -51,8 +68,8 @@ class RegisterPage extends Component {
 
                 <div class="card mb-3" style={{ maxWidth: '45%', position: 'relative', left: '30%', top: '150px' }}>
                     <div class="row g-0">
-                        <div class="col-md-4" style={{ backgroundColor: "gray" }}>
-
+                        <div class="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
+                            <img src={Logo} alt="" style={{ height: '235px', width: '235px' }} />
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
