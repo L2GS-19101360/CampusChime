@@ -13,7 +13,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <div>
     <Router>
-      <Route exact path='/' component={App} />
+      <Route exact path='/' component={LoginPage} />
       <Route path='/loginPage' component={LoginPage} />
       <Route path='/registerPage' component={RegisterPage} />
       <Route path='homePage' component={HomePage} />
