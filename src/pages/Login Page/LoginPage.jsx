@@ -12,6 +12,8 @@ class LoginPage extends Component {
     this.state = {
       showPassword: false,
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
@@ -21,15 +23,16 @@ class LoginPage extends Component {
     }));
   };
 
- handleSubmit = async (event) => {
-    event.preventDefault(); 
-
+ handleSubmit = async (e) => {
+  console.log ("yes")
+    e.preventDefault(); 
+  
     const email = event.target.elements.loginEmail.value;
     const password = event.target.elements.loginPassword.value;
 
     try {
-      const response = await fetch('http://localhost/campuschime/PHP%20files/login.php', {
-        method: 'POST',
+      const response = await fetch(`http://localhost/campuschime/PHP files/login.php?email=${loginEmail}&password=${loginPassword}`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -95,14 +98,14 @@ class LoginPage extends Component {
             top: "250px",
           }}
         >
-          <div class="row g-0">
-            <div class="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
+          <div className="row g-0">
+            <div className="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
               <img src={Logo} alt="" style={{ height: '160px', width: '160px' }} />
             </div>
-            <div class="col-md-8">
-              <div class="card-body">
+            <div className="col-md-8">
+              <div className="card-body">
                 <h1>Login Page</h1>
-                <form action="" method="post">
+                <form action="" method="get" onSubmit={this.handleSubmit(event)}>
                   <label htmlFor="loginEmail">Email</label>
                   <input
                     name="loginEmail"
