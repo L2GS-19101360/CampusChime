@@ -5,6 +5,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import Navbar from '../../components/Navbar';
 import WebLogo from '../../assets/CampusChimePurple.png'
+import '../About Us Page/AboutUsDesign.css'
+import Lorenz from '../../assets/developers/Lorenz.jpg'
 
 class AboutUsPage extends Component {
 
@@ -32,6 +34,15 @@ class AboutUsPage extends Component {
                     </h3>
 
                     <h1>Developers of <img src={WebLogo} alt="" style={{height: '120px', width: '120px'}} /> CampusChime</h1>
+                    <ul className='developersList'>
+                        <li style={{marginLeft: '10px', marginRight: '10px'}}>
+                            <img src={Lorenz} alt="" style={{height: '240px', width: '240px'}}/>
+                            <br/><h6 style={{textAlign: 'center'}}>Suico, Lorenz Gil G. (BSIT)</h6>
+                        </li>
+                        <li style={{marginLeft: '10px', marginRight: '10px'}}>Zyguel</li>
+                        <li style={{marginLeft: '10px', marginRight: '10px'}}>Jaden</li>
+                        <li style={{marginLeft: '10px', marginRight: '10px'}}>Maria</li>
+                    </ul>
                 </div>
             </div>
         )
