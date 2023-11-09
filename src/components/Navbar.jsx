@@ -23,7 +23,7 @@ class Navbar extends Component {
             <div>
                 <nav className="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
                     <div className="container-fluid">
-                        <a className="navbar-brand" href="#"> <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime</a>
+                        <a className="navbar-brand" href="/"> <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime</a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
