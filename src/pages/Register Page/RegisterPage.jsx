@@ -45,7 +45,7 @@ class RegisterPage extends Component {
             console.log(this.state.newLname + this.state.newFname + this.state.newContact + this.state.newEmail + this.state.newPassword)
 
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", `http://localhost/campuschime/PHP%20files/register.php?lastname=${this.state.newLname}&firstname=${this.state.newFname}&contactnumber=${this.state.newContact}&email=${this.state.newEmail}&password=${this.state.newPassword}`, true);
+            xhttp.open("POST", `http://localhost/campuschime/PHP_files/register.php?lastname=${this.state.newLname}&firstname=${this.state.newFname}&contactnumber=${this.state.newContact}&email=${this.state.newEmail}&password=${this.state.newPassword}`, true);
             xhttp.send();
 
             xhttp.onreadystatechange = () => {
