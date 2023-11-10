@@ -1,7 +1,4 @@
-body{
-    /* effdects everything */
-    background-color: whitesmoke;
-}
+
 .showPassword{
     display: inline-flex;
     align-items: center;
