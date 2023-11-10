@@ -1,21 +1,22 @@
 import { Component, useState } from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import WebLogo from '../../assets/CampusChimePurple.png'
-import Logo from '../../assets/CampusChime.png'
+import WebLogo from "../../assets/CampusChimePurple.png";
+import Logo from "../../assets/CampusChime.png";
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      password: '',
       showPassword: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
 
   togglePassword = () => {
     this.setState((prevState) => ({
@@ -23,33 +24,48 @@ class LoginPage extends Component {
     }));
   };
 
- handleSubmit = async (e) => {
-  console.log ("yes")
-    e.preventDefault(); 
-  
-    const email = event.target.elements.loginEmail.value;
-    const password = event.target.elements.loginPassword.value;
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("yert");
+
+    const email = e.target.elements.loginEmail.value;
+    const password = e.target.elements.loginPassword.value;
 
     try {
-      const response = await fetch(`http://localhost/campuschime/PHP files/login.php?email=${loginEmail}&password=${loginPassword}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        "http://localhost/CampusChime/PHP_files/login.php",
+        {
+          email,
+          password,
         },
-        body: JSON.stringify({ username, password }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (response.ok) {
-        console.log('Login successful');
+      const data = response.data;
+      console.log(email);
 
+      if (data.success) {
+        console.log("Login successful");
+        window.location.href = "/HomePage";
       } else {
-        console.error('Login failed');
+        this.setState({
+          password: "", 
+          warning: (
+            <div className="alert alert-danger" role="alert">
+              {data.message}
+            </div>
+          ),
+        });
+        console.error("Login failed:", data.message);
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      console.error("Error during login:", error);
     }
   };
-
 
   render() {
     const inputType = this.state.showPassword ? "text" : "password";
@@ -65,9 +81,12 @@ class LoginPage extends Component {
         >
           <div className="container-fluid">
             <a className="navbar-brand" href="/">
-
-            <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} />  CampusChime
-
+              <img
+                src={WebLogo}
+                alt=""
+                style={{ height: "70px", width: "80px" }}
+              />{" "}
+              CampusChime
             </a>
             <button
               className="navbar-toggler"
@@ -92,22 +111,31 @@ class LoginPage extends Component {
           className="card mb-3"
           style={{
             maxWidth: "40%",
-           width: "40%",
+            width: "40%",
             position: "relative",
             left: "33%",
             top: "250px",
           }}
         >
           <div className="row g-0">
-            <div className="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
-              <img src={Logo} alt="" style={{ height: '160px', width: '160px' }} />
+            <div
+              className="col-md-4"
+              style={{ backgroundColor: "gray", textAlign: "center" }}
+            >
+              <img
+                src={Logo}
+                alt=""
+                style={{ height: "160px", width: "160px" }}
+              />
             </div>
             <div className="col-md-8">
               <div className="card-body">
                 <h1>Login Page</h1>
-                <form action="" method="get" onSubmit={this.handleSubmit(event)}>
+                {this.state.warning}
+                <form method="post" onSubmit={this.handleSubmit}>
                   <label htmlFor="loginEmail">Email</label>
                   <input
+                    id="loginEmail"
                     name="loginEmail"
                     className="form-control"
                     type="email"
@@ -119,11 +147,12 @@ class LoginPage extends Component {
                   <br />
                   <div className="showPassword">
                     <input
+                      id="loginPassword"
                       name="loginPassword"
-
                       className="form-control"
-                      type={inputType}  
-
+                      type={inputType}
+                      value={this.state.password}
+                      onChange={(e) => this.setState({ password: e.target.value })}
                       placeholder="Enter your Password"
                       aria-label="default input example"
                     />
@@ -136,7 +165,9 @@ class LoginPage extends Component {
                     Login
                   </button>
                 </form>
-                Don't have an account? <Link to="/RegisterPage">Register here</Link>
+                
+                Don't have an account?{" "}
+                <Link to="/RegisterPage">Register here</Link>
               </div>
             </div>
           </div>
