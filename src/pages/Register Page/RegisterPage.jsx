@@ -98,7 +98,7 @@ class RegisterPage extends Component {
                     </div>
                 </nav>
 
-                <div className="card mb-3" style={{ maxWidth: '45%', position: 'relative', left: '30%', top: '150px' }}>
+                <div className="card mb-3" style={{ maxWidth: '50%', position: "relative", left: "25%", top: "115px", }} id='registerCard'>
                     <div className="row g-0">
                         <div className="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
                             <img src={Logo} alt="" style={{ height: '235px', width: '235px' }} />

@@ -110,11 +110,10 @@ class LoginPage extends Component {
         <div
           className="card mb-3"
           style={{
-            maxWidth: "40%",
-            width: "40%",
+            maxWidth: "43%",
             position: "relative",
-            left: "33%",
-            top: "250px",
+            left: "30%",
+            top: "240px",
           }}
         >
           <div className="row g-0">
