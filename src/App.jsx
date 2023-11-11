@@ -31,7 +31,6 @@ class App extends Component {
       <div>
         <Navbar />
 
-<<<<<<< HEAD
         <Carousel style={{ height: "500px"}}>
           <Carousel.Item style={{ backgroundColor: "black", height: "500px" }}>
             <img
@@ -39,17 +38,13 @@ class App extends Component {
               // src="https://via.placeholder.com/400x200"
               alt="First slide" 
             />
-=======
-        <Carousel style={{ height: "500px" }}>
-          <Carousel.Item style={{ backgroundColor: "red", height: "500px" }}>
-            
->>>>>>> 3732e5f8c89628fb951889013c74388f2e177a61
           </Carousel.Item>
-          <Carousel.Item style={{ backgroundColor: "blue", height: "500px" }}>
-            
-          </Carousel.Item>
-          <Carousel.Item style={{ backgroundColor: "yellow", height: "500px" }}>
-            
+          <Carousel.Item style={{ backgroundColor: "grey", height: "500px" }}>
+            <img
+              className="d-block w-100"
+              // src={"https://via.placeholder.com/400x200"}
+              alt="Second slide"
+            />
           </Carousel.Item>
         </Carousel>
 
@@ -174,7 +169,15 @@ class App extends Component {
           ))}
         </Carousel>
 
-        
+        <h2 style={{ textAlign: "center", marginTop: "200px" }}>
+          Just for scrolling down
+        </h2>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, cum
+          nostrum natus error rem dolorum, quod et amet, eum nemo nobis!
+          Laboriosam ex itaque quis, accusamus blanditiis quidem doloremque
+          perspiciatis?
+        </p>
       </div>
     );
   }
