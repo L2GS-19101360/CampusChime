@@ -31,12 +31,12 @@ class App extends Component {
       <div>
         <Navbar />
 
-        <Carousel style={{ height: "500px" }}>
+        <Carousel style={{ height: "500px"}}>
           <Carousel.Item style={{ backgroundColor: "black", height: "500px" }}>
             <img
               className="d-block w-100"
               // src="https://via.placeholder.com/400x200"
-              alt="First slide"
+              alt="First slide" 
             />
           </Carousel.Item>
           <Carousel.Item style={{ backgroundColor: "grey", height: "500px" }}>
@@ -57,7 +57,7 @@ class App extends Component {
           </p>
         </div>
 
-        <Row xs={1} md={3} className="g-4 mt-5" style={{ marginLeft: "240px" }}>
+        <Row xs={1} md={3} style={{ marginLeft: "260px", marginTop: "50px", maxWidth: "1600px" }}>
           <Col>
             <Card style={{ height: "300px", width: "300px" }}>
               <Card.Img
@@ -118,7 +118,7 @@ class App extends Component {
         </Row>
 
         <h1
-          style={{ fontSize: "4em", textAlign: "center", marginTop: "100px" }}
+          style={{ fontSize: "4em", textAlign: "center", marginTop: "150px" }}
         >
           ENTREPRENEURS
         </h1>
