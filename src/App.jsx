@@ -32,19 +32,14 @@ class App extends Component {
         <Navbar />
 
         <Carousel style={{ height: "500px" }}>
-          <Carousel.Item style={{ backgroundColor: "black", height: "500px" }}>
-            <img
-              className="d-block w-100"
-              // src="https://via.placeholder.com/400x200"
-              alt="First slide"
-            />
+          <Carousel.Item style={{ backgroundColor: "red", height: "500px" }}>
+            
           </Carousel.Item>
-          <Carousel.Item style={{ backgroundColor: "grey", height: "500px" }}>
-            <img
-              className="d-block w-100"
-              // src={"https://via.placeholder.com/400x200"}
-              alt="Second slide"
-            />
+          <Carousel.Item style={{ backgroundColor: "blue", height: "500px" }}>
+            
+          </Carousel.Item>
+          <Carousel.Item style={{ backgroundColor: "yellow", height: "500px" }}>
+            
           </Carousel.Item>
         </Carousel>
 
@@ -57,7 +52,7 @@ class App extends Component {
           </p>
         </div>
 
-        <Row xs={1} md={3} className="g-4 mt-5" style={{ marginLeft: "240px" }}>
+        <Row xs={1} md={3} style={{ marginLeft: "260px", marginTop: "50px", maxWidth: "1600px" }}>
           <Col>
             <Card style={{ height: "300px", width: "300px" }}>
               <Card.Img
@@ -169,15 +164,7 @@ class App extends Component {
           ))}
         </Carousel>
 
-        <h2 style={{ textAlign: "center", marginTop: "200px" }}>
-          Just for scrolling down
-        </h2>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, cum
-          nostrum natus error rem dolorum, quod et amet, eum nemo nobis!
-          Laboriosam ex itaque quis, accusamus blanditiis quidem doloremque
-          perspiciatis?
-        </p>
+        
       </div>
     );
   }
