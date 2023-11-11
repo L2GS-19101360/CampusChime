@@ -6,7 +6,6 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
-// Check if the request is a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $postdata = file_get_contents("php://input");
