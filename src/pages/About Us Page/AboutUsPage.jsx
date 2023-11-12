@@ -26,7 +26,7 @@ class AboutUsPage extends Component {
             <div>
                 <Navbar />
 
-                <div style={{padding: '7%'}}>
+                <div style={{padding: '7%', color: 'white'}}>
                     <h1 style={{borderBottom: '1px solid black'}}>Chiming in with Student Entrepreneurial Opportunities</h1>
 
                     <h3>
