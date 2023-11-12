@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import Navbar from "./components/Navbar";
+import MainNavbar from "./components/Navbar";
 import { Carousel, Card, Col, Row } from "react-bootstrap";
 import magnifying from "./assets/nfc-magnifying-glass.svg";
 import cart from "./assets/cart-arrow-down.svg";
@@ -29,17 +29,29 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <MainNavbar />
 
-        <Carousel style={{ height: "500px" }}>
-          <Carousel.Item style={{ backgroundColor: "red", height: "500px" }}>
-            
+        <Carousel style={{ height: "500px"}}>
+          <Carousel.Item style={{ backgroundColor: "black", height: "500px" }}>
+            <img
+              className="d-block w-100"
+              // src="https://via.placeholder.com/400x200"
+              alt="First slide" 
+            />
           </Carousel.Item>
-          <Carousel.Item style={{ backgroundColor: "blue", height: "500px" }}>
-            
+          <Carousel.Item style={{ backgroundColor: "grey", height: "500px" }}>
+            <img
+              className="d-block w-100"
+              // src={"https://via.placeholder.com/400x200"}
+              alt="Second slide"
+            />
           </Carousel.Item>
-          <Carousel.Item style={{ backgroundColor: "yellow", height: "500px" }}>
-            
+          <Carousel.Item style={{ backgroundColor: "black", height: "500px" }}>
+            <img
+              className="d-block w-100"
+              // src={"https://via.placeholder.com/400x200"}
+              alt="Second slide"
+            />
           </Carousel.Item>
         </Carousel>
 
@@ -113,7 +125,7 @@ class App extends Component {
         </Row>
 
         <h1
-          style={{ fontSize: "4em", textAlign: "center", marginTop: "100px" }}
+          style={{ fontSize: "4em", textAlign: "center", marginTop: "150px" }}
         >
           ENTREPRENEURS
         </h1>
@@ -164,7 +176,15 @@ class App extends Component {
           ))}
         </Carousel>
 
-        
+        <h2 style={{ textAlign: "center", marginTop: "200px" }}>
+          Just for scrolling down
+        </h2>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, cum
+          nostrum natus error rem dolorum, quod et amet, eum nemo nobis!
+          Laboriosam ex itaque quis, accusamus blanditiis quidem doloremque
+          perspiciatis?
+        </p>
       </div>
     );
   }
