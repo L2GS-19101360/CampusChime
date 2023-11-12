@@ -45,7 +45,7 @@ class RegisterPage extends Component {
             console.log(this.state.newLname + this.state.newFname + this.state.newContact + this.state.newEmail + this.state.newPassword)
 
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", `http://localhost/campuschime/PHP%20files/register.php?lastname=${this.state.newLname}&firstname=${this.state.newFname}&contactnumber=${this.state.newContact}&email=${this.state.newEmail}&password=${this.state.newPassword}`, true);
+            xhttp.open("POST", `http://localhost/campuschime/PHP_files/register.php?lastname=${this.state.newLname}&firstname=${this.state.newFname}&contactnumber=${this.state.newContact}&email=${this.state.newEmail}&password=${this.state.newPassword}`, true);
             xhttp.send();
 
             xhttp.onreadystatechange = () => {
@@ -98,7 +98,7 @@ class RegisterPage extends Component {
                     </div>
                 </nav>
 
-                <div className="card mb-3" style={{ maxWidth: '45%', position: 'relative', left: '30%', top: '150px' }}>
+                <div className="card mb-3" style={{ maxWidth: '50%', position: "relative", left: "25%", top: "115px", }} id='registerCard'>
                     <div className="row g-0">
                         <div className="col-md-4" style={{ backgroundColor: 'gray', textAlign: 'center' }}>
                             <img src={Logo} alt="" style={{ height: '235px', width: '235px' }} />

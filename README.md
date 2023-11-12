@@ -30,5 +30,5 @@ npm run dev
 git pull origin main
 
 #If you are working on backend functionality, you can access your PHP files using the following URL:
-http://localhost/campuschime/PHP files/(your PHP file)
+http://localhost/campuschime/PHP_files/(your PHP file)
 
