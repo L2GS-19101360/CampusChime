@@ -28,7 +28,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{paddingBottom: '8%'}}>
         <MainNavbar />
 
         <Carousel style={{ height: "500px"}}>
@@ -176,15 +176,6 @@ class App extends Component {
           ))}
         </Carousel>
 
-        <h2 style={{ textAlign: "center", marginTop: "200px" }}>
-          Just for scrolling down
-        </h2>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, cum
-          nostrum natus error rem dolorum, quod et amet, eum nemo nobis!
-          Laboriosam ex itaque quis, accusamus blanditiis quidem doloremque
-          perspiciatis?
-        </p>
       </div>
     );
   }

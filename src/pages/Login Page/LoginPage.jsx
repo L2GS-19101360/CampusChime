@@ -1,9 +1,10 @@
-import { Component, useState } from "react";
+import { Component } from "react";
+import PropTypes from 'prop-types';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
 
@@ -33,7 +34,7 @@ class LoginPage extends Component {
 
     try {
       const response = await axios.post(
-        "http://localhost/CampusChime/PHP_files/login.php",
+        `http://localhost/CampusChime/PHP_files/login.php?email=${email}&password=${password}`,
         {
           email,
           password,
@@ -46,14 +47,21 @@ class LoginPage extends Component {
       );
 
       const data = response.data;
-      console.log(email);
+      console.log(data);
 
       if (data.success) {
         console.log("Login successful");
-        window.location.href = "/HomePage";
+        this.props.history.push({
+          pathname: "/HomePage",
+          state: {
+            lastName: data.lastName,
+            firstName: data.firstName,
+            email: email,
+          },
+        });
       } else {
         this.setState({
-          password: "", 
+          password: "",
           warning: (
             <div className="alert alert-danger" role="alert">
               {data.message}
@@ -62,6 +70,7 @@ class LoginPage extends Component {
         });
         console.error("Login failed:", data.message);
       }
+
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -164,7 +173,7 @@ class LoginPage extends Component {
                     Login
                   </button>
                 </form>
-                
+
                 Don't have an account?{" "}
                 <Link to="/RegisterPage">Register here</Link>
               </div>
@@ -176,4 +185,8 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+LoginPage.propTypes = {
+  history: PropTypes.object.isRequired,
+};
+
+export default withRouter(LoginPage);

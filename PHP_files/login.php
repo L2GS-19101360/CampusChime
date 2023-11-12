@@ -24,7 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashedPasswordFromDatabase = $row['password'];
 
             if (password_verify($request->password, $hashedPasswordFromDatabase)) {
-                echo json_encode(["success" => true, "message" => "Login successful"]);
+                $firstName = $row['firstname'];
+                $lastName = $row['lastname'];
+
+                echo json_encode([
+                    "success" => true,
+                    "message" => "Login successful",
+                    "firstName" => $firstName,
+                    "lastName" => $lastName
+                ]);
             } else {
                 echo json_encode(["success" => false, "message" => "Invalid email or password"]);
             }
@@ -40,4 +48,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(["success" => false, "message" => "Invalid request method"]);
 }
-?>
