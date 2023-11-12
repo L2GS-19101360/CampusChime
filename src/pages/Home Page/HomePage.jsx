@@ -4,6 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import HomeNavbar from '../../components/HomeNavbar';
 import Hero from '../../components/home/hero';
+import HeroForHome from '../../components/home/hero';
 class HomePage extends Component {
 
     constructor() {
@@ -21,7 +22,7 @@ class HomePage extends Component {
         return (
             <div>
                 <HomeNavbar />
-                <Hero />
+                <HeroForHome />
                 
             </div>
         )

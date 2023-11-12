@@ -39,7 +39,18 @@ class AboutUsPage extends Component {
                             <img src={Lorenz} alt="" style={{height: '240px', width: '240px'}}/>
                             <br/><h6 style={{textAlign: 'center'}}>Suico, Lorenz Gil G. (BSIT) </h6>
                         </li>
-                        <li style={{marginLeft: '10px', marginRight: '10px'}}>Zyguel</li>
+                        <li style={{marginLeft: '10px', marginRight: '10px'}}>
+                            <img src="https://static1.s123-cdn-static-a.com/uploads/7237226/2000_639e8801751ed_filter_639e881747b30.jpg" alt="" 
+                                style={{
+                                height: '240px', 
+                                width: '240px',
+                                objectFit: 'cover' // or 'none'
+                                }}
+                                />
+                        <br/><h6 style={{textAlign: 'center'}}>Cabogoy, Zyguel Philip E. (BSIT) </h6>
+                        
+                        </li>
+                      
                         <li style={{marginLeft: '10px', marginRight: '10px'}}>Jaden</li>
                         <li style={{marginLeft: '10px', marginRight: '10px'}}>Maria</li>
                     </ul>
