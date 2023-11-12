@@ -57,21 +57,18 @@ class MainNavbar extends Component {
             </Nav>
           </div>
 
-          <div className="d-flex" style={{ marginRight: "-790px" }}>
+          <div className="d-flex" style={{ marginRight: "-570px" }}>
             <Link to="/LoginPage">
-              <button
-                className="btn btn-primary"
-                style={{ marginRight: "30px" }}
-              >
+              <Button variant="outline-light" style={{ marginRight: "30px" }}>
                 Login Account
-              </button>
+              </Button>
             </Link>
             <Link to="/RegisterPage">
-              <button className="btn btn-primary">Register Account</button>
+            <Button variant="outline-light">
+                Register Account
+              </Button>
             </Link>
           </div>
-
-
         </Container>
       </Navbar>
     );

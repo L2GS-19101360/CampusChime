@@ -125,7 +125,7 @@ class App extends Component {
         </Row>
 
         <h1
-          style={{ fontSize: "4em", textAlign: "center", marginTop: "150px" }}
+          style={{ fontSize: "4em", textAlign: "center", marginTop: "150px", color: "white"}}
         >
           ENTREPRENEURS
         </h1>
