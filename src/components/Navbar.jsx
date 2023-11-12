@@ -45,7 +45,7 @@ class MainNavbar extends Component {
 
           <div className="collapse navbar-collapse" id="navbarNav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/homePage">
+              <Nav.Link as={Link} to="/">
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to="/AboutUsPage">
