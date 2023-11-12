@@ -1,55 +1,81 @@
-import { Component, useState } from 'react'
+import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
-import WebLogo from '../assets/CampusChimePurple.png'
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { Link } from "react-router-dom/cjs/react-router-dom";
+import WebLogo from "../assets/CampusChimePurple.png";
 
-class Navbar extends Component {
+class MainNavbar extends Component {
+  constructor() {
+    super();
+  }
 
-    constructor() {
-        super();
-    }
+  componentDidMount() {}
 
-    componentDidMount() {
+  componentWillUnmount() {}
 
-    }
-    componentWillUnmount() {
+  render() {
+    return (
+      <Navbar
+        className="navbar bg-dark border-bottom border-body"
+        data-bs-theme="dark"
+      >
+        <Container style={{ marginLeft: "-10px" }}>
+          <Navbar.Brand as={Link} to="/">
+            <img
+              src={WebLogo}
+              alt="CampusChime Logo"
+              style={{ width: "80px" }}
+            />
+            CampusChime
+          </Navbar.Brand>
 
-    }
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
-    render() {
-        return (
-            <div>
-                <nav className="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-                    <div className="container-fluid">
-                        <a className="navbar-brand" href="#"> <img src={WebLogo} alt="" style={{ height: '70px', width: '80px' }} /> CampusChime</a>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item" style={{ color: 'white' }}>
-                                    Home
-                                </li>
-                                <li className="nav-item" style={{ color: 'white' }}>
-                                    About Us
-                                </li>
-                                <li className="nav-item" style={{ color: 'white' }}>
-                                    Entrepreneur
-                                </li>
-                            </ul>
-                        </div>
-                        <div className='d-flex'>
-                            <Link to='/LoginPage'><button type="button" className="btn btn-secondary">Login Account</button></Link>&nbsp;
-                            <Link to='/RegisterPage'><button type="button" className="btn btn-secondary">Regiter Account</button></Link>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        )
-    }
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <Nav className="me-auto">
+              <Nav.Link as={Link} to="/">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/AboutUsPage">
+                About Us
+              </Nav.Link>
+              <Nav.Link as={Link} to="/EntrepreneurPage">
+                Entrepreneur
+              </Nav.Link>
+            </Nav>
+          </div>
 
+          <div className="d-flex" style={{ marginRight: "-790px" }}>
+            <Link to="/LoginPage">
+              <button
+                className="btn btn-primary"
+                style={{ marginRight: "30px" }}
+              >
+                Login Account
+              </button>
+            </Link>
+            <Link to="/RegisterPage">
+              <button className="btn btn-primary">Register Account</button>
+            </Link>
+          </div>
+
+
+        </Container>
+      </Navbar>
+    );
+  }
 }
 
-export default Navbar
+export default MainNavbar;
