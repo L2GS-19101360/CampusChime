@@ -60,7 +60,8 @@ class RegisterPage extends Component {
                             </div>
                         });
                     } else {
-                        window.location.reload(); //Waiting on Home Page
+                        // window.location.reload(); //Waiting on Home Page
+                        window.location.href = "/HomePage";
                     }
                 }
             }
