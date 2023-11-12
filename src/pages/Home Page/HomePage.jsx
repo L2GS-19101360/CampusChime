@@ -2,7 +2,7 @@ import { Component, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Navbar from '../../components/Navbar';
+import HomeNavbar from '../../components/HomeNavbar';
 import Hero from '../../components/home/hero';
 class HomePage extends Component {
 
@@ -20,9 +20,9 @@ class HomePage extends Component {
     render() {
         return (
             <div>
-                <Navbar />
+                <HomeNavbar />
                 <Hero />
-                Home Page
+                
             </div>
         )
     }
