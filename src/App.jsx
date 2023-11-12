@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import Navbar from "./components/Navbar";
+import MainNavbar from "./components/Navbar";
 import { Carousel, Card, Col, Row } from "react-bootstrap";
 import magnifying from "./assets/nfc-magnifying-glass.svg";
 import cart from "./assets/cart-arrow-down.svg";
@@ -29,7 +29,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <MainNavbar />
 
         <Carousel style={{ height: "500px"}}>
           <Carousel.Item style={{ backgroundColor: "black", height: "500px" }}>
@@ -40,6 +40,13 @@ class App extends Component {
             />
           </Carousel.Item>
           <Carousel.Item style={{ backgroundColor: "grey", height: "500px" }}>
+            <img
+              className="d-block w-100"
+              // src={"https://via.placeholder.com/400x200"}
+              alt="Second slide"
+            />
+          </Carousel.Item>
+          <Carousel.Item style={{ backgroundColor: "black", height: "500px" }}>
             <img
               className="d-block w-100"
               // src={"https://via.placeholder.com/400x200"}
