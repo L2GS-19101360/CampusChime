@@ -15,7 +15,7 @@ const HeroForHome = () => {
           <button type="button" class="btn-danger btn btn-lg px-4">Sell</button>
         </div>
       </div>
-      <div class="col-lg-4 offset-lg-0 p-0 overflow-hidden shadow-lg">
+      <div class="row-lg-4 col-lg-4 offset-lg-0 p-0 shadow-lg">
           <img class="rounded-lg-3" src="/CAMPUSCHIME ANIMATED LOGO.gif" alt="CampusChime" width="480"></img>
       </div>
     </div>
