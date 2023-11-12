@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../Register Page/RegisterDesign.css'
-import { Link } from 'react-router-dom/cjs/react-router-dom';
+import { Link, withRouter } from 'react-router-dom/cjs/react-router-dom';
 import WebLogo from '../../assets/CampusChimePurple.png'
 import Logo from '../../assets/CampusChime.png'
 
@@ -60,8 +60,14 @@ class RegisterPage extends Component {
                             </div>
                         });
                     } else {
-                        // window.location.reload(); //Waiting on Home Page
-                        window.location.href = "/HomePage";
+                        this.props.history.push({
+                            pathname: "/HomePage",
+                            state: {
+                                lastName: this.state.newLname,
+                                firstName: this.state.newFname,
+                                email: this.state.newEmail,
+                            }
+                        });
                     }
                 }
             }
@@ -186,4 +192,4 @@ class RegisterPage extends Component {
 
 }
 
-export default RegisterPage
+export default withRouter(RegisterPage)
