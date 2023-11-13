@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import AboutUsPageLogin from './pages/About Us Page/AboutUsPage(Login).jsx'
+import UserSettingPage from './pages/User Setting Page/UserSettingPage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <div>
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/homePage' component={HomePage} />
       <Route path='/aboutUsPage' component={AboutUsPage} />
       <Route path='/aboutUsPageLogin' component={AboutUsPageLogin}/>
+      <Route path='/userSettingPage' component={UserSettingPage} />
     </Router>
   </div>
 )
