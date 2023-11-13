@@ -3,20 +3,30 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from "../assets/CampusChimePurple.png";
 import ProfileImage from '../assets/profileimage.jpg'
 
 class HomeNavbar extends Component {
   constructor() {
     super();
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentDidMount() { }
 
   componentWillUnmount() { }
 
+  handleLogout = () => {
+    window.location.href = '/';
+  };
+
   render() {
+    const params = new URLSearchParams(this.props.location.search);
+    const lastName = params.get("lastName");
+    const firstName = params.get("firstName");
+    const email = params.get("email");
+
     return (
       <div>
         <Navbar
@@ -60,8 +70,8 @@ class HomeNavbar extends Component {
             </div>
           </Container>
 
-          <div className="ms-auto" style={{marginRight: '30px'}}>
-            <img src={ProfileImage} alt="" style={{height: '90px', width: '90px', cursor: 'pointer'}}
+          <div className="ms-auto" style={{ marginRight: '30px' }}>
+            <img src={ProfileImage} alt="" style={{ height: '90px', width: '90px', cursor: 'pointer' }}
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasRight"
               aria-controls="offcanvasRight"
@@ -71,17 +81,19 @@ class HomeNavbar extends Component {
 
         <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
           <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+
             <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>className
-          <div className="offcanvas-body">
-            ...
+          </div>
+          <div className="offcanvas-body" style={{ textAlign: 'center' }}>
+            <img src={ProfileImage} alt="" style={{ border: '1px solid black' }} /><br />
+            {lastName}, {firstName}<br/><br/>
+            <button type="button" className="btn btn-danger" onClick={this.handleLogout}>Logout Account</button>
           </div>
         </div>
-        
+
       </div>
     );
   }
 }
 
-export default HomeNavbar;
+export default withRouter(HomeNavbar);
