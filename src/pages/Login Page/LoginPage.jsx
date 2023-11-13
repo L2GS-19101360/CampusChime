@@ -64,13 +64,16 @@ class LoginPage extends Component {
 
       if (data.success) {
         console.log("Login successful");
+        const userData = {
+          lastName: data.lastName,
+          firstName: data.firstName,
+          email: email,
+        };
+
+        // Append user data to the URL
         this.props.history.push({
           pathname: "/HomePage",
-          state: {
-            lastName: data.lastName,
-            firstName: data.firstName,
-            email: email,
-          },
+          search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
         });
       } else {
         this.setState({
