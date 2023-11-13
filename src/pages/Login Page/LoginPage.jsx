@@ -20,9 +20,6 @@ class LoginPage extends Component {
     this.state = {
       password: "",
       showPassword: false,
-      warning: null,
-      emailIsValid: true,
-      passwordIsValid: true,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
