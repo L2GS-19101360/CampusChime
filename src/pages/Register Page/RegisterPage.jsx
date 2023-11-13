@@ -67,13 +67,15 @@ class RegisterPage extends Component {
               ),
             });
           } else {
+            const userData = {
+              lastName: this.state.newLname,
+              firstName: this.state.newFname,
+              email: this.state.newEmail,
+            };
+      
             this.props.history.push({
               pathname: "/HomePage",
-              state: {
-                lastName: this.state.newLname,
-                firstName: this.state.newFname,
-                email: this.state.newEmail,
-              },
+              search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
             });
           }
         }
