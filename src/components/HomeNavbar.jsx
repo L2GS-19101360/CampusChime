@@ -5,61 +5,81 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from "../assets/CampusChimePurple.png";
+import ProfileImage from '../assets/profileimage.jpg'
 
 class HomeNavbar extends Component {
   constructor() {
     super();
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   render() {
     return (
-      <Navbar
-        className="navbar bg-dark border-bottom border-body"
-        data-bs-theme="dark"
-      >
-        <Container style={{ marginLeft: "-10px" }}>
-          <Navbar.Brand as={Link} to="/HomePage">
-            <img
-              src={WebLogo}
-              alt="CampusChime Logo"
-              style={{ width: "80px" }}
+      <div>
+        <Navbar
+          className="navbar bg-dark border-bottom border-body"
+          data-bs-theme="dark"
+        >
+          <Container style={{ marginLeft: "-10px" }}>
+            <Navbar.Brand as={Link} to="/HomePage">
+              <img
+                src={WebLogo}
+                alt="CampusChime Logo"
+                style={{ width: "80px" }}
+              />
+              CampusChime
+            </Navbar.Brand>
+
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <Nav className="me-auto">
+                <Nav.Link as={Link} to="/HomePage">
+                  Home
+                </Nav.Link>
+                <Nav.Link as={Link} to="/AboutUsPageLogin">
+                  About Us
+                </Nav.Link>
+                <Nav.Link as={Link} to="/EntrepreneurPage">
+                  Entrepreneur
+                </Nav.Link>
+              </Nav>
+            </div>
+          </Container>
+
+          <div className="ms-auto" style={{marginRight: '30px'}}>
+            <img src={ProfileImage} alt="" style={{height: '90px', width: '90px', cursor: 'pointer'}}
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasRight"
+              aria-controls="offcanvasRight"
             />
-            CampusChime
-          </Navbar.Brand>
-
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/HomePage">
-                Home
-              </Nav.Link>
-              <Nav.Link as={Link} to="/AboutUsPage">
-                About Us
-              </Nav.Link>
-              <Nav.Link as={Link} to="/EntrepreneurPage">
-                Entrepreneur
-              </Nav.Link>
-            </Nav>
           </div>
+        </Navbar>
 
-          
-        </Container>
-      </Navbar>
+        <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+          <div className="offcanvas-header">
+            <h5 className="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>className
+          <div className="offcanvas-body">
+            ...
+          </div>
+        </div>
+        
+      </div>
     );
   }
 }
