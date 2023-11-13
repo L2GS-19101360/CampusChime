@@ -32,6 +32,7 @@ class HomeNavbar extends Component {
         <Navbar
           className="navbar bg-dark border-bottom border-body"
           data-bs-theme="dark"
+          navbar-expand-lg
         >
           <Container style={{ marginLeft: "-10px" }}>
             <Navbar.Brand as={Link} to="/HomePage">
