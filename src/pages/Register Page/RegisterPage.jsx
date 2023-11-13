@@ -1,9 +1,6 @@
-import { Component, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "../Register Page/RegisterDesign.css";
-import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import { Form, Button, Navbar, FloatingLabel, Alert } from "react-bootstrap";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
 
@@ -12,20 +9,15 @@ class RegisterPage extends Component {
     super();
     this.state = {
       showPassword: false,
-
       newLname: "",
       newFname: "",
       newContact: "",
       newEmail: "",
       newPassword: "",
       conPassword: "",
-
       warning: "",
     };
   }
-
-  componentDidMount() {}
-  componentWillUnmount() {}
 
   togglePassword = () => {
     this.setState((prevState) => ({
@@ -44,7 +36,6 @@ class RegisterPage extends Component {
           this.state.newEmail +
           this.state.newPassword
       );
-
       var xhttp = new XMLHttpRequest();
       xhttp.open(
         "POST",
@@ -72,7 +63,7 @@ class RegisterPage extends Component {
               firstName: this.state.newFname,
               email: this.state.newEmail,
             };
-      
+
             this.props.history.push({
               pathname: "/HomePage",
               search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
@@ -82,11 +73,7 @@ class RegisterPage extends Component {
       };
     } else {
       this.setState({
-        warning: (
-          <div className="alert alert-danger" role="alert">
-            Passwords Mismatch!
-          </div>
-        ),
+        warning: <Alert variant="danger">Passwords Mismatch!</Alert>,
       });
     }
   };
@@ -99,41 +86,23 @@ class RegisterPage extends Component {
 
     return (
       <div>
-        <nav
-          className="navbar bg-dark navbar-expand-lg bg-body-tertiary"
-          data-bs-theme="dark"
-        >
-          <div className="container-fluid">
-            <a className="navbar-brand" href="/">
-              <img
-                src={WebLogo}
-                alt=""
-                style={{ height: "70px", width: "80px" }}
-              />{" "}
-              CampusChime
-            </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item"></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <Navbar bg="dark" expand="lg" variant="dark">
+          <Navbar.Brand href="/">
+            <img
+              src={WebLogo}
+              alt=""
+              style={{ height: "70px", width: "80px" }}
+            />{" "}
+            CampusChime
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarNav" />
+          <Navbar.Collapse id="navbarNav"></Navbar.Collapse>
+        </Navbar>
 
         <div
           className="card mb-3"
           style={{
+            backgroundColor: "white",
             maxWidth: "50%",
             position: "relative",
             left: "25%",
@@ -156,106 +125,134 @@ class RegisterPage extends Component {
               <div className="card-body">
                 <h1>Register Page</h1>
                 {this.state.warning}
-                <form
-                  action=""
-                  method="post"
-                  onSubmit={this.handleRegisterAccount}
-                >
-                  <label htmlFor="newLname">Last Name</label>
-                  <input
-                    name="newLname"
-                    className="form-control"
-                    type="text"
-                    placeholder="Enter your Last Name"
-                    value={this.state.newLname}
-                    onChange={(e) =>
-                      this.setState({ newLname: e.target.value })
-                    }
-                    aria-label="default input example"
-                  />
+                <Form onSubmit={this.handleRegisterAccount}
+                style={{ marginTop: "20px" }}>
+                  <FloatingLabel
+                    controlId="newLname"
+                    label="Last Name"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="Last Name"
+                      required
+                      value={this.state.newLname}
+                      onChange={(e) =>
+                        this.setState({ newLname: e.target.value })
+                      }
+                    />
+                  </FloatingLabel>
 
-                  <label htmlFor="newFname">First Name</label>
-                  <input
-                    name="newFname"
-                    className="form-control"
-                    type="text"
-                    placeholder="Enter your First Name"
-                    value={this.state.newFname}
-                    onChange={(e) =>
-                      this.setState({ newFname: e.target.value })
-                    }
-                    aria-label="default input example"
-                  />
+                  <FloatingLabel
+                    controlId="newFname"
+                    label="First Name"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="First Name"
+                      required
+                      value={this.state.newFname}
+                      onChange={(e) =>
+                        this.setState({ newFname: e.target.value })
+                      }
+                    />
+                  </FloatingLabel>
 
-                  <label htmlFor="newContact">Contact Number</label>
-                  <input
-                    name="newContact"
-                    className="form-control"
-                    type="tel"
-                    placeholder="Enter your Contact Number"
-                    value={this.state.newContact}
-                    onChange={(e) =>
-                      this.setState({ newContact: e.target.value })
-                    }
-                    aria-label="default input example"
-                  />
+                  <FloatingLabel
+                    controlId="newContact"
+                    label="Contact Number"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="tel"
+                      placeholder="Contact Number"
+                      required
+                      value={this.state.newContact}
+                      onChange={(e) =>
+                        this.setState({ newContact: e.target.value })
+                      }
+                    />
+                  </FloatingLabel>
 
-                  <label htmlFor="newEmail">Email</label>
-                  <input
-                    name="newEmail"
-                    className="form-control"
-                    type="email"
-                    placeholder="Enter your Email Address"
-                    value={this.state.newEmail}
-                    onChange={(e) =>
-                      this.setState({ newEmail: e.target.value })
-                    }
-                    aria-label="default input example"
-                  />
+                  <FloatingLabel
+                    controlId="newEmail"
+                    label="Email address"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="email"
+                      placeholder="Email Address"
+                      required
+                      value={this.state.newEmail}
+                      onChange={(e) =>
+                        this.setState({ newEmail: e.target.value })
+                      }
+                    />
+                  </FloatingLabel>
 
-                  <label htmlFor="newPassword1">Password</label>
-                  <br />
-                  <div className="showPassword">
-                    <input
-                      name="newPassword1"
-                      className="form-control"
+                  <FloatingLabel
+                    controlId="newPassword1"
+                    label="Password"
+                    className="mb-3"
+                  >
+                    <Form.Control
                       type={inputType}
-                      placeholder="Enter your Password"
+                      placeholder="Password"
+                      required
                       value={this.state.newPassword}
                       onChange={(e) =>
                         this.setState({ newPassword: e.target.value })
                       }
-                      aria-label="default input example"
                     />
-                    <i className={eyeIcons} onClick={this.togglePassword}></i>
-                  </div>
-                  <br />
+                    <i
+                      className={`ms-2 ${eyeIcons}`}
+                      onClick={this.togglePassword}
+                      style={{
+                        cursor: "pointer",
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
+                    ></i>
+                  </FloatingLabel>
 
-                  <label htmlFor="newPassword2">Confirm Password</label>
-                  <br />
-                  <div className="showPassword">
-                    <input
-                      name="newPassword2"
-                      className="form-control"
+                  <FloatingLabel
+                    controlId="newPassword2"
+                    label="Confirm Password"
+                    className="mb-3"
+                  >
+                    <Form.Control
                       type={inputType}
-                      placeholder="Re-Enter your Password"
+                      placeholder="Confirm Password"
+                      required
                       value={this.state.conPassword}
                       onChange={(e) =>
                         this.setState({ conPassword: e.target.value })
                       }
-                      aria-label="default input example"
                     />
-                    <i className={eyeIcons} onClick={this.togglePassword}></i>
-                  </div>
-                  <br />
+                    <i
+                      className={`ms-2 ${eyeIcons}`}
+                      onClick={this.togglePassword}
+                      style={{
+                        cursor: "pointer",
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
+                    ></i>
+                  </FloatingLabel>
 
-                  <br />
-                  <button type="submit" className="btn btn-secondary">
+                  <Button
+                    style={{ marginBottom: "10px" }}
+                    variant="outline-primary"
+                    type="submit"
+                  >
                     Register
-                  </button>
-                </form>
+                  </Button>
+                </Form>
                 Already Have an Account? &nbsp;
-                <Link to="/LoginPage">Login Account</Link>
+                <Link to="/LoginPage">Login here</Link>
               </div>
             </div>
           </div>

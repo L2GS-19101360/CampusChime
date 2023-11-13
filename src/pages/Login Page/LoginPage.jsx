@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link, withRouter } from "react-router-dom";
-import { Form, Button, Alert, Navbar, Nav, FloatingLabel } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Alert,
+  Navbar,
+  Nav,
+  FloatingLabel,
+} from "react-bootstrap";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import WebLogo from "../../assets/CampusChimePurple.png";
@@ -33,6 +40,15 @@ class LoginPage extends Component {
     const email = e.target.elements.loginEmail.value;
     const password = e.target.elements.loginPassword.value;
 
+    // if (!email || !password) {
+    //   this.setState({
+    //     emailIsValid: !email,
+    //     passwordIsValid: !password,
+    //     warning: <Alert variant="danger">Please fill in all fields.</Alert>,
+    //   });
+    //   return;
+    // }
+
     try {
       const response = await axios.post(
         `http://localhost/CampusChime/PHP_files/login.php?email=${email}&password=${password}`,
@@ -51,14 +67,13 @@ class LoginPage extends Component {
 
       if (data.success) {
         console.log("Login successful");
-        const userData = {
-          lastName: data.lastName,
-          firstName: data.firstName,
-          email: email,
-        };
         this.props.history.push({
           pathname: "/HomePage",
-          search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
+          state: {
+            lastName: data.lastName,
+            firstName: data.firstName,
+            email: email,
+          },
         });
       } else {
         this.setState({
@@ -91,9 +106,7 @@ class LoginPage extends Component {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarNav" />
           <Navbar.Collapse id="navbarNav">
-            <Nav className="mr-auto">
-              {/* Add any additional navigation items here if needed */}
-            </Nav>
+            <Nav className="mr-auto"></Nav>
           </Navbar.Collapse>
         </Navbar>
 
@@ -122,20 +135,18 @@ class LoginPage extends Component {
               <div className="card-body">
                 <h1>Login Page</h1>
                 {this.state.warning}
-                <Form onSubmit={this.handleSubmit} style={{marginTop: "20px"}}>
-                  <FloatingLabel
-                    controlId="loginEmail"
-                    label="Email address"
-                    className={this.state.emailIsValid ? "" : "is-invalid"}
-                  >
-                    <Form.Control type="email" placeholder="Enter your Email" />
+                <Form
+                  onSubmit={this.handleSubmit}
+                  style={{ marginTop: "20px" }}
+                >
+                  <FloatingLabel controlId="loginEmail" label="Email address">
+                    <Form.Control type="email" placeholder="Email" required />
                   </FloatingLabel>
 
                   <FloatingLabel
                     style={{ marginTop: "20px" }}
                     controlId="loginPassword"
                     label="Password"
-                    className={this.state.passwordIsValid ? "" : "is-invalid"}
                   >
                     <Form.Control
                       type={inputType}
@@ -143,23 +154,29 @@ class LoginPage extends Component {
                       onChange={(e) =>
                         this.setState({ password: e.target.value })
                       }
-                      placeholder="Enter your Password"
+                      placeholder="Password"
+                      required
                     />
                     <i
                       className={`ms-2 ${eyeIcons}`}
                       onClick={this.togglePassword}
-                      style={{ cursor: "pointer", position: "absolute", top: "10px", right: "10px" }}
+                      style={{
+                        cursor: "pointer",
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
                     ></i>
                   </FloatingLabel>
 
                   <Button
-                    style={{ marginTop: "20px", marginBottom: "10px"}}
+                    style={{ marginTop: "15px", marginBottom: "10px" }}
                     variant="outline-primary"
                     type="submit"
                   >
                     Login
                   </Button>
-                </Form> 
+                </Form>
                 Don't have an account?{" "}
                 <Link to="/RegisterPage">Register here</Link>
               </div>
