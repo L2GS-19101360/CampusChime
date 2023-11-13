@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link, withRouter } from "react-router-dom";
-import { Form, Button, Alert, Navbar, Nav } from "react-bootstrap";
+import { Form, Button, Alert, Navbar, Nav, FloatingLabel } from "react-bootstrap";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import WebLogo from "../../assets/CampusChimePurple.png";
@@ -14,6 +14,8 @@ class LoginPage extends Component {
       password: "",
       showPassword: false,
       warning: null,
+      emailIsValid: true,
+      passwordIsValid: true,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +29,6 @@ class LoginPage extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("yert");
 
     const email = e.target.elements.loginEmail.value;
     const password = e.target.elements.loginPassword.value;
@@ -47,7 +48,6 @@ class LoginPage extends Component {
       );
 
       const data = response.data;
-      console.log(data);
 
       if (data.success) {
         console.log("Login successful");
@@ -121,39 +121,44 @@ class LoginPage extends Component {
               <div className="card-body">
                 <h1>Login Page</h1>
                 {this.state.warning}
-                <Form onSubmit={this.handleSubmit}>
-                  <Form.Group controlId="loginEmail">
-                    <Form.Label>Email</Form.Label>
+                <Form onSubmit={this.handleSubmit} style={{marginTop: "20px"}}>
+                  <FloatingLabel
+                    controlId="loginEmail"
+                    label="Email address"
+                    className={this.state.emailIsValid ? "" : "is-invalid"}
+                  >
                     <Form.Control type="email" placeholder="Enter your Email" />
-                  </Form.Group>
+                  </FloatingLabel>
 
-                  <Form.Group controlId="loginPassword">
-                    <Form.Label>Password</Form.Label>
-                    <div className="d-flex align-items-center">
-                      <Form.Control
-                        type={inputType}
-                        value={this.state.password}
-                        onChange={(e) =>
-                          this.setState({ password: e.target.value })
-                        }
-                        placeholder="Enter your Password"
-                      />
-                      <i
-                        className={`ms-2 ${eyeIcons}`}
-                        onClick={this.togglePassword}
-                        style={{ cursor: "pointer" }}
-                      ></i>
-                    </div>
-                  </Form.Group>
+                  <FloatingLabel
+                    style={{ marginTop: "20px" }}
+                    controlId="loginPassword"
+                    label="Password"
+                    className={this.state.passwordIsValid ? "" : "is-invalid"}
+                  >
+                    <Form.Control
+                      type={inputType}
+                      value={this.state.password}
+                      onChange={(e) =>
+                        this.setState({ password: e.target.value })
+                      }
+                      placeholder="Enter your Password"
+                    />
+                    <i
+                      className={`ms-2 ${eyeIcons}`}
+                      onClick={this.togglePassword}
+                      style={{ cursor: "pointer", position: "absolute", top: "10px", right: "10px" }}
+                    ></i>
+                  </FloatingLabel>
 
                   <Button
-                    style={{ marginTop: "10px" }}
+                    style={{ marginTop: "20px", marginBottom: "10px"}}
                     variant="outline-primary"
                     type="submit"
                   >
                     Login
                   </Button>
-                </Form>
+                </Form> 
                 Don't have an account?{" "}
                 <Link to="/RegisterPage">Register here</Link>
               </div>

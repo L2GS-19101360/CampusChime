@@ -132,7 +132,7 @@ class App extends Component {
 
         <Carousel
           style={{
-            backgroundColor: "grey",
+            backgroundColor: "#8f7f61",
             height: "300px",
             marginTop: "50px",
             marginLeft: "500px",
