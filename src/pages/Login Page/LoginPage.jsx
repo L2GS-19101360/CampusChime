@@ -1,10 +1,9 @@
-import { Component } from "react";
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Link, withRouter } from "react-router-dom";
+import { Form, Button, Alert, Navbar, Nav } from "react-bootstrap";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
 
@@ -12,8 +11,9 @@ class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      password: '',
+      password: "",
       showPassword: false,
+      warning: null,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,15 +62,10 @@ class LoginPage extends Component {
       } else {
         this.setState({
           password: "",
-          warning: (
-            <div className="alert alert-danger" role="alert">
-              {data.message}
-            </div>
-          ),
+          warning: <Alert variant="danger">{data.message}</Alert>,
         });
         console.error("Login failed:", data.message);
       }
-
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -84,41 +79,27 @@ class LoginPage extends Component {
 
     return (
       <div>
-        <nav
-          className="navbar bg-dark navbar-expand-lg bg-body-tertiary"
-          data-bs-theme="dark"
-        >
-          <div className="container-fluid">
-            <a className="navbar-brand" href="/">
-              <img
-                src={WebLogo}
-                alt=""
-                style={{ height: "70px", width: "80px" }}
-              />{" "}
-              CampusChime
-            </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item"></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <Navbar bg="dark" expand="lg" variant="dark">
+          <Navbar.Brand href="/">
+            <img
+              src={WebLogo}
+              alt=""
+              style={{ height: "70px", width: "80px" }}
+            />{" "}
+            CampusChime
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarNav" />
+          <Navbar.Collapse id="navbarNav">
+            <Nav className="mr-auto">
+              {/* Add any additional navigation items here if needed */}
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
 
         <div
           className="card mb-3"
           style={{
+            backgroundColor: "white",
             maxWidth: "43%",
             position: "relative",
             left: "30%",
@@ -140,40 +121,39 @@ class LoginPage extends Component {
               <div className="card-body">
                 <h1>Login Page</h1>
                 {this.state.warning}
-                <form method="post" onSubmit={this.handleSubmit}>
-                  <label htmlFor="loginEmail">Email</label>
-                  <input
-                    id="loginEmail"
-                    name="loginEmail"
-                    className="form-control"
-                    type="email"
-                    placeholder="Enter your Email"
-                    aria-label="default input example"
-                  />
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Group controlId="loginEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" placeholder="Enter your Email" />
+                  </Form.Group>
 
-                  <label htmlFor="loginPassword">Password</label>
-                  <br />
-                  <div className="showPassword">
-                    <input
-                      id="loginPassword"
-                      name="loginPassword"
-                      className="form-control"
-                      type={inputType}
-                      value={this.state.password}
-                      onChange={(e) => this.setState({ password: e.target.value })}
-                      placeholder="Enter your Password"
-                      aria-label="default input example"
-                    />
-                    <i className={eyeIcons} onClick={this.togglePassword}></i>
-                  </div>
-                  <br />
+                  <Form.Group controlId="loginPassword">
+                    <Form.Label>Password</Form.Label>
+                    <div className="d-flex align-items-center">
+                      <Form.Control
+                        type={inputType}
+                        value={this.state.password}
+                        onChange={(e) =>
+                          this.setState({ password: e.target.value })
+                        }
+                        placeholder="Enter your Password"
+                      />
+                      <i
+                        className={`ms-2 ${eyeIcons}`}
+                        onClick={this.togglePassword}
+                        style={{ cursor: "pointer" }}
+                      ></i>
+                    </div>
+                  </Form.Group>
 
-                  <br />
-                  <button type="submit" className="btn btn-secondary">
+                  <Button
+                    style={{ marginTop: "10px" }}
+                    variant="outline-primary"
+                    type="submit"
+                  >
                     Login
-                  </button>
-                </form>
-
+                  </Button>
+                </Form>
                 Don't have an account?{" "}
                 <Link to="/RegisterPage">Register here</Link>
               </div>
