@@ -88,8 +88,13 @@ class HomeNavbar extends Component {
           <div className="offcanvas-body" style={{ textAlign: 'center' }}>
             <img src={ProfileImage} alt="" style={{ border: '1px solid black' }} /><br />
             {lastName}, {firstName}<br/><br/>
-            <button type="button" className="btn btn-danger" onClick={this.handleLogout}>Logout Account</button>
+            <Link to='/UserSettingPage'>User Settings</Link><br/><br/>
+            <button type="button" className="btn btn-danger" onClick={this.handleLogout} style={{marginTop: '100%'}}>Logout Account</button>
           </div>
+        </div>
+
+        <div id="userSettingBox">
+
         </div>
 
       </div>
