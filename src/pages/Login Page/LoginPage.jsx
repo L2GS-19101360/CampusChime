@@ -37,18 +37,9 @@ class LoginPage extends Component {
     const email = e.target.elements.loginEmail.value;
     const password = e.target.elements.loginPassword.value;
 
-    // if (!email || !password) {
-    //   this.setState({
-    //     emailIsValid: !email,
-    //     passwordIsValid: !password,
-    //     warning: <Alert variant="danger">Please fill in all fields.</Alert>,
-    //   });
-    //   return;
-    // }
-
     try {
       const response = await axios.post(
-        `http://localhost/CampusChime/PHP_files/login.php?email=${email}&password=${password}`,
+        `http://localhost/CampusChime/PHP_files/login.php`,
         {
           email,
           password,
@@ -61,19 +52,20 @@ class LoginPage extends Component {
       );
 
       const data = response.data;
+      console.log('Server Response:', data);
 
       if (data.success) {
-        console.log("Login successful");
-        const userData = {
-          lastName: data.lastName,
-          firstName: data.firstName,
-          email: email,
-        };
+        console.log('Login successful');
 
-        // Append user data to the URL
+        // Store session data on the client side
+        sessionStorage.setItem('firstName', data.firstName);
+        sessionStorage.setItem('lastName', data.lastName);
+        sessionStorage.setItem('email', email);
+
+        // Redirect user
         this.props.history.push({
-          pathname: "/HomePage",
-          search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
+          pathname: '/HomePage',
+          search: `?lastName=${data.lastName}&firstName=${data.firstName}&email=${email}`,
         });
       } else {
         this.setState({
