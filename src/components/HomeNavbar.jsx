@@ -5,27 +5,30 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from "../assets/CampusChimePurple.png";
-import ProfileImage from '../assets/profileimage.jpg'
+import ProfileImage from '../assets/profileimage.jpg';
 
 class HomeNavbar extends Component {
   constructor() {
     super();
-    this.handleLogout = this.handleLogout.bind(this)
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   handleLogout = () => {
+    // Clear session variables on the client side
+    sessionStorage.clear();
+
+    // Redirect to login page
     window.location.href = '/';
   };
 
   render() {
-    const params = new URLSearchParams(this.props.location.search);
-    const lastName = params.get("lastName");
-    const firstName = params.get("firstName");
-    const email = params.get("email");
+    // Retrieve first name and last name from session storage
+    const firstName = sessionStorage.getItem('firstName');
+    const lastName = sessionStorage.getItem('lastName');
 
     return (
       <div>
