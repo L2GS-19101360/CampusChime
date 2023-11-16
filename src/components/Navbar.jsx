@@ -20,6 +20,7 @@ class MainNavbar extends Component {
       <Navbar
         className="navbar bg-dark border-bottom border-body"
         data-bs-theme="dark"
+        expand="lg"
       >
         <Container style={{ marginLeft: "-10px" }}>
           <Navbar.Brand as={Link} to="/">
@@ -45,7 +46,7 @@ class MainNavbar extends Component {
 
           <div className="collapse navbar-collapse" id="navbarNav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/homePage">
+              <Nav.Link as={Link} to="/">
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to="/AboutUsPage">

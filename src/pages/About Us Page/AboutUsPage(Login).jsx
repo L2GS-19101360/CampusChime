@@ -7,9 +7,10 @@ import Navbar from "../../components/Navbar";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import "../About Us Page/AboutUsDesign.css";
 import Lorenz from "../../assets/developers/Lorenz.jpg";
+import HomeNavbar from "../../components/HomeNavbar";
 import Jaden from "../../assets/developers/Jaden.jpg";
 
-class AboutUsPage extends Component {
+class AboutUsPageLogin extends Component {
   constructor() {
     super();
   }
@@ -20,10 +21,10 @@ class AboutUsPage extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <HomeNavbar />
 
         <div style={{ padding: "7%", color: "white" }}>
-          <h1 style={{ borderBottom: "2px solid grey", width: "1050px" }}>
+          <h1 style={{ borderBottom: "1px solid black" }}>
             Chiming in with Student Entrepreneurial Opportunities
           </h1>
 
@@ -84,7 +85,6 @@ class AboutUsPage extends Component {
               <br />
               <h6 style={{ textAlign: "center" }}>Ceniza, Jaden P. (BSIT) </h6>
             </li>
-
             <li style={{ marginLeft: "10px", marginRight: "10px" }}>Maria</li>
           </ul>
         </div>
@@ -93,4 +93,4 @@ class AboutUsPage extends Component {
   }
 }
 
-export default AboutUsPage;
+export default AboutUsPageLogin;
