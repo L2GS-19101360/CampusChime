@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from "../assets/CampusChimePurple.png";
-import ProfileImage from "../assets/profileimage.jpg";
+import LetteredAvatar from "./LetteredAvater";
 
 const HomeNavbar = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -61,12 +61,10 @@ const HomeNavbar = () => {
         </Container>
 
         <div className="ms-auto" style={{ marginRight: "30px" }}>
-          <Image
-            src={ProfileImage}
-            alt=""
-            style={{ height: "70px", width: "70px", cursor: "pointer" }}
+          <LetteredAvatar
+            name={`${firstName} ${lastName}`}
+            size={55}
             onClick={handleOffcanvasShow}
-            roundedCircle
           />
         </div>
       </Navbar>
@@ -80,15 +78,13 @@ const HomeNavbar = () => {
           <Offcanvas.Title>Profile</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ textAlign: "center" }}>
-          <Image
-            src={ProfileImage}
-            alt=""
-            style={{ border: "1px solid black" }}
-            roundedCircle
-          />
-          <br />
-          {lastName}, {firstName}
-          <br />
+          <div style={{ marginLeft: "100px" }}>
+            <LetteredAvatar name={`${firstName} ${lastName}`} size={150} />
+          </div>
+          <div style={{ marginTop: "5px", fontSize: "20px" }}>
+            {firstName} {lastName}
+          </div>
+
           <br />
           <Link to="/UserSettingPage">User Settings</Link>
           <br />
