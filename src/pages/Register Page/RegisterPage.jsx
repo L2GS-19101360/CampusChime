@@ -3,6 +3,11 @@ import { Link, withRouter } from "react-router-dom";
 import { Form, Button, Navbar, FloatingLabel, Alert } from "react-bootstrap";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
+import {
+  PersonCircle,
+  TelephoneFill,
+  EnvelopeFill,
+} from "react-bootstrap-icons";
 
 class RegisterPage extends Component {
   constructor() {
@@ -54,9 +59,9 @@ class RegisterPage extends Component {
               });
             } else {
               // Store data in sessionStorage
-              sessionStorage.setItem('firstName', this.state.newFname);
-              sessionStorage.setItem('lastName', this.state.newLname);
-              sessionStorage.setItem('email', this.state.newEmail);
+              sessionStorage.setItem("firstName", this.state.newFname);
+              sessionStorage.setItem("lastName", this.state.newLname);
+              sessionStorage.setItem("email", this.state.newEmail);
 
               const userData = {
                 lastName: this.state.newLname,
@@ -80,8 +85,6 @@ class RegisterPage extends Component {
       });
     }
   };
-
-
 
   render() {
     var inputType = this.state.showPassword ? "text" : "password";
@@ -130,8 +133,10 @@ class RegisterPage extends Component {
               <div className="card-body">
                 <h1>Register Page</h1>
                 {this.state.warning}
-                <Form onSubmit={this.handleRegisterAccount}
-                  style={{ marginTop: "20px" }}>
+                <Form
+                  onSubmit={this.handleRegisterAccount}
+                  style={{ marginTop: "20px" }}
+                >
                   <FloatingLabel
                     controlId="newLname"
                     label="Last Name"
@@ -145,6 +150,14 @@ class RegisterPage extends Component {
                       onChange={(e) =>
                         this.setState({ newLname: e.target.value })
                       }
+                    />
+                    <PersonCircle
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
                     />
                   </FloatingLabel>
 
@@ -162,6 +175,14 @@ class RegisterPage extends Component {
                         this.setState({ newFname: e.target.value })
                       }
                     />
+                    <PersonCircle
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
+                    />
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -178,6 +199,14 @@ class RegisterPage extends Component {
                         this.setState({ newContact: e.target.value })
                       }
                     />
+                    <TelephoneFill
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
+                    />
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -193,6 +222,14 @@ class RegisterPage extends Component {
                       onChange={(e) =>
                         this.setState({ newEmail: e.target.value })
                       }
+                    />
+                    <EnvelopeFill
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
                     />
                   </FloatingLabel>
 
@@ -214,9 +251,10 @@ class RegisterPage extends Component {
                       className={`ms-2 ${eyeIcons}`}
                       onClick={this.togglePassword}
                       style={{
+                        fontSize: "20px",
                         cursor: "pointer",
                         position: "absolute",
-                        top: "20px",
+                        top: "15px",
                         right: "10px",
                       }}
                     ></i>
@@ -240,9 +278,10 @@ class RegisterPage extends Component {
                       className={`ms-2 ${eyeIcons}`}
                       onClick={this.togglePassword}
                       style={{
+                        fontSize: "20px",
                         cursor: "pointer",
                         position: "absolute",
-                        top: "20px",
+                        top: "15px",
                         right: "10px",
                       }}
                     ></i>
