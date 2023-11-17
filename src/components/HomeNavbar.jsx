@@ -78,17 +78,33 @@ const HomeNavbar = () => {
           <Offcanvas.Title>Profile</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ textAlign: "center" }}>
-          <div style={{ marginLeft: "100px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginLeft: "30px",
+            }}
+          >
             <LetteredAvatar name={`${firstName} ${lastName}`} size={150} />
           </div>
-          <div style={{ marginTop: "5px", fontSize: "20px" }}>
+          <div
+            style={{
+              marginTop: "5px",
+              fontSize: "25px",
+              marginLeft: "40px",
+              marginTop: "20px",
+            }}
+          >
             {firstName} {lastName}
           </div>
 
-          <br />
-          <Link to="/UserSettingPage">User Settings</Link>
-          <br />
-          <br />
+          <div style={{ marginLeft: "40px", marginTop: "100px" }}>
+            <Link to="/UserSettingPage" style= {{color: "black", fontSize: "16px", fontWeight: "bold" }}>
+              <span>
+                <i className="bi bi-gear" style={{ color: 'black'}}></i> User Settings
+              </span>
+            </Link>
+          </div>
           <Button
             variant="outline-danger"
             onClick={handleLogout}

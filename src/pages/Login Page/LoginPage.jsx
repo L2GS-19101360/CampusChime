@@ -13,6 +13,7 @@ import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
+import { EnvelopeFill   } from "react-bootstrap-icons";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -52,19 +53,19 @@ class LoginPage extends Component {
       );
 
       const data = response.data;
-      console.log('Server Response:', data);
+      console.log("Server Response:", data);
 
       if (data.success) {
-        console.log('Login successful');
+        console.log("Login successful");
 
         // Store session data on the client side
-        sessionStorage.setItem('firstName', data.firstName);
-        sessionStorage.setItem('lastName', data.lastName);
-        sessionStorage.setItem('email', email);
+        sessionStorage.setItem("firstName", data.firstName);
+        sessionStorage.setItem("lastName", data.lastName);
+        sessionStorage.setItem("email", email);
 
         // Redirect user
         this.props.history.push({
-          pathname: '/HomePage',
+          pathname: "/HomePage",
           search: `?lastName=${data.lastName}&firstName=${data.firstName}&email=${email}`,
         });
       } else {
@@ -133,6 +134,15 @@ class LoginPage extends Component {
                 >
                   <FloatingLabel controlId="loginEmail" label="Email address">
                     <Form.Control type="email" placeholder="Email" required />
+                    
+                    <EnvelopeFill  
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
+                    />
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -153,9 +163,10 @@ class LoginPage extends Component {
                       className={`ms-2 ${eyeIcons}`}
                       onClick={this.togglePassword}
                       style={{
+                        fontSize: "20px",
                         cursor: "pointer",
                         position: "absolute",
-                        top: "20px",
+                        top: "15px",
                         right: "10px",
                       }}
                     ></i>
