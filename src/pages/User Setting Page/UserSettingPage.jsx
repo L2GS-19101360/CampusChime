@@ -66,15 +66,8 @@ class UserSettingPage extends Component {
                     </Container>
                 </Navbar>
 
-                <div style={{width: '60%', position: 'relative', left: '23%'}}>
-                    <div className="card">
-                        <div className="card-header">
-                            Featured
-                        </div>
-                        <div className="card-body">
-                            
-                        </div>
-                    </div>
+                <div style={{backgroundColor: 'white', height: '65%', width: '65%', position: 'absolute', left: '50%', top: '55%', transform: 'translate(-50%, -50%)'}}>
+                    
                 </div>
                 
             </div>
