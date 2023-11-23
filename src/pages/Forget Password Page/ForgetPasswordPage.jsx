@@ -14,6 +14,14 @@ class ForgetPasswordPage extends Component {
 
   componentWillUnmount() {}
 
+  handleEmailSubmit = async (e) => {
+    e.preventDefault();
+
+    const email = e.target.elements.forgetPasswordEmail.value;
+
+    console.log(email);
+  }
+
   render() {
     return (
       <div>
@@ -60,7 +68,7 @@ class ForgetPasswordPage extends Component {
                   Please enter your email address to receive a password reset
                   link.
                 </p>
-                <Form style={{ marginTop: "20px" }}>
+                <Form onSubmit={this.handleEmailSubmit} style={{ marginTop: "20px" }}>
                   <FloatingLabel
                     controlId="forgetPasswordEmail"
                     label="Email address"
