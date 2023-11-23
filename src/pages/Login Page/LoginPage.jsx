@@ -133,7 +133,7 @@ class LoginPage extends Component {
                   onSubmit={this.handleSubmit}
                   style={{ marginTop: "20px",  }}
                 >
-                  <FloatingLabel controlId="loginEmail" label="Email address">
+                  <FloatingLabel controlId="loginEmail" label="Email address" style={{color: "#0d6efd"}}>
                     <Form.Control
                       type="email"
                       placeholder="Email"
@@ -147,6 +147,7 @@ class LoginPage extends Component {
                         position: "absolute",
                         top: "20px",
                         right: "10px",
+                        color: "1a1e21"
                       }}
                     />
                   </FloatingLabel>
