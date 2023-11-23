@@ -3,6 +3,11 @@ import { Link, withRouter } from "react-router-dom";
 import { Form, Button, Navbar, FloatingLabel, Alert } from "react-bootstrap";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
+import {
+  PersonCircle,
+  TelephoneFill,
+  EnvelopeFill,
+} from "react-bootstrap-icons";
 
 class RegisterPage extends Component {
   constructor() {
@@ -29,13 +34,6 @@ class RegisterPage extends Component {
     event.preventDefault();
 
     if (this.state.newPassword === this.state.conPassword) {
-      console.log(
-        this.state.newLname +
-          this.state.newFname +
-          this.state.newContact +
-          this.state.newEmail +
-          this.state.newPassword
-      );
       var xhttp = new XMLHttpRequest();
       xhttp.open(
         "POST",
@@ -46,28 +44,38 @@ class RegisterPage extends Component {
 
       xhttp.onreadystatechange = () => {
         if (xhttp.status === 200 && xhttp.readyState === 4) {
-          var response = JSON.parse(xhttp.responseText);
-          console.log(response);
+          console.log(xhttp.responseText); // Log the response to the console
 
-          if (response.message === "Email already exists.") {
-            this.setState({
-              warning: (
-                <div className="alert alert-danger" role="alert">
-                  Email already Exist!
-                </div>
-              ),
-            });
-          } else {
-            const userData = {
-              lastName: this.state.newLname,
-              firstName: this.state.newFname,
-              email: this.state.newEmail,
-            };
+          try {
+            var response = JSON.parse(xhttp.responseText);
 
-            this.props.history.push({
-              pathname: "/HomePage",
-              search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
-            });
+            if (response.message === "Email already exists.") {
+              this.setState({
+                warning: (
+                  <div className="alert alert-danger" role="alert">
+                    Email already Exist!
+                  </div>
+                ),
+              });
+            } else {
+              // Store data in sessionStorage
+              sessionStorage.setItem("firstName", this.state.newFname);
+              sessionStorage.setItem("lastName", this.state.newLname);
+              sessionStorage.setItem("email", this.state.newEmail);
+
+              const userData = {
+                lastName: this.state.newLname,
+                firstName: this.state.newFname,
+                email: this.state.newEmail,
+              };
+
+              this.props.history.push({
+                pathname: "/HomePage",
+                search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
+              });
+            }
+          } catch (error) {
+            console.error("Error parsing JSON:", error);
           }
         }
       };
@@ -125,8 +133,10 @@ class RegisterPage extends Component {
               <div className="card-body">
                 <h1>Register Page</h1>
                 {this.state.warning}
-                <Form onSubmit={this.handleRegisterAccount}
-                style={{ marginTop: "20px" }}>
+                <Form
+                  onSubmit={this.handleRegisterAccount}
+                  style={{ marginTop: "20px" }}
+                >
                   <FloatingLabel
                     controlId="newLname"
                     label="Last Name"
@@ -140,6 +150,14 @@ class RegisterPage extends Component {
                       onChange={(e) =>
                         this.setState({ newLname: e.target.value })
                       }
+                    />
+                    <PersonCircle
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
                     />
                   </FloatingLabel>
 
@@ -157,6 +175,14 @@ class RegisterPage extends Component {
                         this.setState({ newFname: e.target.value })
                       }
                     />
+                    <PersonCircle
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
+                    />
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -173,6 +199,14 @@ class RegisterPage extends Component {
                         this.setState({ newContact: e.target.value })
                       }
                     />
+                    <TelephoneFill
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
+                    />
                   </FloatingLabel>
 
                   <FloatingLabel
@@ -188,6 +222,14 @@ class RegisterPage extends Component {
                       onChange={(e) =>
                         this.setState({ newEmail: e.target.value })
                       }
+                    />
+                    <EnvelopeFill
+                      size={20}
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "10px",
+                      }}
                     />
                   </FloatingLabel>
 
@@ -209,9 +251,10 @@ class RegisterPage extends Component {
                       className={`ms-2 ${eyeIcons}`}
                       onClick={this.togglePassword}
                       style={{
+                        fontSize: "20px",
                         cursor: "pointer",
                         position: "absolute",
-                        top: "20px",
+                        top: "15px",
                         right: "10px",
                       }}
                     ></i>
@@ -235,9 +278,10 @@ class RegisterPage extends Component {
                       className={`ms-2 ${eyeIcons}`}
                       onClick={this.togglePassword}
                       style={{
+                        fontSize: "20px",
                         cursor: "pointer",
                         position: "absolute",
-                        top: "20px",
+                        top: "15px",
                         right: "10px",
                       }}
                     ></i>

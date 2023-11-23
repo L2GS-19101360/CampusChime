@@ -1,105 +1,123 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  Button,
+  Image,
+  Offcanvas,
+} from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from "../assets/CampusChimePurple.png";
-import ProfileImage from '../assets/profileimage.jpg'
+import LetteredAvatar from "./LetteredAvater";
 
-class HomeNavbar extends Component {
-  constructor() {
-    super();
-    this.handleLogout = this.handleLogout.bind(this)
-  }
+const HomeNavbar = () => {
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
 
-  componentDidMount() { }
+  const handleOffcanvasClose = () => setShowOffcanvas(false);
+  const handleOffcanvasShow = () => setShowOffcanvas(true);
 
-  componentWillUnmount() { }
-
-  handleLogout = () => {
-    window.location.href = '/';
+  const handleLogout = () => {
+    sessionStorage.clear();
+    window.location.href = "/";
   };
 
-  render() {
-    const params = new URLSearchParams(this.props.location.search);
-    const lastName = params.get("lastName");
-    const firstName = params.get("firstName");
-    const email = params.get("email");
+  const firstName = sessionStorage.getItem("firstName");
+  const lastName = sessionStorage.getItem("lastName");
 
-    return (
-      <div>
-        <Navbar
-          className="navbar bg-dark border-bottom border-body"
-          data-bs-theme="dark"
-          navbar-expand-lg
-        >
-          <Container style={{ marginLeft: "-10px" }}>
-            <Navbar.Brand as={Link} to="/HomePage">
-              <img
-                src={WebLogo}
-                alt="CampusChime Logo"
-                style={{ width: "80px" }}
-              />
-              CampusChime
-            </Navbar.Brand>
-
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <Nav className="me-auto">
-                <Nav.Link as={Link} to="/HomePage">
-                  Home
-                </Nav.Link>
-                <Nav.Link as={Link} to="/AboutUsPageLogin">
-                  About Us
-                </Nav.Link>
-                <Nav.Link as={Link} to="/EntrepreneurPage">
-                  Entrepreneur
-                </Nav.Link>
-              </Nav>
-            </div>
-          </Container>
-
-          <div className="ms-auto" style={{ marginRight: '30px' }}>
-            <img src={ProfileImage} alt="" style={{ height: '90px', width: '90px', cursor: 'pointer' }}
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasRight"
-              aria-controls="offcanvasRight"
+  return (
+    <div>
+      <Navbar
+        className="navbar bg-dark border-bottom border-body"
+        data-bs-theme="dark"
+        expand="lg"
+      >
+        <Container style={{ marginLeft: "-10px" }}>
+          <Navbar.Brand as={Link} to="/HomePage">
+            <Image
+              src={WebLogo}
+              alt="CampusChime Logo"
+              style={{ width: "80px" }}
             />
-          </div>
-        </Navbar>
+            CampusChime
+          </Navbar.Brand>
 
-        <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-          <div className="offcanvas-header">
+          <Navbar.Toggle aria-controls="navbarNav" />
 
-            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div className="offcanvas-body" style={{ textAlign: 'center' }}>
-            <img src={ProfileImage} alt="" style={{ border: '1px solid black' }} /><br />
-            {lastName}, {firstName}<br/><br/>
-            <Link to='/UserSettingPage'>User Settings</Link><br/><br/>
-            <button type="button" className="btn btn-danger" onClick={this.handleLogout} style={{marginTop: '100%'}}>Logout Account</button>
-          </div>
+          <Navbar.Collapse id="navbarNav">
+            <Nav className="me-auto">
+              <Nav.Link as={Link} to="/HomePage">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/AboutUsPageLogin">
+                About Us
+              </Nav.Link>
+              <Nav.Link as={Link} to="/EntrepreneurPage">
+                Entrepreneur
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+
+        <div className="ms-auto" style={{ marginRight: "30px" }}>
+          <LetteredAvatar
+            name={`${firstName} ${lastName}`}
+            size={55}
+            onClick={handleOffcanvasShow}
+          />
         </div>
+      </Navbar>
 
-        <div id="userSettingBox">
+      <Offcanvas
+        show={showOffcanvas}
+        onHide={handleOffcanvasClose}
+        placement="end"
+      >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Profile</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body style={{ textAlign: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginLeft: "30px",
+            }}
+          >
+            <LetteredAvatar name={`${firstName} ${lastName}`} size={150} />
+          </div>
+          <div
+            style={{
+              marginTop: "5px",
+              fontSize: "25px",
+              marginLeft: "40px",
+              marginTop: "20px",
+            }}
+          >
+            {firstName} {lastName}
+          </div>
 
-        </div>
+          <div style={{ marginLeft: "40px", marginTop: "100px" }}>
+            <Link to="/UserSettingPage" style= {{color: "black", fontSize: "16px", fontWeight: "bold" }}>
+              <span>
+                <i className="bi bi-gear" style={{ color: 'black'}}></i> User Settings
+              </span>
+            </Link>
+          </div>
+          <Button
+            variant="outline-danger"
+            onClick={handleLogout}
+            style={{ marginTop: "100%" }}
+          >
+            Logout Account
+          </Button>
+        </Offcanvas.Body>
+      </Offcanvas>
 
-      </div>
-    );
-  }
-}
+      <div id="userSettingBox"></div>
+    </div>
+  );
+};
 
 export default withRouter(HomeNavbar);

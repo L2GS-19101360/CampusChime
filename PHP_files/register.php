@@ -12,26 +12,26 @@ $newContact = trim($_GET['contactnumber']);
 $newEmail = trim($_GET['email']);
 $newPassword = trim($_GET['password']);
 
-//check in database if email exists
-if ($isValid){
+// Check in the database if the email exists
+if ($isValid) {
     $stmt = $conn->prepare("SELECT * FROM customer WHERE email = ?");
-    $stmt->bind_param("s",$newEmail);
+    $stmt->bind_param("s", $newEmail);
     $stmt->execute();
 
     $result = $stmt->get_result();
     $stmt->close();
 
-    if ($result->num_rows > 0){
+    if ($result->num_rows > 0) {
         $isValid = false;
         $retVal = "Email already exists.";
     }
 }
 
-//Insert Data
-if ($isValid){
+// Insert Data
+if ($isValid) {
     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-    try{
+    try {
         $stmt = $conn->prepare("INSERT INTO customer(lastname, firstname, contactnumber, email, password) VALUES (?,?,?,?,?)");
         $stmt->bind_param("ssiss", $newLname, $newFname, $newContact, $newEmail, $hashedPassword);
         $stmt->execute();
@@ -40,11 +40,12 @@ if ($isValid){
         $data = $conn->insert_id;
         $status = 200;
         $retVal = "User account added.";
-    }catch (Exception $e){
+    } catch (Exception $e) {
         $retVal = $e->getMessage();
     }
 }
 
+// Send a proper JSON response
 $response = array(
     'status' => $status,
     'data' => $data,
@@ -53,5 +54,4 @@ $response = array(
 
 header('Content-Type: application/json');
 echo json_encode($response);
-
 ?>
