@@ -161,6 +161,8 @@ class LoginPage extends Component {
                     ></i>
                   </FloatingLabel>
 
+                  <Link to="/forgetPasswordPage">Forget Password?</Link><br/>
+
                   <Button
                     style={{ marginTop: "15px", marginBottom: "10px" }}
                     variant="outline-primary"
