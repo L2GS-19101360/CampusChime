@@ -13,7 +13,7 @@ import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
-import { EnvelopeFill   } from "react-bootstrap-icons";
+import { EnvelopeFill } from "react-bootstrap-icons";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -111,6 +111,7 @@ class LoginPage extends Component {
             position: "relative",
             left: "30%",
             top: "240px",
+            borderColor: "#0d6efd"
           }}
         >
           <div className="row g-0">
@@ -130,12 +131,17 @@ class LoginPage extends Component {
                 {this.state.warning}
                 <Form
                   onSubmit={this.handleSubmit}
-                  style={{ marginTop: "20px" }}
+                  style={{ marginTop: "20px",  }}
                 >
                   <FloatingLabel controlId="loginEmail" label="Email address">
-                    <Form.Control type="email" placeholder="Email" required />
-                    
-                    <EnvelopeFill  
+                    <Form.Control
+                      type="email"
+                      placeholder="Email"
+                      required
+                      style={{ borderColor: "#0d6efd"}}
+                    />
+
+                    <EnvelopeFill
                       size={20}
                       style={{
                         position: "absolute",
@@ -172,7 +178,8 @@ class LoginPage extends Component {
                     ></i>
                   </FloatingLabel>
 
-                  <Link to="/forgetPasswordPage">Forget Password?</Link><br/>
+                  <Link to="/forgetPasswordPage">Forget Password?</Link>
+                  <br />
 
                   <Button
                     style={{ marginTop: "15px", marginBottom: "10px" }}

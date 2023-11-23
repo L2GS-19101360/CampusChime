@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, Button, FloatingLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import EnvelopeFill from "react-bootstrap-icons/dist/icons/envelope-fill";
+import { EnvelopeFill } from "react-bootstrap-icons";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
 
