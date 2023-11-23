@@ -89,16 +89,15 @@ const HomeNavbar = () => {
           </div>
           <div
             style={{
-              marginTop: "5px",
               fontSize: "25px",
-              marginLeft: "40px",
-              marginTop: "20px",
+              marginLeft: "30px",
+              marginTop: "10px",
             }}
           >
             {firstName} {lastName}
           </div>
 
-          <div style={{ marginLeft: "40px", marginTop: "100px" }}>
+          <div style={{ marginLeft: "25px", marginTop: "20px" }}>
             <Link to="/UserSettingPage" style= {{color: "black", fontSize: "16px", fontWeight: "bold" }}>
               <span>
                 <i className="bi bi-gear" style={{ color: 'black'}}></i> User Settings
