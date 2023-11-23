@@ -1,8 +1,14 @@
 
 import React, { useState } from 'react';
+//import ShopComponent from './ShopComponent';
+//import SellComponent from './SellComponent';
+import Loader from '../loader/loader';
 
 const HeroForHome = () => {
   const [showHero, setShowHero] = useState(true);
+  /*const [showShop, setShowShop] = useState(false);
+  const [showSell, setShowSell] = useState(false);*/
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
     {showHero && (
@@ -13,8 +19,18 @@ const HeroForHome = () => {
             <h1 className="display-4 fw-bold lh-1 text-body-emphasis">Welcome to Campus Chime</h1>
             <p className="lead text-black">Buying and Selling venturing unique businesses, student's best start-up platform!</p>
             <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-              <button type="button" className="btn btn-success btn-lg px-4 me-md-2 fw-bold" onClick={() => setShowHero(false)}>Shop Now!</button>
-              <button type="button" className="btn-danger btn btn-lg px-4" onClick={() => setShowHero(false)}>Sell</button>
+              <button type="button" className="btn btn-success btn-lg px-4 me-md-2 fw-bold"  onClick={() => {
+                  setShowHero(false);
+                  setIsLoading(true);
+                  //setShowShop(true);
+                  
+                }}>Shop Now!</button>
+              <button type="button" className="btn-danger btn btn-lg px-4" onClick={() =>{ 
+                setShowHero(false);
+                setIsLoading(true);
+                //setShowSell(true);
+                
+                }}>Sell</button>
             </div>
           </div>
           <div className="col-lg-4 offset-lg-0 p-0 text-center mb-5">
@@ -24,6 +40,11 @@ const HeroForHome = () => {
       </div>
   </section>
     )}
+    {isLoading && (
+     <Loader></Loader>
+    )}
+    {/*showShop && <ShopComponent />*/}
+    {/*showSell && <SellComponent />*/}
   </div>
   );
 };
