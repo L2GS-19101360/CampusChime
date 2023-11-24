@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 import { EnvelopeFill } from "react-bootstrap-icons";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 class ForgetPasswordPage extends Component {
   constructor() {
     super();
+    this.state = {
+      sentEmailDisplay: ""
+    }
   }
 
   componentDidMount() { }
@@ -20,6 +25,12 @@ class ForgetPasswordPage extends Component {
     const email = e.target.elements.forgetPasswordEmail.value;
 
     console.log(email);
+
+    this.setState({
+      sentEmailDisplay: <div className="alert alert-primary" role="alert">
+                          Email Sent!
+                        </div>
+    });
 
     try {
       const response = await fetch("http://localhost:8081/send-forgetpassword-email", {
@@ -86,6 +97,7 @@ class ForgetPasswordPage extends Component {
                   Please enter your email address to receive a password reset
                   link.
                 </p>
+                {this.state.sentEmailDisplay}
                 <Form onSubmit={this.handleEmailSubmit} style={{ marginTop: "20px" }}>
                   <FloatingLabel
                     controlId="forgetPasswordEmail"
