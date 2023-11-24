@@ -28,6 +28,12 @@ class UserSettingPage extends Component {
       contactNumber: "s43535435345",
       newPassword: "",
       confirmPassword: "",
+      products: [
+        { id: 1, name: "Product 1", image: "placeholder.jpg" },
+        { id: 2, name: "Product 2", image: "placeholder.jpg" },
+        { id: 3, name: "Product 3", image: "placeholder.jpg" },
+        // Add more placeholders as needed
+      ],
     };
   }
 
@@ -109,24 +115,26 @@ class UserSettingPage extends Component {
         <div
           style={{
             backgroundColor: "white",
+            marginTop: "20px",
             padding: "20px",
-            width: "63%",
+            width: "45%",
             position: "absolute",
             left: "50%",
-            top: "55%",
+            top: "50%",
             transform: "translate(-50%, -50%)",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
+            justifyContent: "space-around",
           }}
         >
           <div>
-            <LetteredAvatar name={`${firstName} ${lastName}`} size={200} />
+            <LetteredAvatar name={`${firstName} ${lastName}`} size={190} />
             <Button
               variant="danger"
               onClick={handleLogout}
               style={{
-                marginLeft: "35px",
+                marginLeft: "28px",
                 marginTop: "30px",
               }}
             >
@@ -134,9 +142,9 @@ class UserSettingPage extends Component {
             </Button>
           </div>
 
-          <div style={{ marginLeft: "30px" }}>
+          <div style={{ marginLeft: "25px" }}>
             <h2>User Settings</h2>
-            <Form onSubmit={this.handleSubmit} style={{ width: "900px" }}>
+            <Form onSubmit={this.handleSubmit} style={{ width: "600px" }}>
               <Form.Group className="mb-3" controlId="formFirstName">
                 <FloatingLabel controlId="floatingFirstName" label="First Name">
                   <Form.Control
@@ -169,7 +177,6 @@ class UserSettingPage extends Component {
                     name="email"
                     value={email}
                     onChange={this.handleInputChange}
-                    readOnly
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -249,7 +256,13 @@ class UserSettingPage extends Component {
                 </FloatingLabel>
               </Form.Group>
 
-              <Button variant="outline-primary" type="submit">
+              <Button
+                variant="outline-primary"
+                type="submit"
+                style={{
+                  marginTop: "10px",
+                }}
+              >
                 Save Changes
               </Button>
             </Form>
