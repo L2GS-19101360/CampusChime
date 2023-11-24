@@ -10,9 +10,9 @@ class ForgetPasswordPage extends Component {
     super();
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +20,24 @@ class ForgetPasswordPage extends Component {
     const email = e.target.elements.forgetPasswordEmail.value;
 
     console.log(email);
+
+    try {
+      const response = await fetch("http://localhost:8081/send-forgetpassword-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        console.log("Email sent successfully");
+      } else {
+        console.error("Failed to send email");
+      }
+    } catch (error) {
+      console.error("Error sending email", error);
+    }
   }
 
   render() {
