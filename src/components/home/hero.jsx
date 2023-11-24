@@ -22,6 +22,11 @@ const HeroForHome = () => {
               <button type="button" className="btn btn-success btn-lg px-4 me-md-2 fw-bold"  onClick={() => {
                   setShowHero(false);
                   setIsLoading(true);
+                  setTimeout(function() {
+                  
+                    setIsLoading(false);
+                  }, 2000);
+                 
                   //setShowShop(true);
                   
                 }}>Shop Now!</button>
