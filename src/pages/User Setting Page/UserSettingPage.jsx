@@ -6,6 +6,7 @@ import {
   Form,
   Button,
   FloatingLabel,
+  Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import WebLogo from "../../assets/CampusChimePurple.png";
@@ -28,6 +29,12 @@ class UserSettingPage extends Component {
       contactNumber: "s43535435345",
       newPassword: "",
       confirmPassword: "",
+      products: [
+        { id: 1, name: "Product 1", image: "https://via.placeholder.com/50" },
+        { id: 2, name: "Product 2", image: "https://via.placeholder.com/50" },
+        { id: 3, name: "Product 3", image: "https://via.placeholder.com/50" },
+        // Add more placeholders as needed
+      ],
     };
   }
 
@@ -68,65 +75,65 @@ class UserSettingPage extends Component {
           className="navbar bg-dark border-bottom border-body"
           data-bs-theme="dark"
         >
-          <Container style={{ marginLeft: "-10px" }}>
-            <Navbar.Brand as={Link} to="/HomePage">
-              <img
-                src={WebLogo}
-                alt="CampusChime Logo"
-                style={{ width: "80px" }}
-              />
-              CampusChime
-            </Navbar.Brand>
+          <Navbar.Brand as={Link} to="/HomePage">
+            <img
+              src={WebLogo}
+              alt="CampusChime Logo"
+              style={{ width: "80px" }}
+            />
+            CampusChime
+          </Navbar.Brand>
 
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <Nav className="me-auto">
-                <Nav.Link as={Link} to="/HomePage">
-                  Home
-                </Nav.Link>
-                <Nav.Link as={Link} to="/AboutUsPageLogin">
-                  About Us
-                </Nav.Link>
-                <Nav.Link as={Link} to="/EntrepreneurPage">
-                  Entrepreneur
-                </Nav.Link>
-              </Nav>
-            </div>
-          </Container>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <Nav className="me-auto">
+              <Nav.Link as={Link} to="/HomePage">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/AboutUsPageLogin">
+                About Us
+              </Nav.Link>
+              <Nav.Link as={Link} to="/EntrepreneurPage">
+                Entrepreneur
+              </Nav.Link>
+            </Nav>
+          </div>
         </Navbar>
 
-        <div
+        <Container
           style={{
             backgroundColor: "white",
+            marginTop: "20px",
             padding: "20px",
-            width: "63%",
+            width: "45%",
             position: "absolute",
             left: "50%",
-            top: "55%",
+            top: "50%",
             transform: "translate(-50%, -50%)",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
+            justifyContent: "space-around",
           }}
         >
           <div>
-            <LetteredAvatar name={`${firstName} ${lastName}`} size={200} />
+            <LetteredAvatar name={`${firstName} ${lastName}`} size={190} />
             <Button
               variant="danger"
               onClick={handleLogout}
               style={{
-                marginLeft: "35px",
+                marginLeft: "28px",
                 marginTop: "30px",
               }}
             >
@@ -134,9 +141,12 @@ class UserSettingPage extends Component {
             </Button>
           </div>
 
-          <div style={{ marginLeft: "30px" }}>
+          <div style={{ marginLeft: "25px" }}>
             <h2>User Settings</h2>
-            <Form onSubmit={this.handleSubmit} style={{ width: "900px" }}>
+            <Form
+              onSubmit={this.handleSubmit}
+              style={{ marginTop: "30px", width: "600px" }}
+            >
               <Form.Group className="mb-3" controlId="formFirstName">
                 <FloatingLabel controlId="floatingFirstName" label="First Name">
                   <Form.Control
@@ -169,7 +179,6 @@ class UserSettingPage extends Component {
                     name="email"
                     value={email}
                     onChange={this.handleInputChange}
-                    readOnly
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -249,12 +258,69 @@ class UserSettingPage extends Component {
                 </FloatingLabel>
               </Form.Group>
 
-              <Button variant="outline-primary" type="submit">
+              <Button
+                variant="outline-primary"
+                type="submit"
+                style={{
+                  marginTop: "10px",
+                }}
+              >
                 Save Changes
               </Button>
             </Form>
           </div>
-        </div>
+        </Container>
+
+        <Container
+          style={{
+            marginTop: "1000px",
+            width: "100%",
+            backgroundColor: "White",
+          }}
+        >
+          <h2 style={{ textAlign: "center" }}>Product List</h2>
+          <Table striped bordered hover style={{ marginTop: "40px" }}>
+            <thead>
+              <tr style={{ textAlign: "center" }}>
+                <th style={{ width: "20%" }}>Image</th>{" "}
+                <th style={{ width: "20%" }}>Name</th>{" "}
+                <th style={{ width: "20%" }}>Actions</th>{" "}
+              </tr>
+            </thead>
+            <tbody style={{ textAlign: "center" }}>
+              {this.state.products.map((product) => (
+                <tr key={product.id}>
+                  <td>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      style={{ width: "150px" }}
+                    />
+                  </td>
+                  <td className="align-middle" style={{ fontSize: "23px" }}>
+                    {product.name}
+                  </td>
+                  <td style={{ textAlign: "center" }} className="align-middle">
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => this.editProduct(product.id)}
+                    >
+                      Edit
+                    </Button>
+
+                    <Button
+                      variant="danger"
+                      onClick={() => this.removeProduct(product.id)}
+                      style={{ marginLeft: "10px" }}
+                    >
+                      Remove
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Container>
       </div>
     );
   }
