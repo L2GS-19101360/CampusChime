@@ -23,7 +23,7 @@ class AboutUsPageLogin extends Component {
       <div>
         <HomeNavbar />
 
-        <div style={{ padding: "7%", color: "white" }}>
+        <div style={{ padding: "7%", color: "black" }}>
           <h1 style={{ borderBottom: "1px solid black" }}>
             Chiming in with Student Entrepreneurial Opportunities
           </h1>
@@ -53,7 +53,7 @@ class AboutUsPageLogin extends Component {
               <img
                 src={Lorenz}
                 alt=""
-                style={{ height: "240px", width: "240px" }}
+                style={{ height: "240px", width: "240px", border: '1px solid black' }}
               />
               <br />
               <h6 style={{ textAlign: "center" }}>
@@ -68,6 +68,7 @@ class AboutUsPageLogin extends Component {
                   height: "240px",
                   width: "240px",
                   objectFit: "cover", // or 'none'
+                  border: '1px solid black'
                 }}
               />
               <br />
@@ -80,7 +81,7 @@ class AboutUsPageLogin extends Component {
               <img
                 src={Jaden}
                 alt=""
-                style={{ height: "240px", width: "240px" }}
+                style={{ height: "240px", width: "240px", border: '1px solid black' }}
               />
               <br />
               <h6 style={{ textAlign: "center" }}>Ceniza, Jaden P. (BSIT) </h6>
