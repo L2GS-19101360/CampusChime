@@ -13,6 +13,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import AboutUsPageLogin from './pages/About Us Page/AboutUsPage(Login).jsx'
 import UserSettingPage from './pages/User Setting Page/UserSettingPage.jsx'
 import ForgetPasswordPage from './pages/Forget Password Page/ForgetPasswordPage.jsx'
+import AdminPage from './pages/Admin Page/AdminPage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <div>
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/aboutUsPageLogin' component={AboutUsPageLogin}/>
       <Route path='/userSettingPage' component={UserSettingPage} />
       <Route path='/forgetPasswordPage' component={ForgetPasswordPage}/>
+      <Route path='/adminPage' component={AdminPage}/>
     </Router>
   </div>
 )
