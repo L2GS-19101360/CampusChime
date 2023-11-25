@@ -20,15 +20,28 @@ const handleLogout = () => {
 
 class UserSettingPage extends Component {
   constructor() {
+
+    const LAfirstName = sessionStorage.getItem("firstName");
+    const LAlastName = sessionStorage.getItem("lastName");
+    const firstName = sessionStorage.getItem("firstName");
+    const lastName = sessionStorage.getItem("lastName");
+    const email = sessionStorage.getItem("email");
+    const contactNumber = sessionStorage.getItem("contactNumber");
+    // const password = sessionStorage.getItem("password");
+    // const conPassword = password;
+
     super();
     this.state = {
       showPassword: false,
-      firstName: "John", // Example initial values
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      contactNumber: "s43535435345",
+      LAfirstName: LAfirstName,
+      LAlastName: LAlastName,
+      firstName: firstName, // Example initial values
+      lastName: lastName,
+      email: email,
+      contactNumber: contactNumber,
       newPassword: "",
       confirmPassword: "",
+
       products: [
         { id: 1, name: "Product 1", image: "https://via.placeholder.com/50" },
         { id: 2, name: "Product 2", image: "https://via.placeholder.com/50" },
@@ -48,8 +61,9 @@ class UserSettingPage extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // Handle the form submission logic here (e.g., update user settings)
-    // You can use this.state to get the updated values
+    
+    console.log(this.state.firstName + this.state.lastName + this.state.email + this.state.contactNumber + this.state.newPassword + this.state.confirmPassword);
+    
   };
 
   togglePasswordVisibility = () => {
@@ -60,6 +74,8 @@ class UserSettingPage extends Component {
 
   render() {
     const {
+      LAfirstName,
+      LAlastName,
       firstName,
       lastName,
       email,
@@ -116,7 +132,7 @@ class UserSettingPage extends Component {
             backgroundColor: "white",
             marginTop: "20px",
             padding: "20px",
-            width: "45%",
+            width: "100%",
             position: "absolute",
             left: "50%",
             top: "50%",
@@ -125,10 +141,11 @@ class UserSettingPage extends Component {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-around",
+            borderBottom: '1px solid black'
           }}
         >
           <div>
-            <LetteredAvatar name={`${firstName} ${lastName}`} size={190} />
+            <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
             <Button
               variant="danger"
               onClick={handleLogout}
@@ -273,9 +290,10 @@ class UserSettingPage extends Component {
 
         <Container
           style={{
-            marginTop: "1000px",
+            marginTop: "700px",
             width: "100%",
             backgroundColor: "White",
+            marginBottom: '100px'
           }}
         >
           <h2 style={{ textAlign: "center" }}>Product List</h2>
