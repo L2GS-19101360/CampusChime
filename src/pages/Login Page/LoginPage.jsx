@@ -61,7 +61,9 @@ class LoginPage extends Component {
         // Store session data on the client side
         sessionStorage.setItem("firstName", data.firstName);
         sessionStorage.setItem("lastName", data.lastName);
-        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("email", data.email);
+        sessionStorage.setItem("contactNumber", data.contactNumber);
+        // sessionStorage.setItem("password", data.password);
 
         // Redirect user
         this.props.history.push({
@@ -131,14 +133,14 @@ class LoginPage extends Component {
                 {this.state.warning}
                 <Form
                   onSubmit={this.handleSubmit}
-                  style={{ marginTop: "20px",  }}
+                  style={{ marginTop: "20px", }}
                 >
-                  <FloatingLabel controlId="loginEmail" label="Email address" style={{color: "#0d6efd"}}>
+                  <FloatingLabel controlId="loginEmail" label="Email address" style={{ color: "#0d6efd" }}>
                     <Form.Control
                       type="email"
                       placeholder="Email"
                       required
-                      style={{ borderColor: "#0d6efd"}}
+                      style={{ borderColor: "#0d6efd" }}
                     />
 
                     <EnvelopeFill

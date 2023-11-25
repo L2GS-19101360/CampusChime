@@ -31,17 +31,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($request->password, $hashedPasswordFromDatabase)) {
                 $firstName = $row['firstname'];
                 $lastName = $row['lastname'];
+                $contactNumber = $row['contactnumber'];
+                $email = $row['email'];
+                // $password = $row['password'];
 
                 // Set session variables
                 $_SESSION['firstName'] = $firstName;
                 $_SESSION['lastName'] = $lastName;
                 $_SESSION['email'] = $email;
+                $_SESSION['contactNumber'] = $contactNumber;
+                $_SESSION['email'] = $email;
+                // $_SESSION['password'] = $password;
 
                 echo json_encode([
                     "success" => true,
                     "message" => "Login successful",
                     "firstName" => $firstName,
-                    "lastName" => $lastName
+                    "lastName" => $lastName,
+                    "contactNumber" => $contactNumber,
+                    "email" => $email,
+                    // "password" => $password,
                 ]);
             } else {
                 echo json_encode(["success" => false, "message" => "Invalid email or password"]);
