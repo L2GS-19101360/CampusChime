@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Navbar, Nav, Form, Button, FloatingLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { EnvelopeFill } from "react-bootstrap-icons";
-import WebLogo from "../../assets/CampusChimePurple.png";
+import WebLogo from "../../assets/CampusChimeNoname.png";
 import Logo from "../../assets/CampusChime.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -11,13 +11,13 @@ class ForgetPasswordPage extends Component {
   constructor() {
     super();
     this.state = {
-      sentEmailDisplay: ""
-    }
+      sentEmailDisplay: "",
+    };
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -27,19 +27,24 @@ class ForgetPasswordPage extends Component {
     console.log(email);
 
     this.setState({
-      sentEmailDisplay: <div className="alert alert-primary" role="alert">
-                          Email Sent!
-                        </div>
+      sentEmailDisplay: (
+        <div className="alert alert-primary" role="alert">
+          Email Sent!
+        </div>
+      ),
     });
 
     try {
-      const response = await fetch("http://localhost:8081/send-forgetpassword-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await fetch(
+        "http://localhost:8081/send-forgetpassword-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       if (response.ok) {
         console.log("Email sent successfully");
@@ -49,7 +54,7 @@ class ForgetPasswordPage extends Component {
     } catch (error) {
       console.error("Error sending email", error);
     }
-  }
+  };
 
   render() {
     return (
@@ -59,7 +64,7 @@ class ForgetPasswordPage extends Component {
             <img
               src={WebLogo}
               alt=""
-              style={{ height: "70px", width: "80px" }}
+              style={{ width: "50px", marginBottom: "5px"  }}
             />{" "}
             CampusChime
           </Navbar.Brand>
@@ -98,7 +103,10 @@ class ForgetPasswordPage extends Component {
                   link.
                 </p>
                 {this.state.sentEmailDisplay}
-                <Form onSubmit={this.handleEmailSubmit} style={{ marginTop: "20px" }}>
+                <Form
+                  onSubmit={this.handleEmailSubmit}
+                  style={{ marginTop: "20px" }}
+                >
                   <FloatingLabel
                     controlId="forgetPasswordEmail"
                     label="Email address"

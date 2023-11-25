@@ -11,6 +11,8 @@ import {
 import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
 import WebLogo from "../assets/CampusChimePurple.png";
 import LetteredAvatar from "./LetteredAvater";
+import logo from "../assets/CampusChimeNoname.png";
+
 
 const HomeNavbar = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -36,10 +38,10 @@ const HomeNavbar = () => {
         <Container style={{ marginLeft: "-10px" }}>
           <Navbar.Brand as={Link} to="/HomePage">
             <Image
-              src={WebLogo}
+              src={ logo }
               alt="CampusChime Logo"
-              style={{ width: "80px" }}
-            />
+              style={{ width: "50px", marginBottom: "5px" }}
+            />{" "}
             CampusChime
           </Navbar.Brand>
 

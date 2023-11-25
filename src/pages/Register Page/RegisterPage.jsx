@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Form, Button, Navbar, FloatingLabel, Alert } from "react-bootstrap";
-import WebLogo from "../../assets/CampusChimePurple.png";
+import WebLogo from "../../assets/CampusChimeNoname.png";
 import Logo from "../../assets/CampusChime.png";
 import {
   PersonCircle,
@@ -100,7 +100,7 @@ class RegisterPage extends Component {
             <img
               src={WebLogo}
               alt=""
-              style={{ height: "70px", width: "80px" }}
+              style={{ width: "50px", marginBottom: "5px" }}
             />{" "}
             CampusChime
           </Navbar.Brand>
