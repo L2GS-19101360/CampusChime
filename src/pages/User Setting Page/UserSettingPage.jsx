@@ -61,8 +61,9 @@ class UserSettingPage extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // Handle the form submission logic here (e.g., update user settings)
-    // You can use this.state to get the updated values
+    
+    console.log(this.state.firstName + this.state.lastName + this.state.email + this.state.contactNumber + this.state.newPassword + this.state.confirmPassword);
+    
   };
 
   togglePasswordVisibility = () => {
