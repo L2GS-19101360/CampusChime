@@ -1,0 +1,28 @@
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.list-group a:hover {
+  background-color: rgb(0, 0, 0);
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.main-content {
+  transition: margin-left 0.3s;
+}
+
+.main-content-open {
+  margin-left: 300px; /* Adjust the width of the Offcanvas as needed */
+}
+
+.collapsed {
+  margin-left: 0;
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .main-content-open {
+    margin-left: 300px; /* Adjust the width for smaller screens */
+  }
+}
