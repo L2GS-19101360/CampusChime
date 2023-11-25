@@ -20,15 +20,30 @@ cd C:\xampp\htdocs
 
 git clone https://github.com/L2GS-19101360/CampusChime.git
 
-cd campuschime
+cd CampusChime
 
+# If you are working on the API, navigate to the 'api' directory
+cd api
+
+# Install dependencies
 npm install
 
+# Navigate back to the main project directory
+cd ..
+
+# Start the development server
 npm run dev
 
-#Make sure to regularly update your branch to keep it in sync with the main branch:
+# Navigate to the 'api' directory
+cd api
+
+# Start the API server
+npm start
+
+# Make sure you are in the main project directory
+cd CampusChime
+
+# Pull the latest changes from the main branch
 git pull origin main
 
-#If you are working on backend functionality, you can access your PHP files using the following URL:
-http://localhost/campuschime/PHP_files/(your PHP file)
-
+http://localhost/CampusChime/PHP_files/(your PHP file)

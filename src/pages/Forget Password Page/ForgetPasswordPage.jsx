@@ -1,18 +1,55 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, Button, FloatingLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import EnvelopeFill from "react-bootstrap-icons/dist/icons/envelope-fill";
+import { EnvelopeFill } from "react-bootstrap-icons";
 import WebLogo from "../../assets/CampusChimePurple.png";
 import Logo from "../../assets/CampusChime.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 class ForgetPasswordPage extends Component {
   constructor() {
     super();
+    this.state = {
+      sentEmailDisplay: ""
+    }
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
+
+  handleEmailSubmit = async (e) => {
+    e.preventDefault();
+
+    const email = e.target.elements.forgetPasswordEmail.value;
+
+    console.log(email);
+
+    this.setState({
+      sentEmailDisplay: <div className="alert alert-primary" role="alert">
+                          Email Sent!
+                        </div>
+    });
+
+    try {
+      const response = await fetch("http://localhost:8081/send-forgetpassword-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        console.log("Email sent successfully");
+      } else {
+        console.error("Failed to send email");
+      }
+    } catch (error) {
+      console.error("Error sending email", error);
+    }
+  }
 
   render() {
     return (
@@ -60,7 +97,8 @@ class ForgetPasswordPage extends Component {
                   Please enter your email address to receive a password reset
                   link.
                 </p>
-                <Form style={{ marginTop: "20px" }}>
+                {this.state.sentEmailDisplay}
+                <Form onSubmit={this.handleEmailSubmit} style={{ marginTop: "20px" }}>
                   <FloatingLabel
                     controlId="forgetPasswordEmail"
                     label="Email address"
