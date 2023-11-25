@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import WebLogo from "../assets/CampusChimePurple.png";
+import Logo from "../assets/CampusChimeNoname.png";
 
 const MainNavbar = () => {
   return (
@@ -12,7 +12,11 @@ const MainNavbar = () => {
     >
       <Container className="d-flex justify-content-between align-items-center ">
         <Navbar.Brand as={Link} to="/">
-          <img src={WebLogo} alt="CampusChime Logo" style={{ width: "80px" }} />
+          <img
+            src={Logo}
+            alt="CampusChime Logo"
+            style={{ width: "50px", marginBottom: "5px" }}
+          />{" "}
           CampusChime
         </Navbar.Brand>
 

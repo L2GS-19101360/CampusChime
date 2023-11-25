@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import WebLogo from "../../assets/CampusChimePurple.png";
+import WebLogo from "../../assets/CampusChimeNoname.png";
 import Logo from "../../assets/CampusChime.png";
 import { EnvelopeFill } from "react-bootstrap-icons";
 
@@ -95,7 +95,7 @@ class LoginPage extends Component {
             <img
               src={WebLogo}
               alt=""
-              style={{ height: "70px", width: "80px" }}
+              style={{ width: "50px", marginBottom: "5px" }}
             />{" "}
             CampusChime
           </Navbar.Brand>
