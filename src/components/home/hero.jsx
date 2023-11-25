@@ -1,13 +1,13 @@
 
-import React, { useState } from 'react';
-//import ShopComponent from './ShopComponent';
+import React, { useState, Suspense } from 'react';
+import Shop from '../shop/shop';
 //import SellComponent from './SellComponent';
 import Loader from '../loader/loader';
 
 const HeroForHome = () => {
   const [showHero, setShowHero] = useState(true);
-  /*const [showShop, setShowShop] = useState(false);
-  const [showSell, setShowSell] = useState(false);*/
+  const [showShop, setShowShop] = useState(false);
+  /*const [showSell, setShowSell] = useState(false);*/
   const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
@@ -21,13 +21,12 @@ const HeroForHome = () => {
             <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
               <button type="button" className="btn btn-success btn-lg px-4 me-md-2 fw-bold"  onClick={() => {
                   setShowHero(false);
-                  setIsLoading(true);
-                  setTimeout(function() {
-                  
-                    setIsLoading(false);
-                  }, 2000);
+                  <Suspense fallback={setIsLoading(true)}>
+                  {setShowShop(true)}
+                  {setIsLoading(false)}
+                  </Suspense>
                  
-                  //setShowShop(true);
+                 // setShowShop(true);
                   
                 }}>Shop Now!</button>
               <button type="button" className="btn-danger btn btn-lg px-4" onClick={() =>{ 
@@ -48,7 +47,7 @@ const HeroForHome = () => {
     {isLoading && (
      <Loader></Loader>
     )}
-    {/*showShop && <ShopComponent />*/}
+    {showShop && <Shop />}
     {/*showSell && <SellComponent />*/}
   </div>
   );
