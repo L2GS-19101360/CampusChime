@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import WebLogo from "../../assets/CampusChimeNoname.png";
 import LetteredAvatar from "../../components/LetteredAvater";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 const handleLogout = () => {
   sessionStorage.clear();
@@ -26,14 +28,18 @@ class UserSettingPage extends Component {
     const lastName = sessionStorage.getItem("lastName");
     const email = sessionStorage.getItem("email");
     const contactNumber = sessionStorage.getItem("contactNumber");
+    const customerId = sessionStorage.getItem("customerId");
     // const password = sessionStorage.getItem("password");
     // const conPassword = password;
 
     super();
     this.state = {
       showPassword: false,
+
       LAfirstName: LAfirstName,
       LAlastName: LAlastName,
+      
+      id: customerId,
       firstName: firstName, // Example initial values
       lastName: lastName,
       email: email,
@@ -47,6 +53,8 @@ class UserSettingPage extends Component {
         { id: 3, name: "Product 3", image: "https://via.placeholder.com/50" },
         // Add more placeholders as needed
       ],
+
+      alertMessage: ""
     };
   }
 
@@ -61,14 +69,27 @@ class UserSettingPage extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(
-      this.state.firstName +
-        this.state.lastName +
-        this.state.email +
-        this.state.contactNumber +
-        this.state.newPassword +
-        this.state.confirmPassword
-    );
+    
+    console.log(this.state.id + this.state.firstName + this.state.lastName + this.state.email + this.state.contactNumber + this.state.newPassword + this.state.confirmPassword);
+
+    if (this.state.newPassword === this.state.confirmPassword){
+      console.log("True");
+      
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST",`http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&customer_id=${this.state.id}`,true);
+      xhttp.send();
+
+      sessionStorage.clear();
+      window.location.href = "/";
+
+    }else{
+      console.log("False");
+      this.setState({
+        alertMessage: <div className="alert alert-danger" role="alert">
+                        Passwords Mismatched!
+                      </div>
+      });
+    }
   };
 
   togglePasswordVisibility = () => {
@@ -165,6 +186,7 @@ class UserSettingPage extends Component {
 
           <div style={{ marginLeft: "25px" }}>
             <h2>User Settings</h2>
+            {this.state.alertMessage}
             <Form
               onSubmit={this.handleSubmit}
               style={{ marginTop: "30px", width: "600px" }}
