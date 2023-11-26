@@ -20,7 +20,7 @@ if ($isValid) {
 
     try {
         
-        $stmt = $conn->prepare("UPDATE your_table_name SET 
+        $stmt = $conn->prepare("UPDATE customer SET 
                                lastName = :lastName,
                                firstName = :firstName,
                                contactNumber = :contactNumber,
