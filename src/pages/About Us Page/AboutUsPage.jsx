@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import Navbar from "../../components/Navbar";
-import WebLogo from "../../assets/CampusChimePurple.png";
+import WebLogo from "../../assets/CampusChimeNoname.png";
 import "../About Us Page/AboutUsDesign.css";
 import Lorenz from "../../assets/developers/Lorenz.jpg";
 import Jaden from "../../assets/developers/Jaden.jpg";
@@ -39,20 +39,23 @@ class AboutUsPage extends Component {
           </h3>
 
           <h1>
-            Developers of{" "}
+            Developers of CampusChime{" "}
             <img
               src={WebLogo}
               alt=""
-              style={{ height: "120px", width: "120px" }}
-            />{" "}
-            CampusChime
+              style={{ width: "70px", marginBottom: "5px" }}
+            />
           </h1>
           <ul className="developersList">
             <li style={{ marginLeft: "10px", marginRight: "10px" }}>
               <img
                 src={Lorenz}
                 alt=""
-                style={{ height: "240px", width: "240px", border: '1px solid black' }}
+                style={{
+                  height: "240px",
+                  width: "240px",
+                  border: "1px solid black",
+                }}
               />
               <br />
               <h6 style={{ textAlign: "center" }}>
@@ -67,7 +70,7 @@ class AboutUsPage extends Component {
                   height: "240px",
                   width: "240px",
                   objectFit: "cover", // or 'none'
-                  border: '1px solid black'
+                  border: "1px solid black",
                 }}
               />
               <br />
@@ -80,7 +83,11 @@ class AboutUsPage extends Component {
               <img
                 src={Jaden}
                 alt=""
-                style={{ height: "240px", width: "240px", border: '1px solid black' }}
+                style={{
+                  height: "240px",
+                  width: "240px",
+                  border: "1px solid black",
+                }}
               />
               <br />
               <h6 style={{ textAlign: "center" }}>Ceniza, Jaden P. (BSIT) </h6>
