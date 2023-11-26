@@ -9,7 +9,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import WebLogo from "../../assets/CampusChimePurple.png";
+import WebLogo from "../../assets/CampusChimeNoname.png";
 import LetteredAvatar from "../../components/LetteredAvater";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,7 +22,6 @@ const handleLogout = () => {
 
 class UserSettingPage extends Component {
   constructor() {
-
     const LAfirstName = sessionStorage.getItem("firstName");
     const LAlastName = sessionStorage.getItem("lastName");
     const firstName = sessionStorage.getItem("firstName");
@@ -69,6 +68,7 @@ class UserSettingPage extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     
     console.log(this.state.id + this.state.firstName + this.state.lastName + this.state.email + this.state.contactNumber + this.state.newPassword + this.state.confirmPassword);
 
@@ -90,7 +90,6 @@ class UserSettingPage extends Component {
                       </div>
       });
     }
-    
   };
 
   togglePasswordVisibility = () => {
@@ -122,8 +121,8 @@ class UserSettingPage extends Component {
             <img
               src={WebLogo}
               alt="CampusChime Logo"
-              style={{ width: "80px" }}
-            />
+              style={{ width: "50px", marginBottom: "5px" }}
+            />{" "}
             CampusChime
           </Navbar.Brand>
 
@@ -168,7 +167,7 @@ class UserSettingPage extends Component {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-around",
-            borderBottom: '1px solid black'
+            borderBottom: "1px solid black",
           }}
         >
           <div>
@@ -321,7 +320,7 @@ class UserSettingPage extends Component {
             marginTop: "700px",
             width: "100%",
             backgroundColor: "White",
-            marginBottom: '100px'
+            marginBottom: "100px",
           }}
         >
           <h2 style={{ textAlign: "center" }}>Product List</h2>
