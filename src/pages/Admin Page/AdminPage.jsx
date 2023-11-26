@@ -3,6 +3,7 @@ import { Offcanvas } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../../assets/CampusChimeNoname.png";
 import AdminNavbar from "../../components/admin/AdminNavbar";
+import Dashboard from "../../components/admin/Dashboard";
 import "./AdminDesign.css";
 import { BiChevronLeft, BiMenu } from "react-icons/bi";
 
@@ -11,7 +12,7 @@ function AdminPage() {
 
   return (
     <div className="container-fluid bg-white min-vh-100">
-      <div className="row">
+      <div className="row" style={{ backgroundColor: "#1d2124" }}>
         <Offcanvas
           show={isSidebarOpen}
           onHide={() => setSidebarOpen(false)}
@@ -57,13 +58,15 @@ function AdminPage() {
         {/* Main Content */}
         <AdminNavbar toggleSidebar={() => setSidebarOpen(!isSidebarOpen)} />
         <div
-          className={`col-10 vh-100 main-content-container ${
+          className={`col-12 col-md-12 vh-100 main-content-container ${
             isSidebarOpen ? "main-content-open" : "collapsed"
           }`}
+          style={{
+            width: isSidebarOpen ? "calc(100% - 300px)" : "100%",
+          }}
         >
           <div className="flexible-content">
-            <h1>Main Content</h1>
-            {/* Other dashboard content here */}
+            <Dashboard Toggle={() => setSidebarOpen(!isSidebarOpen)} />
           </div>
         </div>
       </div>
