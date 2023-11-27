@@ -3,26 +3,35 @@
 }
 
 .list-group a:hover {
-  background-color: rgb(0, 0, 0);
-  color: aliceblue;
+  background-color: rgba(232, 215, 211);
+  color: rgb(0, 0, 0);
   cursor: pointer;
 }
 
-.main-content {
-  transition: margin-left 0.3s;
+.list-group a.active {
+  background-color: rgba(232, 215, 211);
+  color: rgb(0, 0, 0);
+  border-color: rgba(232, 215, 211);
 }
 
 .main-content-open {
-  margin-left: 300px; /* Adjust the width of the Offcanvas as needed */
+  margin-left: 300px;
 }
 
-.collapsed {
-  margin-left: 0;
+.collapsed:not(.main-content-open) {
+  transition-duration: 0.5s;
 }
 
-/* Media query for small screens */
+.main-content-open:not(.collapsed) {
+  transition-duration: 0.3s;
+}
+
 @media (max-width: 768px) {
   .main-content-open {
-    margin-left: 300px; /* Adjust the width for smaller screens */
+    margin-left: 0;
   }
+}
+body {
+  margin: 0;
+  padding: 0;
 }

@@ -9,9 +9,11 @@ import {
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import WebLogo from "../../assets/CampusChimePurple.png";
+import WebLogo from "../../assets/CampusChimeNoname.png";
 import LetteredAvatar from "../../components/LetteredAvater";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 const handleLogout = () => {
   sessionStorage.clear();
@@ -20,21 +22,24 @@ const handleLogout = () => {
 
 class UserSettingPage extends Component {
   constructor() {
-
     const LAfirstName = sessionStorage.getItem("firstName");
     const LAlastName = sessionStorage.getItem("lastName");
     const firstName = sessionStorage.getItem("firstName");
     const lastName = sessionStorage.getItem("lastName");
     const email = sessionStorage.getItem("email");
     const contactNumber = sessionStorage.getItem("contactNumber");
+    const customerId = sessionStorage.getItem("customerId");
     // const password = sessionStorage.getItem("password");
     // const conPassword = password;
 
     super();
     this.state = {
       showPassword: false,
+
       LAfirstName: LAfirstName,
       LAlastName: LAlastName,
+
+      id: customerId,
       firstName: firstName, // Example initial values
       lastName: lastName,
       email: email,
@@ -48,22 +53,44 @@ class UserSettingPage extends Component {
         { id: 3, name: "Product 3", image: "https://via.placeholder.com/50" },
         // Add more placeholders as needed
       ],
+
+      alertMessage: ""
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  handleInputChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  // handleInputChange = (e) => {
+  //   this.setState({ [e.target.name]: e.target.value });
+  // };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    
-    console.log(this.state.firstName + this.state.lastName + this.state.email + this.state.contactNumber + this.state.newPassword + this.state.confirmPassword);
-    
+
+    if (this.state.newPassword === this.state.confirmPassword) {
+      console.log("True");
+
+      console.log(this.state.id + this.state.firstName + this.state.lastName + this.state.email + this.state.contactNumber + this.state.newPassword + this.state.confirmPassword);
+
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&customer_id=${this.state.id}`, true);
+      xhttp.send();
+
+      // sessionStorage.clear();
+      // window.location.href = "/";
+
+      // window.location.reload();
+
+    } else {
+      console.log("False");
+      this.setState({
+        alertMessage: <div className="alert alert-danger" role="alert">
+          Passwords Mismatched!
+        </div>
+      });
+    }
   };
 
   togglePasswordVisibility = () => {
@@ -95,8 +122,8 @@ class UserSettingPage extends Component {
             <img
               src={WebLogo}
               alt="CampusChime Logo"
-              style={{ width: "80px" }}
-            />
+              style={{ width: "50px", marginBottom: "5px" }}
+            />{" "}
             CampusChime
           </Navbar.Brand>
 
@@ -141,7 +168,7 @@ class UserSettingPage extends Component {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-around",
-            borderBottom: '1px solid black'
+            borderBottom: "1px solid black",
           }}
         >
           <div>
@@ -160,6 +187,7 @@ class UserSettingPage extends Component {
 
           <div style={{ marginLeft: "25px" }}>
             <h2>User Settings</h2>
+            {this.state.alertMessage}
             <Form
               onSubmit={this.handleSubmit}
               style={{ marginTop: "30px", width: "600px" }}
@@ -171,7 +199,9 @@ class UserSettingPage extends Component {
                     placeholder="Enter your first name"
                     name="firstName"
                     value={firstName}
-                    onChange={this.handleInputChange}
+                    onChange={(e) => this.setState({
+                      firstName: e.target.value
+                    })}
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -183,7 +213,9 @@ class UserSettingPage extends Component {
                     placeholder="Enter your last name"
                     name="lastName"
                     value={lastName}
-                    onChange={this.handleInputChange}
+                    onChange={(e) => this.setState({
+                      lastName: e.target.value
+                    })}
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -195,7 +227,9 @@ class UserSettingPage extends Component {
                     placeholder="Enter your email address"
                     name="email"
                     value={email}
-                    onChange={this.handleInputChange}
+                    onChange={(e) => this.setState({
+                      email: e.target.value
+                    })}
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -210,7 +244,9 @@ class UserSettingPage extends Component {
                     placeholder="Enter your contact number"
                     name="contactNumber"
                     value={contactNumber}
-                    onChange={this.handleInputChange}
+                    onChange={(e) => this.setState({
+                      contactNumber: e.target.value
+                    })}
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -225,14 +261,15 @@ class UserSettingPage extends Component {
                     placeholder="Enter your new password"
                     name="newPassword"
                     value={newPassword}
-                    onChange={this.handleInputChange}
+                    onChange={(e) => this.setState({
+                      newPassword: e.target.value
+                    })}
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
+                    className={`ms-2 ${this.state.showPassword
                         ? "bi bi-eye-slash-fill"
                         : "bi bi-eye-fill"
-                    }`}
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -255,14 +292,15 @@ class UserSettingPage extends Component {
                     placeholder="Confirm your new password"
                     name="confirmPassword"
                     value={confirmPassword}
-                    onChange={this.handleInputChange}
+                    onChange={(e) => this.setState({
+                      confirmPassword: e.target.value
+                    })}
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
+                    className={`ms-2 ${this.state.showPassword
                         ? "bi bi-eye-slash-fill"
                         : "bi bi-eye-fill"
-                    }`}
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -293,7 +331,7 @@ class UserSettingPage extends Component {
             marginTop: "700px",
             width: "100%",
             backgroundColor: "White",
-            marginBottom: '100px'
+            marginBottom: "100px",
           }}
         >
           <h2 style={{ textAlign: "center" }}>Product List</h2>
