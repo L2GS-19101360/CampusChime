@@ -1,7 +1,10 @@
 <?php
 
 include("db_connection.php");
-session_start();
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, UPDATE");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
 $retVal = "Addition failed.";
 $isValid = true;
@@ -20,7 +23,13 @@ if ($isValid) {
 
     try {
         
-        
+        $stmt = $conn->prepare("UPDATE customer SET lastname=?,firstname=?,contactnumber=?,email=?,password=? WHERE customer_id=?");
+        $stmt->bind_param("ssissi", $updateLname, $updateFname, $updateContact, $updateEmail, $updatehashedPassword, $id);
+        $stmt->execute();
+        $stmt->close();
+
+        $status = 200;
+        $retVal = "User account updated.";
 
     } catch (Exception $e) {
         $retVal = $e->getMessage();
