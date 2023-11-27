@@ -75,12 +75,7 @@ class UserSettingPage extends Component {
     if (this.state.newPassword === this.state.confirmPassword){
       console.log("True");
       
-      var xhttp = new XMLHttpRequest();
-      xhttp.open("POST",`http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&customer_id=${this.state.id}`,true);
-      xhttp.send();
-
-      sessionStorage.clear();
-      window.location.href = "/";
+      
 
     }else{
       console.log("False");
