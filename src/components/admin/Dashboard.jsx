@@ -1,9 +1,17 @@
 import React from "react";
-import AdminNavbar from "./AdminNavbar";
 
 function Dashboard() {
   return (
-    <div className="px-3">
+    <div
+      className="px-3"
+      style={{
+        backgroundColor: "rgba(232, 215, 211, 0.6)",
+        borderRadius: "10px",
+        height: "100%",
+        marginLeft: "20px",
+        marginRight: "10px"
+      }}
+    >
       <div className="container-fluid">
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 my-2">
           <div className="col-md-3 col-sm-6 p-1">
@@ -45,7 +53,7 @@ function Dashboard() {
         </div>
       </div>
       <table className="table caption-top bg-white rounded mt-2">
-        <caption className="text-white fs-4">Recent Orders</caption>
+        <caption className="text-black fs-2">Recent Orders</caption>
         <thead>
           <tr>
             <th scope="col">#</th>
