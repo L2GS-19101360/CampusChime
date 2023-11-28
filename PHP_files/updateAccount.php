@@ -1,49 +1,54 @@
 <?php
-
-include("db_connection.php");
+// Include your database connection file
+include_once("db_connection.php");
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, UPDATE");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-$retVal = "Addition failed.";
-$isValid = true;
-$status = 400;
-$data = -1;
+// Check if the required parameters are set
+if (
+    isset($_GET['lastname']) &&
+    isset($_GET['firstname']) &&
+    isset($_GET['contactnumber']) &&
+    isset($_GET['email']) &&
+    isset($_GET['password']) &&
+    isset($_GET['customer_id'])
+) {
+    // Sanitize and store the parameters
+    $lastname = mysqli_real_escape_string($conn, $_GET['lastname']);
+    $firstname = mysqli_real_escape_string($conn, $_GET['firstname']);
+    $contactnumber = mysqli_real_escape_string($conn, $_GET['contactnumber']);
+    $email = mysqli_real_escape_string($conn, $_GET['email']);
+    $password = mysqli_real_escape_string($conn, $_GET['password']);
+    $customer_id = mysqli_real_escape_string($conn, $_GET['customer_id']);
 
-$updateLname = trim($_GET['lastName']);
-$updateFname = trim($_GET['firstName']);
-$updateContact = trim($_GET['contactNumber']);
-$updateEmail = trim($_GET['email']);
-$updatePassword = trim($_GET['newPassword']);
-$id = trim($_GET['id']);
+    // Hash the password (you should use a stronger hashing method in production)
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-if ($isValid) {
-    $updatehashedPassword = password_hash($updatePassword, PASSWORD_DEFAULT);
+    // Update the row in the database
+    $query = "UPDATE customer SET 
+        lastname = '$lastname',
+        firstname = '$firstname',
+        contactnumber = '$contactnumber',
+        email = '$email',
+        password = '$hashed_password'
+        WHERE customer_id = '$customer_id'";
 
-    try {
-        
-        $stmt = $conn->prepare("UPDATE customer SET lastname=?,firstname=?,contactnumber=?,email=?,password=? WHERE customer_id=?");
-        $stmt->bind_param("ssissi", $updateLname, $updateFname, $updateContact, $updateEmail, $updatehashedPassword, $id);
-        $stmt->execute();
-        $stmt->close();
+    $result = mysqli_query($conn, $query);
 
-        $status = 200;
-        $retVal = "User account updated.";
-
-    } catch (Exception $e) {
-        $retVal = $e->getMessage();
+    if ($result) {
+        // Update successful
+        echo "Update successful!";
+    } else {
+        // Update failed
+        echo "Update failed: " . mysqli_error($conn);
     }
+} else {
+    // Required parameters not set
+    echo "Missing required parameters!";
 }
 
-// Send a proper JSON response
-$response = array(
-    'status' => $status,
-    'data' => $data,
-    'message' => $retVal
-);
-
-header('Content-Type: application/json');
-echo json_encode($response);
-
+// Close the database connection
+mysqli_close($conn);
 ?>
