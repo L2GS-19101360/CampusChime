@@ -28,7 +28,7 @@ class UserSettingPage extends Component {
     const lastName = sessionStorage.getItem("lastName");
     const email = sessionStorage.getItem("email");
     const contactNumber = sessionStorage.getItem("contactNumber");
-    const customerId = sessionStorage.getItem("customerId");
+    const userId = sessionStorage.getItem("userId");
     // const password = sessionStorage.getItem("password");
     // const conPassword = password;
 
@@ -39,7 +39,7 @@ class UserSettingPage extends Component {
       LAfirstName: LAfirstName,
       LAlastName: LAlastName,
 
-      id: customerId,
+      id: userId,
       firstName: firstName, // Example initial values
       lastName: lastName,
       email: email,
@@ -68,14 +68,43 @@ class UserSettingPage extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (this.state.newPassword === this.state.confirmPassword) {
-      
+      try {
+        const response = await fetch(`http://localhost/campuschime/PHP_files/updateAccount.php`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: this.state.id,
+            lastname: this.state.lastName,
+            firstname: this.state.firstName,
+            contactnumber: this.state.contactNumber,
+            email: this.state.email,
+            password: this.state.newPassword,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.status === 200) {
+          // Successfully updated
+          console.log("Account updated successfully");
+        } else {
+          // Handle errors
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error("Error updating account:", error.message);
+      }
     } else {
       this.setState({
-        alertMessage: <div className="alert alert-danger" role="alert">
-                        Password Mismatch!
-                      </div>
+        alertMessage: (
+          <div className="alert alert-danger" role="alert">
+            Password Mismatch!
+          </div>
+        ),
       });
     }
   };
