@@ -13,7 +13,7 @@ if (
     isset($_GET['contactnumber']) &&
     isset($_GET['email']) &&
     isset($_GET['password']) &&
-    isset($_GET['customer_id'])
+    isset($_GET['user_id'])
 ) {
     // Sanitize and store the parameters
     $lastname = mysqli_real_escape_string($conn, $_GET['lastname']);
@@ -21,19 +21,19 @@ if (
     $contactnumber = mysqli_real_escape_string($conn, $_GET['contactnumber']);
     $email = mysqli_real_escape_string($conn, $_GET['email']);
     $password = mysqli_real_escape_string($conn, $_GET['password']);
-    $customer_id = mysqli_real_escape_string($conn, $_GET['customer_id']);
+    $customer_id = mysqli_real_escape_string($conn, $_GET['user_id']);
 
     // Hash the password (you should use a stronger hashing method in production)
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Update the row in the database
-    $query = "UPDATE customer SET 
+    $query = "UPDATE users SET 
         lastname = '$lastname',
         firstname = '$firstname',
         contactnumber = '$contactnumber',
         email = '$email',
         password = '$hashed_password'
-        WHERE customer_id = '$customer_id'";
+        WHERE user_id = '$customer_id'";
 
     $result = mysqli_query($conn, $query);
 

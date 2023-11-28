@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($request->email) && isset($request->password)) {
         $email = $conn->real_escape_string($request->email);
 
-        $stmt = $conn->prepare("SELECT * FROM customer WHERE email=?");
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $lastName = $row['lastname'];
                 $contactNumber = $row['contactnumber'];
                 $email = $row['email'];
-                $id = $row['customer_id'];
+                $id = $row['user_id'];
                 // $password = $row['password'];
 
                 // Set session variables
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['email'] = $email;
                 $_SESSION['contactNumber'] = $contactNumber;
                 $_SESSION['email'] = $email;
-                $_SESSION['customer_id'] = $id;
+                $_SESSION['user_id'] = $id;
                 // $_SESSION['password'] = $password;
 
                 echo json_encode([
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "lastName" => $lastName,
                     "contactNumber" => $contactNumber,
                     "email" => $email,
-                    "customerId" => $id,
+                    "userId" => $id,
                     // "password" => $password,
                 ]);
             } else {
