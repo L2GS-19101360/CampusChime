@@ -68,36 +68,18 @@ class UserSettingPage extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (this.state.newPassword === this.state.confirmPassword) {
-      try {
-        const response = await fetch(`http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&user_id=${this.state.id}`);
-
-        if (response.ok) {
-          const result = await response.text();
-          console.log(result); // Log the response
-          sessionStorage.clear();
-          window.location.href = "/";
-          // Update your React component state or perform any additional actions on success
-        } else {
-          console.error("Update failed:", response.statusText);
-          // Handle error in your React component
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        // Handle error in your React component
-      }
+      
     } else {
-      console.log("False");
       this.setState({
-        alertMessage: (
-          <div className="alert alert-danger" role="alert">
-            Passwords Mismatched!
-          </div>
-        ),
+        alertMessage: <div className="alert alert-danger" role="alert">
+                        Password Mismatch!
+                      </div>
       });
     }
   };
+
 
 
   togglePasswordVisibility = () => {
