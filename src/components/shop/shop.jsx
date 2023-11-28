@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, Button } from 'react-bootstrap'; 
 
 const Shop = () => {
  return (
@@ -15,10 +16,49 @@ const Shop = () => {
         </header>
         </section>
        <div className="row">
-            <div className="col-3 bg-success" data-bs-theme="dark">
+            <div className="col-3 bg-success" data-bs-theme="dark" hidden>
                <p className="fw-bolder p-4 text-white">Test</p>
+               <Form>
+                <Form.Group controlId="formFilter">
+                <Form.Label>Filter Options</Form.Label>
+                <Form.Control type="text" placeholder="Filter by keyword" />
+                </Form.Group>
+
+                <Form.Group controlId="formCategory">
+                <Form.Label>Category</Form.Label>
+                <Form.Control as="select">
+                    <option>Select category...</option>
+                    <option>Category 1</option>
+                    <option>Category 2</option>
+                    {/* Add more categories as needed */}
+                </Form.Control>
+                </Form.Group>
+
+                <Button variant="primary" type="submit">
+                Apply Filters
+                </Button>
+                 </Form>
             </div>
-            <div className="col-9 bg-danger" data-bs-spy="scroll"  data-bs-target=".container" data-bs-offset="50">
+            
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Filter</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <p>See the things you want your way</p>
+            </div>
+            </div>
+            <div className="col-12 bg-danger" data-bs-spy="scroll"  data-bs-target=".container" data-bs-offset="50">
+            <div className="px-4 mt-4 d-flex align-items-center">
+            <button className="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">   
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-filter-circle-fill" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M3.5 5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1M5 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5"/>
+            </svg>
+            <h2 className="d-inline px-2">Filter Results</h2>
+            </button> 
+            </div>
+
                 <div className="container px-4 px-lg-5 mt-5">
                         <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                             <div className="col mb-5">
