@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2023 at 01:01 AM
+-- Generation Time: Nov 28, 2023 at 02:06 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -24,11 +24,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `customer` (
-  `customer_id` int(11) NOT NULL,
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
   `lastname` varchar(100) NOT NULL,
   `firstname` varchar(100) NOT NULL,
   `contactnumber` bigint(20) NOT NULL,
@@ -38,36 +38,35 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `customer`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `customer` (`customer_id`, `lastname`, `firstname`, `contactnumber`, `email`, `password`, `registered`) VALUES
-(1, 'Cabogoy', 'Zyguel Philip', 9123456789, 'zyguel@gmail.com', '$2y$10$aKlT8.AZO9IcTccM4Qgpz.6z1aE9HsS9VH3ngkvjZNKV4xRihmKBm', '2023-11-07 11:54:16'),
-(2, 'Suico', 'Lorenz Gil', 9987654321, 'lorenz@gmail.com', '$2y$10$8J0Pwjo2x35Ge3mnY1KXXOFBLvGLxLodhg6ITZueU124u14n7y/g.', '2023-11-07 11:54:16'),
-(3, 'Ceniza', 'Jaden', 9369852147, 'jaden@gmail.com', '$2y$10$5ubjOjxmxXeglPQPvTHMYux4FTdUyi2MPMviF/rQ2pI6WIpxuQVmy', '2023-11-07 11:54:16'),
-(4, 'Tangcay', 'Maria Madonna', 9147852369, 'maria@gmail.com', '$2y$10$r8yjGi.3NT4pmdM7DUov6eHBqjnhuqXUnzq97JUTNNJVyWuH2vkuC', '2023-11-07 11:54:16'),
-(5, 'Jones', 'Bob', 9369852147, 'bob@gmail.com', '$2y$10$NhI6Y.kwc3ytevu1TZ/HPePgvyAXG5rvVXJ2e8Mroz999oYygLJfu', '2023-11-08 18:08:08'),
-(7, 'Jones', 'Lorenz', 9369852147, 'carl@gmail.com', '$2y$10$H7IPE/60L3.bOORQg1NeBuuySx8pTq7nDhEK0D2M7jAxWVr08mV5S', '2023-11-08 23:56:10');
+INSERT INTO `users` (`user_id`, `lastname`, `firstname`, `contactnumber`, `email`, `password`, `registered`) VALUES
+(34, 'Suico', 'Lorenz', 9123456789, 'lorenz@gmail.com', '$2y$10$wsejaKFNIvc.Z8b37Xo1HOtzPMjsTNZTgJYKZLu6rYcHuuOAviOeG', '2023-11-28 01:00:24'),
+(35, 'Dunphy', 'Alex', 9987456321, 'alex@gmail.com', '$2y$10$xaqaw9X49Y2yOEVB//FWdev6lUjh4DbC7jlj27ucJCDEoU/RQSz4W', '2023-11-28 01:01:04'),
+(36, 'Cabogoy', 'Zyguel', 9147852369, 'zyguel@gmail.com', '$2y$10$4zE5z.KRDSoJIq1OuLafQ.rsc8ZQKEUWaVkT6L5Cl2q0hEpQofEx6', '2023-11-28 01:02:05'),
+(37, 'Ceniza', 'Jaden', 9369852147, 'jaden@gmail.com', '$2y$10$IowdE0H02yhGxJbCwjHa9OK39RS5FB9O50/I6SAeSp59B9IfE2ylC', '2023-11-28 01:02:51'),
+(38, 'Tangcay', 'Maria', 9741258963, 'maria@gmail.com', '$2y$10$5w6QrVZVDcBLOB0lkMJ2aOf.M.M0T.Xo7VDj0OJ8up28aKIlwqjZW', '2023-11-28 01:03:33');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `customer`
+-- Indexes for table `users`
 --
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`customer_id`);
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `customer`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
