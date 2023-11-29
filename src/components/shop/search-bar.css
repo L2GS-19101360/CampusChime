@@ -1,0 +1,14 @@
+.search-bar {
+    width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 20px;
+    margin-top: 2em;
+    transition: width 0.15s ease-in-out;
+ }
+ 
+ .search-bar:focus {
+    width: 100%;
+    padding: 13px;
+ }
