@@ -55,7 +55,7 @@ class App extends Component {
           </Carousel.Item>
         </Carousel>
 
-        <div className="text-center mt-5" style={{ color: "white" }}>
+        <div className="text-center mt-5" style={{ color: "black" }}>
           <h1>CampusChime</h1>
           <p>
             To promote entrepreneurial ideas, connect with customers,
@@ -125,7 +125,7 @@ class App extends Component {
         </Row>
 
         <h1
-          style={{ fontSize: "4em", textAlign: "center", marginTop: "150px", color: "white"}}
+          style={{ fontSize: "4em", textAlign: "center", marginTop: "150px", color: "black"}}
         >
           ENTREPRENEURS
         </h1>
