@@ -63,14 +63,21 @@ class LoginPage extends Component {
         sessionStorage.setItem("lastName", data.lastName);
         sessionStorage.setItem("email", data.email);
         sessionStorage.setItem("contactNumber", data.contactNumber);
-        sessionStorage.setItem("userId", data.customerId);
+        sessionStorage.setItem("userId", data.userId);
+        sessionStorage.setItem("role", data.role);
         // sessionStorage.setItem("password", data.password);
 
-        // Redirect user
-        this.props.history.push({
-          pathname: "/HomePage",
-          search: `?lastName=${data.lastName}&firstName=${data.firstName}&email=${email}`,
-        });
+        if (data.role === "admin"){
+          window.location.href = "/adminPage";
+        } else {
+          window.location.href = "/homePage";
+        }
+
+        // // Redirect user
+        // this.props.history.push({
+        //   pathname: "/HomePage",
+        //   search: `?lastName=${data.lastName}&firstName=${data.firstName}&email=${email}`,
+        // });
       } else {
         this.setState({
           password: "",

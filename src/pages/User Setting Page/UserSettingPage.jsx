@@ -69,35 +69,21 @@ class UserSettingPage extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    // console.log(this.state.id);
+
+    var getId = this.state.id;
+
     if (this.state.newPassword === this.state.confirmPassword) {
-      try {
-        const response = await fetch(`http://localhost/campuschime/PHP_files/updateAccount.php`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            user_id: this.state.id,
-            lastname: this.state.lastName,
-            firstname: this.state.firstName,
-            contactnumber: this.state.contactNumber,
-            email: this.state.email,
-            password: this.state.newPassword,
-          }),
-        });
 
-        const data = await response.json();
+      console.log(getId);
 
-        if (data.status === 200) {
-          // Successfully updated
-          console.log("Account updated successfully");
-        } else {
-          // Handle errors
-          console.error(data.message);
-        }
-      } catch (error) {
-        console.error("Error updating account:", error.message);
-      }
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&user_id=${getId}`, true);
+      xhttp.send();
+
+      sessionStorage.clear();
+      window.location.href = "/";
+
     } else {
       this.setState({
         alertMessage: (
