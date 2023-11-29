@@ -8,10 +8,8 @@ import LetteredAvatar from "../LetteredAvater";
 import Logo from "../../assets/CampusChimeNoname.png";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 
-function AdminNavbar({ toggleSidebar, isSidebarOpen }) {
-  const firstName = "John"; // Replace with session
-  const lastName = "Ceniza";
-  const email = "john@usc.edu.ph";
+function AdminNavbar({ toggleSidebar, isSidebarOpen, userDetails }) {
+  const { firstName, lastName, email } = userDetails;
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const handleDropdownToggle = () => {
@@ -159,7 +157,7 @@ function AdminNavbar({ toggleSidebar, isSidebarOpen }) {
               <Dropdown.Item onClick={handleLogout}>
                 <span
                   style={{
-                    color: "black",
+                    color: "red",
                     fontSize: "15px",
                     fontWeight: "bold",
                   }}
