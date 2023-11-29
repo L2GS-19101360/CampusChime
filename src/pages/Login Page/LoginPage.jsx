@@ -63,7 +63,7 @@ class LoginPage extends Component {
         sessionStorage.setItem("lastName", data.lastName);
         sessionStorage.setItem("email", data.email);
         sessionStorage.setItem("contactNumber", data.contactNumber);
-        sessionStorage.setItem("userId", data.customerId);
+        sessionStorage.setItem("userId", data.userId);
         // sessionStorage.setItem("password", data.password);
 
         // Redirect user
