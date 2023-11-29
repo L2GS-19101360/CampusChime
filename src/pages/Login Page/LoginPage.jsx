@@ -16,15 +16,12 @@ import Logo from "../../assets/CampusChime.png";
 import { EnvelopeFill } from "react-bootstrap-icons";
 
 class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      password: "",
-      showPassword: false,
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  state = {
+    password: "",
+    showPassword: false,
+    warning: null,
+    loading: false,
+  };
 
   togglePassword = () => {
     this.setState((prevState) => ({
@@ -38,6 +35,7 @@ class LoginPage extends Component {
     const email = e.target.elements.loginEmail.value;
     const password = e.target.elements.loginPassword.value;
 
+    this.setState({ loading: true });
     try {
       const response = await axios.post(
         `http://localhost/CampusChime/PHP_files/login.php`,
@@ -67,17 +65,11 @@ class LoginPage extends Component {
         sessionStorage.setItem("role", data.role);
         // sessionStorage.setItem("password", data.password);
 
-        if (data.role === "admin"){
-          window.location.href = "/adminPage";
+        if (data.role === "admin") {
+          this.props.history.push("/adminPage");
         } else {
-          window.location.href = "/homePage";
+          this.props.history.push("/homePage");
         }
-
-        // // Redirect user
-        // this.props.history.push({
-        //   pathname: "/HomePage",
-        //   search: `?lastName=${data.lastName}&firstName=${data.firstName}&email=${email}`,
-        // });
       } else {
         this.setState({
           password: "",
@@ -87,10 +79,19 @@ class LoginPage extends Component {
       }
     } catch (error) {
       console.error("Error during login:", error);
+      this.setState({
+        password: "",
+        warning: (
+          <Alert variant="danger">An error occurred during login.</Alert>
+        ),
+      });
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
   render() {
+    const { loading } = this.state;
     const inputType = this.state.showPassword ? "text" : "password";
     const eyeIcons = this.state.showPassword
       ? "bi bi-eye-slash-fill"
@@ -121,7 +122,7 @@ class LoginPage extends Component {
             position: "relative",
             left: "30%",
             top: "240px",
-            borderColor: "#0d6efd"
+            borderColor: "#0d6efd",
           }}
         >
           <div className="row g-0">
@@ -141,9 +142,13 @@ class LoginPage extends Component {
                 {this.state.warning}
                 <Form
                   onSubmit={this.handleSubmit}
-                  style={{ marginTop: "20px", }}
+                  style={{ marginTop: "20px" }}
                 >
-                  <FloatingLabel controlId="loginEmail" label="Email address" style={{ color: "#0d6efd" }}>
+                  <FloatingLabel
+                    controlId="loginEmail"
+                    label="Email address"
+                    style={{ color: "#0d6efd" }}
+                  >
                     <Form.Control
                       type="email"
                       placeholder="Email"
@@ -157,7 +162,7 @@ class LoginPage extends Component {
                         position: "absolute",
                         top: "20px",
                         right: "10px",
-                        color: "1a1e21"
+                        color: "1a1e21",
                       }}
                     />
                   </FloatingLabel>
@@ -196,8 +201,9 @@ class LoginPage extends Component {
                     style={{ marginTop: "15px", marginBottom: "10px" }}
                     variant="outline-primary"
                     type="submit"
+                    disabled={loading}
                   >
-                    Login
+                    {loading ? "Logging in..." : "Login"}
                   </Button>
                 </Form>
                 Don't have an account?{" "}
