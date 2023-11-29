@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $contactNumber = $row['contactnumber'];
                 $email = $row['email'];
                 $id = $row['user_id'];
+                $role = $row['role'];
                 // $password = $row['password'];
 
                 // Set session variables
@@ -43,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['contactNumber'] = $contactNumber;
                 $_SESSION['email'] = $email;
                 $_SESSION['user_id'] = $id;
+                $_SESSION['role'] = $row;
                 // $_SESSION['password'] = $password;
 
                 echo json_encode([
@@ -53,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "contactNumber" => $contactNumber,
                     "email" => $email,
                     "userId" => $id,
+                    "role" => $role,
                     // "password" => $password,
                 ]);
             } else {
