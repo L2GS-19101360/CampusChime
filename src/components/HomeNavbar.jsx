@@ -13,7 +13,6 @@ import WebLogo from "../assets/CampusChimePurple.png";
 import LetteredAvatar from "./LetteredAvater";
 import logo from "../assets/CampusChimeNoname.png";
 
-
 const HomeNavbar = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
@@ -38,7 +37,7 @@ const HomeNavbar = () => {
         <Container style={{ marginLeft: "-10px" }}>
           <Navbar.Brand as={Link} to="/HomePage">
             <Image
-              src={ logo }
+              src={logo}
               alt="CampusChime Logo"
               style={{ width: "50px", marginBottom: "5px" }}
             />{" "}
@@ -100,9 +99,13 @@ const HomeNavbar = () => {
           </div>
 
           <div style={{ marginLeft: "25px", marginTop: "20px" }}>
-            <Link to="/UserSettingPage" style= {{color: "black", fontSize: "16px", fontWeight: "bold" }}>
+            <Link
+              to="/UserSettingPage"
+              style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
+            >
               <span>
-                <i className="bi bi-gear" style={{ color: 'black'}}></i> User Settings
+                <i className="bi bi-gear" style={{ color: "black" }}></i> User
+                Settings
               </span>
             </Link>
           </div>

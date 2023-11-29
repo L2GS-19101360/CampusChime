@@ -1,7 +1,6 @@
-
 import React, { useState, Suspense } from 'react';
 import Shop from '../shop/shop';
-//import SellComponent from './SellComponent';
+// import SellComponent from './SellComponent';
 import Loader from '../loader/loader';
 
 const HeroForHome = () => {
