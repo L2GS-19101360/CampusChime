@@ -29,7 +29,7 @@ class UserSettingPage extends Component {
     const email = sessionStorage.getItem("email");
     const contactNumber = sessionStorage.getItem("contactNumber");
     const userId = sessionStorage.getItem("userId");
-    // const password = sessionStorage.getItem("password");
+    const password = sessionStorage.getItem("password");
     // const conPassword = password;
 
     super();
@@ -44,7 +44,7 @@ class UserSettingPage extends Component {
       lastName: lastName,
       email: email,
       contactNumber: contactNumber,
-      newPassword: "",
+      newPassword: password,
       confirmPassword: "",
 
       products: [
@@ -73,8 +73,16 @@ class UserSettingPage extends Component {
 
     var getId = this.state.id;
 
-    if (this.state.newPassword === this.state.confirmPassword) {
-      console.log(getId);
+    if ((!this.state.newPassword || this.state.newPassword.trim() === "") && (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")) {
+
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_id=${getId}`, true);
+      xhttp.send();
+
+      sessionStorage.clear();
+      window.location.href = "/";
+
+    } else if (this.state.newPassword === this.state.confirmPassword) {
 
       var xhttp = new XMLHttpRequest();
       xhttp.open(

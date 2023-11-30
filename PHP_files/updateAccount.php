@@ -19,19 +19,36 @@ $updateEmail = trim($_GET['email']);
 $updatePassword = trim($_GET['password']);
 
 if ($isValid) {
-    $hashedPassword = password_hash($updatePassword, PASSWORD_DEFAULT);
+    if ($updatePassword === "") {
 
-    try {
-        $stmt = $conn->prepare("UPDATE users SET lastname=?,firstname=?,contactnumber=?,email=?,password=? WHERE user_id=?");
-        $stmt->bind_param("ssissi", $updateLname, $updateFname, $updateContact, $updateEmail, $hashedPassword, $getId);
-        $stmt->execute();
-        $stmt->close();
+        try {
+            $stmt = $conn->prepare("UPDATE users SET lastname=?,firstname=?,contactnumber=?,email=? WHERE user_id=?");
+            $stmt->bind_param("ssisi", $updateLname, $updateFname, $updateContact, $updateEmail, $getId);
+            $stmt->execute();
+            $stmt->close();
 
-        $data = $conn->insert_id;
-        $status = 200;
-        $retVal = "User account updated.";
-    } catch (Exception $e) {
-        $retVal = $e->getMessage();
+            $data = $conn->insert_id;
+            $status = 200;
+            $retVal = "User account updated.";
+        } catch (Exception $e) {
+            $retVal = $e->getMessage();
+        }
+    } else {
+
+        $hashedPassword = password_hash($updatePassword, PASSWORD_DEFAULT);
+
+        try {
+            $stmt = $conn->prepare("UPDATE users SET lastname=?,firstname=?,contactnumber=?,email=?,password=? WHERE user_id=?");
+            $stmt->bind_param("ssissi", $updateLname, $updateFname, $updateContact, $updateEmail, $hashedPassword, $getId);
+            $stmt->execute();
+            $stmt->close();
+
+            $data = $conn->insert_id;
+            $status = 200;
+            $retVal = "User account updated.";
+        } catch (Exception $e) {
+            $retVal = $e->getMessage();
+        }
     }
 }
 
@@ -44,5 +61,3 @@ $response = array(
 
 header('Content-Type: application/json');
 echo json_encode($response);
-
-?>
