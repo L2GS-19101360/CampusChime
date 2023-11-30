@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Offcanvas } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../../assets/CampusChimeNoname.png";
@@ -9,6 +9,19 @@ import { BiChevronLeft } from "react-icons/bi";
 
 function AdminPage() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [userDetails, setUserDetails] = useState({});
+
+  useEffect(() => {
+    const firstName = sessionStorage.getItem("firstName");
+    const lastName = sessionStorage.getItem("lastName");
+    const email = sessionStorage.getItem("email");
+
+    setUserDetails({
+      firstName: firstName || "",
+      lastName: lastName || "",
+      email: email || "",
+    });
+  }, []);
 
   return (
     <div className="container-fluid bg-white  min-vh-100">
@@ -104,6 +117,7 @@ function AdminPage() {
           <AdminNavbar
             toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
             isSidebarOpen={isSidebarOpen}
+            userDetails={userDetails}
           />
 
           <div className="flexible-content">
