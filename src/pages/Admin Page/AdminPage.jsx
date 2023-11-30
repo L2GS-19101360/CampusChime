@@ -9,21 +9,17 @@ import { BiChevronLeft } from "react-icons/bi";
 
 function AdminPage() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [userDetails, setUserDetails] = useState({
-    firstName: "d",
-    lastName: "d",
-    email: "d",
-  });
+  const [userDetails, setUserDetails] = useState({});
 
   useEffect(() => {
     const firstName = sessionStorage.getItem("firstName");
     const lastName = sessionStorage.getItem("lastName");
-    const email = sessionStorage.getItem("Email");
+    const email = sessionStorage.getItem("email");
 
     setUserDetails({
-      firstName: firstName || "v",
-      lastName: lastName || "v",
-      email: email || "v",
+      firstName: firstName || "",
+      lastName: lastName || "",
+      email: email || "",
     });
   }, []);
 
