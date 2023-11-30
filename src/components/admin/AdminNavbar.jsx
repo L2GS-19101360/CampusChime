@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Image, Dropdown } from "react-bootstrap";
-import { BiChevronLeft, BiChevronRight, BiChevronDown } from "react-icons/bi";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { HiOutlineLogout } from "react-icons/hi";
 import { PiUserCircleGear } from "react-icons/pi";
 
@@ -8,10 +8,8 @@ import LetteredAvatar from "../LetteredAvater";
 import Logo from "../../assets/CampusChimeNoname.png";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 
-function AdminNavbar({ toggleSidebar, isSidebarOpen }) {
-  const firstName = "John"; // Replace with session
-  const lastName = "Ceniza";
-  const email = "john@usc.edu.ph";
+function AdminNavbar({ toggleSidebar, isSidebarOpen, userDetails }) {
+  const { firstName, lastName, email } = userDetails;
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const handleDropdownToggle = () => {
@@ -82,19 +80,12 @@ function AdminNavbar({ toggleSidebar, isSidebarOpen }) {
             <div
               onClick={handleDropdownToggle}
               style={{
-                marginRight: "40px",
+                marginRight: "75px",
                 display: "flex",
                 alignItems: "center",
               }}
             >
               <LetteredAvatar name={`${firstName} ${lastName}`} size={55} />
-              <BiChevronDown
-                size={25}
-                style={{
-                  marginTop: "20px",
-                  transform: isDropdownOpen ? "rotate(180deg)" : "",
-                }}
-              />
             </div>
 
             <Dropdown.Menu
@@ -159,9 +150,10 @@ function AdminNavbar({ toggleSidebar, isSidebarOpen }) {
               <Dropdown.Item onClick={handleLogout}>
                 <span
                   style={{
-                    color: "black",
+                    color: "red",
                     fontSize: "15px",
                     fontWeight: "bold",
+                    marginLeft: "5px",
                   }}
                 >
                   <HiOutlineLogout style={{ color: "black" }} size={20} />{" "}
