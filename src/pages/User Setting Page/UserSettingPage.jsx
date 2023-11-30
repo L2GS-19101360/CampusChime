@@ -54,13 +54,13 @@ class UserSettingPage extends Component {
         // Add more placeholders as needed
       ],
 
-      alertMessage: ""
+      alertMessage: "",
     };
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   // handleInputChange = (e) => {
   //   this.setState({ [e.target.name]: e.target.value });
@@ -73,7 +73,6 @@ class UserSettingPage extends Component {
 
     var getId = this.state.id;
 
-
     if ((!this.state.newPassword || this.state.newPassword.trim() === "") && (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")) {
 
       var xhttp = new XMLHttpRequest();
@@ -85,15 +84,16 @@ class UserSettingPage extends Component {
 
     } else if (this.state.newPassword === this.state.confirmPassword) {
 
-      console.log(getId);
-
       var xhttp = new XMLHttpRequest();
-      xhttp.open("POST", `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&user_id=${getId}`, true);
+      xhttp.open(
+        "POST",
+        `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&user_id=${getId}`,
+        true
+      );
       xhttp.send();
 
       sessionStorage.clear();
       window.location.href = "/";
-
     } else {
       this.setState({
         alertMessage: (
@@ -104,8 +104,6 @@ class UserSettingPage extends Component {
       });
     }
   };
-
-
 
   togglePasswordVisibility = () => {
     this.setState((prevState) => ({
@@ -213,9 +211,11 @@ class UserSettingPage extends Component {
                     placeholder="Enter your first name"
                     name="firstName"
                     value={firstName}
-                    onChange={(e) => this.setState({
-                      firstName: e.target.value
-                    })}
+                    onChange={(e) =>
+                      this.setState({
+                        firstName: e.target.value,
+                      })
+                    }
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -227,9 +227,11 @@ class UserSettingPage extends Component {
                     placeholder="Enter your last name"
                     name="lastName"
                     value={lastName}
-                    onChange={(e) => this.setState({
-                      lastName: e.target.value
-                    })}
+                    onChange={(e) =>
+                      this.setState({
+                        lastName: e.target.value,
+                      })
+                    }
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -241,9 +243,11 @@ class UserSettingPage extends Component {
                     placeholder="Enter your email address"
                     name="email"
                     value={email}
-                    onChange={(e) => this.setState({
-                      email: e.target.value
-                    })}
+                    onChange={(e) =>
+                      this.setState({
+                        email: e.target.value,
+                      })
+                    }
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -258,9 +262,11 @@ class UserSettingPage extends Component {
                     placeholder="Enter your contact number"
                     name="contactNumber"
                     value={contactNumber}
-                    onChange={(e) => this.setState({
-                      contactNumber: e.target.value
-                    })}
+                    onChange={(e) =>
+                      this.setState({
+                        contactNumber: e.target.value,
+                      })
+                    }
                   />
                 </FloatingLabel>
               </Form.Group>
@@ -275,15 +281,18 @@ class UserSettingPage extends Component {
                     placeholder="Enter your new password"
                     name="newPassword"
                     value={newPassword}
-                    onChange={(e) => this.setState({
-                      newPassword: e.target.value
-                    })}
+                    onChange={(e) =>
+                      this.setState({
+                        newPassword: e.target.value,
+                      })
+                    }
                   />
                   <i
-                    className={`ms-2 ${this.state.showPassword
-                      ? "bi bi-eye-slash-fill"
-                      : "bi bi-eye-fill"
-                      }`}
+                    className={`ms-2 ${
+                      this.state.showPassword
+                        ? "bi bi-eye-slash-fill"
+                        : "bi bi-eye-fill"
+                    }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -306,15 +315,18 @@ class UserSettingPage extends Component {
                     placeholder="Confirm your new password"
                     name="confirmPassword"
                     value={confirmPassword}
-                    onChange={(e) => this.setState({
-                      confirmPassword: e.target.value
-                    })}
+                    onChange={(e) =>
+                      this.setState({
+                        confirmPassword: e.target.value,
+                      })
+                    }
                   />
                   <i
-                    className={`ms-2 ${this.state.showPassword
-                      ? "bi bi-eye-slash-fill"
-                      : "bi bi-eye-fill"
-                      }`}
+                    className={`ms-2 ${
+                      this.state.showPassword
+                        ? "bi bi-eye-slash-fill"
+                        : "bi bi-eye-fill"
+                    }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
