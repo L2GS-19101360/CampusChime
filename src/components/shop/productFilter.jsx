@@ -116,9 +116,11 @@ const ProdFilter = () => {
           <div className="mb-3">
             <label className="form-label">Price Range</label>
             {/* Input for minimum price */}
+            <br></br>
+            <label className="form-label mx-1">Minimum Price</label>
             <input
               type="number"
-              className="form-control"
+              className="form-control "
               placeholder="Min Price"
               value={filters.minPrice}
               onChange={(e) =>
@@ -126,6 +128,7 @@ const ProdFilter = () => {
               }
             />
             {/* Input for maximum price */}
+            <label className="form-label mx-1">Maximum Price</label>
             <input
               type="number"
               className="form-control mt-2"
@@ -162,6 +165,10 @@ const ProdFilter = () => {
               <option value="">Any Rating</option>
               <option value="5">5 Stars</option>
               <option value="4">4 Stars & above</option>
+              <option value="3">3 Stars & above</option>
+              <option value="2">2 Stars & above</option>
+              <option value="1">1 Star & above</option>
+              <option value="0">No Rating</option>
               {/* Add more rating options */}
             </select>
           </div>
@@ -171,7 +178,7 @@ const ProdFilter = () => {
           {/* Apply Button */}
           <button
             type="button"
-            className="btn btn-primary"
+            className="my-2 btn btn-primary"
             onClick={applyFilters}
           >
             Apply Filters
