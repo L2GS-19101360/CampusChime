@@ -50,7 +50,7 @@ const HeroForHome = () => {
   };
 
   // SellRequestModal component
-  const SellRequestModal = ({ onClose, onSendRequest }) => {
+  const EntrepRequestModal = ({ onClose, onSendRequest }) => {
     const [file, setFile] = useState(null);
 
     // Handle file change for uploading the document
@@ -181,7 +181,7 @@ const HeroForHome = () => {
       {/* ShowEntrepForm component */}
       {showEntrepForm && (
         <EntrepRequestModal
-          onClose={handleEntrepForm}
+          onClose={handleCloseSellModal}
           onSendRequest={handleSendRequest}
         />
       )}
