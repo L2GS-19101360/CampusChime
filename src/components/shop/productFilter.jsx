@@ -4,7 +4,8 @@ const ProdFilter = () => {
   // State to manage filter options
   const [filters, setFilters] = useState({
     category: '',
-    price: '',
+    minPrice: '',
+    maxPrice: '',
     brand: '',
     rating: '',
     // Add more filters as needed
@@ -68,36 +69,72 @@ const ProdFilter = () => {
           ></button>
         </div>
         <div className="offcanvas-body">
-          {/* Category Filter */}
-          <div className="mb-3">
-            <label className="form-label">Category</label>
-            {/* Replace with your actual category options */}
-            <select
-              className="form-select"
-              value={filters.category}
-              onChange={(e) => handleFilterChange('category', e.target.value)}
-            >
-              <option value="">All Categories</option>
-              <option value="electronics">Electronics</option>
-              <option value="clothing">Clothing</option>
-              {/* Add more categories */}
-            </select>
-          </div>
+         {/* Category Filter */}
+        <div className="mb-3">
+          <label className="form-label">Category</label>
+          {/* Replace with your actual category options */}
+          <select
+            className="form-select"
+            value={filters.category}
+            onChange={(e) => handleFilterChange('category', e.target.value)}
+          >
+            <option value="">All Categories</option>
+            <option value="electronics">Electronics</option>
+            <option value="clothing">Clothing</option>
+            <option value="shoes">Shoes</option>
+            <option value="home-appliances">Home Appliances</option>
+            <option value="furniture">Furniture</option>
+            <option value="books">Books</option>
+            <option value="toys">Toys</option>
+            <option value="sports-outdoors">Sports & Outdoors</option>
+            <option value="beauty-health">Beauty & Health</option>
+            <option value="automotive">Automotive</option>
+            <option value="jewelry">Jewelry</option>
+            <option value="watches">Watches</option>
+            <option value="music-instruments">Music Instruments</option>
+            <option value="pet-supplies">Pet Supplies</option>
+            <option value="kitchen-dining">Kitchen & Dining</option>
+            <option value="office-supplies">Office Supplies</option>
+            <option value="luggage-bags">Luggage & Bags</option>
+            <option value="baby-products">Baby Products</option>
+            <option value="outdoor-gear">Outdoor Gear</option>
+            <option value="cameras">Cameras</option>
+            <option value="smart-home">Smart Home</option>
+            <option value="fitness">Fitness</option>
+            <option value="gaming">Gaming</option>
+            <option value="tools">Tools</option>
+            <option value="party-supplies">Party Supplies</option>
+            <option value="home-decor">Home Decor</option>
+            <option value="crafts">Crafts</option>
+            {/* Add or remove categories based on your products */}
+          </select>
+        </div>
+
+
 
           {/* Price Range Filter */}
           <div className="mb-3">
             <label className="form-label">Price Range</label>
-            {/* Replace with your actual price range options */}
-            <select
-              className="form-select"
-              value={filters.price}
-              onChange={(e) => handleFilterChange('price', e.target.value)}
-            >
-              <option value="">Any Price</option>
-              <option value="0-50">$0 - $50</option>
-              <option value="51-100">$51 - $100</option>
-              {/* Add more price ranges */}
-            </select>
+            {/* Input for minimum price */}
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Min Price"
+              value={filters.minPrice}
+              onChange={(e) =>
+                handleFilterChange('minPrice', e.target.value)
+              }
+            />
+            {/* Input for maximum price */}
+            <input
+              type="number"
+              className="form-control mt-2"
+              placeholder="Max Price"
+              value={filters.maxPrice}
+              onChange={(e) =>
+                handleFilterChange('maxPrice', e.target.value)
+              }
+            />
           </div>
 
           {/* Brand Filter */}
