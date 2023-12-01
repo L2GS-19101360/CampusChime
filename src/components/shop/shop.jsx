@@ -1,14 +1,15 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap'; 
 import './search-bar.css'
-
-
+import ScrollToTopButton from '../other-nav/gotoTop'
+import ProdFilter from './productFilter';
 const Shop = () => {
  
 
  return (
- 
+    
 <div>
+
     <section className="py-0 py-lg-0 bg-dark">
     {/*Message Icon and Entry to Messages*/}
     <button type="button" class="btn py-2 btn-primary position-relative m-4 float-end d-inline">
@@ -36,7 +37,7 @@ const Shop = () => {
 
 
         <div class="modal-dialog modal-fullscreen-sm-down">
-        ...
+        
         </div>
          {/*Hero Section*/}
         <header className="py-5">
@@ -52,33 +53,18 @@ const Shop = () => {
         </header>
         </section>
        <div className="row">
-           
+       <ProdFilter />
             
-            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Filter</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <p>See the things you want your way</p>
-            </div>
-            </div>
+          
             <div className="col-12" data-bs-spy="scroll"  data-bs-target=".container" data-bs-offset="50">
-                <div className="px-4 mt-4 d-flex align-items-center">
-                <button className="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">   
-                <section className="d-inline-flex">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-filter-circle-fill" viewBox="0 0 16 16">
-                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M3.5 5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1M5 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5"/>
-                </svg>
-                </section>
-                <h1 className="d-inline-grid px-2">Filter Results</h1>
-                </button> 
-                </div>
+              
+               
 
                 <div className="container px-4 px-lg-5 mt-5">
                         <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                             <div className="col mb-5">
                                 <div className="card h-100">
+                         
                                     {/* Product image */}
                                     <img className="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                     {/* Product details */}
@@ -229,7 +215,7 @@ const Shop = () => {
                             <div className="col mb-5">
                                 <div className="card h-100">
                                     {/* Sale badge */}
-                                    <div className="badge bg-dark text-white position-absolute" style={{top: '0.5rem', right: '0.5rem'}}>Sale</div>
+                                    <div className="badge bg-danger text-white position-absolute" style={{top: '0.5rem', right: '0.5rem'}}>Sale</div>
                                     {/* Product image */}
                                     <img className="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                     {/* Product details */}
@@ -249,10 +235,14 @@ const Shop = () => {
                                 </div>
                             </div>
 
-                        </div>     
+                        </div>   
+                        <ScrollToTopButton />  
                     </div>
+                    
                 </div>  {/*Product Show case Div*/}
         </div> 
+       
+
 </div> 
  );
 };
