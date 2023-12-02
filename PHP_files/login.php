@@ -39,11 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // $password = $row['password'];
 
                 // Set session variables
+
                 $_SESSION['firstName'] = $firstName;
                 $_SESSION['lastName'] = $lastName;
                 $_SESSION['email'] = $email;
                 $_SESSION['contactNumber'] = $contactNumber;
-                $_SESSION['email'] = $email;
                 $_SESSION['user_id'] = $id;
                 // $_SESSION['user_image'] = $imageData;
                 $_SESSION['role'] = $role;
