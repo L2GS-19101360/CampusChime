@@ -2,12 +2,13 @@ import React, { useState, Suspense } from 'react';
 import Shop from '../shop/shop';
 // import SellComponent from './SellComponent';
 import Loader from '../loader/loader';
-
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import SellerProductPage from '../../pages/ProductManagement/SellerProductManage';
 const HeroForHome = () => {
   // State variables
   const [showHero, setShowHero] = useState(true);
   const [showShop, setShowShop] = useState(false);
-  /*const [showSell, setShowSell] = useState(false);*/
+  const [showSellerProductPage, setShowSellerProductPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showEntrepForm, setShowEntrepForm] = useState(false);
 
@@ -149,7 +150,10 @@ const HeroForHome = () => {
               <button type="button" className="btn-danger btn btn-lg px-4" onClick={() =>{ 
                 setShowHero(false);
                 setIsLoading(true);
-                //setShowSell(true);
+                <Suspense fallback={setIsLoading(true)}>
+                {setShowSellerProductPage(true)}
+                {setIsLoading(false)}
+                </Suspense>
                 
                 }}>Sell</button>
             </div>
@@ -165,6 +169,7 @@ const HeroForHome = () => {
      <Loader></Loader>
     )}
     {showShop && <Shop />}
+    {showSellerProductPage && <SellerProductPage />}
     {/*showSell && <SellComponent />*/}
   </div>
   );
