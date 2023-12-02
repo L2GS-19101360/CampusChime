@@ -27,6 +27,9 @@ const HomeNavbar = () => {
   const firstName = sessionStorage.getItem("firstName");
   const lastName = sessionStorage.getItem("lastName");
   const role = sessionStorage.getItem("role");
+  const userImage = sessionStorage.getItem("userImage");
+
+  var IsImageNull = userImage == null;
 
   return (
     <div>
@@ -63,11 +66,25 @@ const HomeNavbar = () => {
         </Container>
 
         <div className="ms-auto" style={{ marginRight: "30px" }}>
-          <LetteredAvatar
-            name={`${firstName} ${lastName}`}
-            size={55}
-            onClick={handleOffcanvasShow}
-          />
+          {IsImageNull ? (
+            <LetteredAvatar
+              name={`${firstName} ${lastName}`}
+              size={55}
+              onClick={handleOffcanvasShow}
+            />
+          ) : (
+            <img
+              src={`http://localhost/campuschime/PHP_files/user_images/${userImage}`}
+              alt={`${firstName} ${lastName}`}
+              style={{
+                width: "55px",
+                height: "55px",
+                borderRadius: "50%",
+                border: '1px solid black'
+              }}
+              onClick={handleOffcanvasShow}
+            />
+          )}
         </div>
       </Navbar>
 
@@ -87,7 +104,21 @@ const HomeNavbar = () => {
               marginLeft: "30px",
             }}
           >
-            <LetteredAvatar name={`${firstName} ${lastName}`} size={150} />
+            {IsImageNull ? (
+              <LetteredAvatar name={`${firstName} ${lastName}`} size={150} />
+            ) : (
+              <img
+                src={`http://localhost/campuschime/PHP_files/user_images/${userImage}`}
+                alt={`${firstName} ${lastName}`}
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  borderRadius: "50%",
+                  border: '1px solid black'
+                }}
+                onClick={handleOffcanvasShow}
+              />
+            )}
           </div>
           <div
             style={{

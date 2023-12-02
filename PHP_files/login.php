@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $email = $row['email'];
                 $id = $row['user_id'];
                 $role = $row['role'];
-                // $imageData = base64_encode($row['user_image']);     
+                $imageData = $row['user_image'];     
                 // $password = $row['password'];
 
                 // Set session variables
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['email'] = $email;
                 $_SESSION['contactNumber'] = $contactNumber;
                 $_SESSION['user_id'] = $id;
-                // $_SESSION['user_image'] = $imageData;
+                $_SESSION['user_image'] = $imageData;
                 $_SESSION['role'] = $role;
                 // $_SESSION['password'] = $password;
 
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "email" => $email,
                     "userId" => $id,
                     "role" => $role,
-                    // "user_image" => $imageData,
+                    "user_image" => $imageData,
                     // "password" => $password,
                 ]);
             } else {
