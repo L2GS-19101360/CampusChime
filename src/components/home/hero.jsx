@@ -5,15 +5,14 @@ import Loader from "../loader/loader";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
-var user_id = sessionStorage.getItem("userId");
-
-console.log(user_id);
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import SellerProductPage from '../../pages/ProductManagement/SellerProductManage';
 
 const HeroForHome = () => {
   // State variables
   const [showHero, setShowHero] = useState(true);
   const [showShop, setShowShop] = useState(false);
+  const [showSellerProductPage, setShowSellerProductPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showEntrepForm, setShowEntrepForm] = useState(false);
 
@@ -183,66 +182,49 @@ const HeroForHome = () => {
 
   return (
     <div>
-      {showHero && (
-        <section className="HERO-HOME">
-          <div
-            className="container my-5 rounded"
-            style={{ backgroundColor: "#C0C0C0" }}
-          >
-            <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
-              <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                <h1 className="display-4 fw-bold lh-1 text-body-emphasis">
-                  Welcome to Campus Chime
-                </h1>
-                <p className="lead text-black">
-                  Buying and Selling venturing unique businesses, student's best
-                  start-up platform!
-                </p>
-                <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                  <button
-                    type="button"
-                    className="btn btn-success btn-lg px-4 me-md-2 fw-bold"
-                    onClick={handleShopClick}
-                  >
-                    Shop Now!
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-danger btn btn-lg px-4"
-                    onClick={handleSellClick}
-                  >
-                    Sell
-                  </button>
-                </div>
-              </div>
-              <div className="col-lg-4 offset-lg-0 p-0 text-center mb-5">
-                <img
-                  className="img-fluid mx-auto"
-                  src="/CAMPUSCHIME ANIMATED LOGO.gif"
-                  alt="CampusChime"
-                  width="480"
-                ></img>
-              </div>
+    {showHero && (
+      <section className="HERO-HOME">
+        <div className="container my-5  rounded" style={{backgroundColor: '#C0C0C0'}}>
+        <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+          <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 className="display-4 fw-bold lh-1 text-body-emphasis">Welcome to Campus Chime</h1>
+            <p className="lead text-black">Buying and Selling venturing unique businesses, student's best start-up platform!</p>
+            <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+              <button type="button" className="btn btn-success btn-lg px-4 me-md-2 fw-bold"  onClick={() => {
+                  setShowHero(false);
+                  <Suspense fallback={setIsLoading(true)}>
+                  {setShowShop(true)}
+                  {setIsLoading(false)}
+                  </Suspense>
+                 
+                 // setShowShop(true);
+                  
+                }}>Shop Now!</button>
+              <button type="button" className="btn-danger btn btn-lg px-4" onClick={() =>{ 
+                setShowHero(false);
+                setIsLoading(true);
+                <Suspense fallback={setIsLoading(true)}>
+                {setShowSellerProductPage(true)}
+                {setIsLoading(false)}
+                </Suspense>
+                
+                }}>Sell</button>
             </div>
           </div>
-        </section>
-      )}
-
-      {isLoading && <Loader></Loader>}
-
-      {showShop && <Shop />}
-
-      {/* ShowEntrepForm component */}
-      {showEntrepForm && (
-        <EntrepRequestModal
-          onClose={handleCloseSellModal}
-          onSendRequest={handleSendRequest}
-        />
-      )}
-
-      {/* Toastify notification container */}
-      <ToastContainer />
-    </div>
+          <div className="col-lg-4 offset-lg-0 p-0 text-center mb-5">
+              <img className="img-fluid mx-auto" src="/CAMPUSCHIME ANIMATED LOGO.gif" alt="CampusChime" width="480"></img>
+          </div>
+        </div>
+      </div>
+  </section>
+    )}
+    {isLoading && (
+     <Loader></Loader>
+    )}
+    {showShop && <Shop />}
+    {showSellerProductPage && <SellerProductPage />}
+    {/*showSell && <SellComponent />*/}
+  </div>
   );
 };
 
