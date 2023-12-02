@@ -30,7 +30,7 @@ class UserSettingPage extends Component {
     const contactNumber = sessionStorage.getItem("contactNumber");
     const userId = sessionStorage.getItem("userId");
     const password = sessionStorage.getItem("password");
-    // const userImage = sessionStorage.getItem("userImage");
+    const userImage = sessionStorage.getItem("userImage");
     // const conPassword = password;
 
     super();
@@ -45,7 +45,7 @@ class UserSettingPage extends Component {
       lastName: lastName,
       email: email,
       contactNumber: contactNumber,
-      // user_Image: userImage,
+      user_Image: userImage,
       newPassword: password,
       confirmPassword: "",
 
@@ -60,47 +60,104 @@ class UserSettingPage extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   // handleInputChange = (e) => {
   //   this.setState({ [e.target.name]: e.target.value });
   // };
 
+  handleFileChange = (e) => {
+    console.log("File selected");
+
+    const file = e.target.files[0];
+
+    console.log(file);
+
+    this.setState({
+      user_Image: file.name
+    });
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch("http://localhost/campuschime/PHP_files/updateAccount.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        console.log("Server Response:", response);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data received from the server:", data);
+
+        if (data && data.filename) {
+          const filename = data.filename;
+          console.log("Filename received:", filename);
+
+          this.setState({
+            user_Image: filename,
+          });
+        } else {
+          console.error("Error: Unexpected response format from the server.");
+        }
+      })
+
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+      });
+  };
+
+
+
+
+
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log(this.state.id);
+    // Get the filename from the component state
+    var filename = this.state.user_Image;
+    console.log(filename);
 
+    // Get other necessary values from the state
     var getId = this.state.id;
 
-    if (
-      (!this.state.newPassword || this.state.newPassword.trim() === "") &&
-      (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")
-    ) {
+    // Check if no new password and no confirm password
+    if ((!this.state.newPassword || this.state.newPassword.trim() === "") && (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")) {
+      // Handle the case where no password change is needed
+
       var xhttp = new XMLHttpRequest();
-      xhttp.open(
-        "POST",
-        `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_id=${getId}`,
-        true
-      );
+      xhttp.open("POST", `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_image=${filename}&user_id=${getId}`, true);
       xhttp.send();
 
       sessionStorage.clear();
       window.location.href = "/";
+      // Handle the rest of your code or redirection if needed
+
     } else if (this.state.newPassword === this.state.confirmPassword) {
+      // Handle the case where a new password is provided
+
       var xhttp = new XMLHttpRequest();
       xhttp.open(
         "POST",
-        `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&user_id=${getId}`,
+        `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&user_image=${filename}&user_id=${getId}`,
         true
       );
       xhttp.send();
 
       sessionStorage.clear();
       window.location.href = "/";
+      // Handle the rest of your code or redirection if needed
+
     } else {
+      // Handle the case where passwords do not match
       this.setState({
         alertMessage: (
           <div className="alert alert-danger" role="alert">
@@ -109,7 +166,48 @@ class UserSettingPage extends Component {
         ),
       });
     }
+
+    // Check if a file is selected
+    // if (filename) {
+    //   // Include the filename in the form submission
+    //   const formData = new FormData();
+    //   formData.append("file", filename);
+
+    //   // Fetch request to upload the file
+    //   fetch("http://localhost/campuschime/PHP_files/updateAccount.php", {
+    //     method: "POST",
+    //     body: formData,
+    //   })
+    //     .then((response) => {
+    //       console.log("Server Response:", response);
+
+    //       if (!response.ok) {
+    //         throw new Error(`HTTP error! Status: ${response.status}`);
+    //       }
+
+    //       return response.json();
+    //     })
+    //     .then((data) => {
+    //       console.log("Data received from the server:", data);
+
+    //       if (data && data.filename) {
+    //         // Handle the response or update state if needed
+    //         const filename = data.filename;
+    //         console.log("Filename received:", filename);
+
+    //         this.setState({
+    //           user_Image: filename,
+    //         });
+    //       } else {
+    //         console.error("Error: Unexpected response format from the server.");
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error uploading image:", error);
+    //     });
+    // }
   };
+
 
   togglePasswordVisibility = () => {
     this.setState((prevState) => ({
@@ -128,7 +226,24 @@ class UserSettingPage extends Component {
       newPassword,
       confirmPassword,
     } = this.state;
+
     const inputType = this.state.showPassword ? "text" : "password";
+
+    var profileImage = this.state.user_Image == null ? (
+      <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
+    ) : (
+      <img
+        src={`http://localhost/campuschime/PHP_files/user_images/${this.state.user_Image}`}
+        alt={`${LAfirstName} ${LAlastName}`}
+        style={{
+          width: "190px",
+          height: "190px",
+          borderRadius: "50%",
+          border: '1px solid black'
+        }}
+      />
+    );
+
 
     return (
       <div>
@@ -190,7 +305,11 @@ class UserSettingPage extends Component {
           }}
         >
           <div>
-            <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
+            {profileImage}
+            <h4 style={{
+              marginLeft: "10px",
+              marginTop: "10px"
+            }}>{lastName},{firstName}</h4><br /><br /><br /><br />
             <Button
               variant="danger"
               onClick={handleLogout}
@@ -294,11 +413,10 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
-                        ? "bi bi-eye-slash-fill"
-                        : "bi bi-eye-fill"
-                    }`}
+                    className={`ms-2 ${this.state.showPassword
+                      ? "bi bi-eye-slash-fill"
+                      : "bi bi-eye-fill"
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -328,11 +446,10 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
-                        ? "bi bi-eye-slash-fill"
-                        : "bi bi-eye-fill"
-                    }`}
+                    className={`ms-2 ${this.state.showPassword
+                      ? "bi bi-eye-slash-fill"
+                      : "bi bi-eye-fill"
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -343,6 +460,15 @@ class UserSettingPage extends Component {
                     }}
                   ></i>
                 </FloatingLabel>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formProfileImage">
+                <Form.Label>Profile Image</Form.Label>
+                <input
+                  type="file"
+                  name="profileImage"
+                  onChange={(e) => this.handleFileChange(e)}
+                />
               </Form.Group>
 
               <Button
