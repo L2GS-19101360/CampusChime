@@ -4,6 +4,11 @@ import Shop from "../shop/shop";
 import Loader from "../loader/loader";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+
+var user_id = sessionStorage.getItem("userId");
+
+console.log(user_id);
 
 const HeroForHome = () => {
   // State variables
@@ -38,20 +43,67 @@ const HeroForHome = () => {
   };
 
   // Handle sending the request and show a success notification
-  const handleSendRequest = (formData) => {
-    // Add logic to handle sending the request with the form data
-    setShowEntrepForm(false);
-    showNotification("Request sent successfully!");
+  const handleSendRequest = (file, productDescription) => {
+    if (!file || !productDescription) {
+      // Handle the case where file or productDescription is not defined
+      console.error("File or productDescription is not defined.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("productDescription", productDescription);
+    formData.append("user_id", user_id); // Add user_id to the form data
+
+    axios
+      .post(
+        "http://localhost/CampusChime/PHP_files/entrepreneur_request.php",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data && response.data.success) {
+          setShowEntrepForm(false);
+          showNotification("Request sent successfully!");
+        } else {
+          console.error("Error in response data:", response);
+          showNotification("Error in response data.", "error");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        showNotification("An error occurred. Please try again later.", "error");
+      });
   };
 
   // Display a notification using Toastify
-  const showNotification = (message) => {
-    toast.success(message, { position: "top-center", autoClose: 2000 });
+  const showNotification = (message, type = "success") => {
+    const options = {
+      position: "top-center",
+      autoClose: 2000,
+    };
+
+    switch (type) {
+      case "success":
+        toast.success(message, options);
+        break;
+      case "error":
+        toast.error(message, options);
+        break;
+      default:
+        toast(message, options);
+        break;
+    }
   };
 
   // SellRequestModal component
   const EntrepRequestModal = ({ onClose, onSendRequest }) => {
     const [file, setFile] = useState(null);
+    const [productDescription, setProductDescription] = useState("");
 
     // Handle file change for uploading the document
     const handleFileChange = (event) => {
@@ -62,12 +114,13 @@ const HeroForHome = () => {
     const handleSubmit = (event) => {
       event.preventDefault();
 
-      const formData = new FormData();
-      formData.append("file", file);
+      if (!file) {
+        console.error("Please select a file before submitting.");
+        showNotification("Please select a file before submitting.", "error");
+        return;
+      }
 
-      // Add more form data if needed
-
-      onSendRequest(formData);
+      onSendRequest(file, productDescription);
     };
 
     return (
@@ -108,6 +161,7 @@ const HeroForHome = () => {
                 as="textarea"
                 rows={3}
                 placeholder="Enter a brief description of your product..."
+                onChange={(e) => setProductDescription(e.target.value)}
               />
             </Form.Group>
 
