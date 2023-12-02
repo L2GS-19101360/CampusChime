@@ -63,7 +63,7 @@ class LoginPage extends Component {
         sessionStorage.setItem("contactNumber", data.contactNumber);
         sessionStorage.setItem("userId", data.userId);
         sessionStorage.setItem("role", data.role);
-        // sessionStorage.setItem("password", data.password);
+        // sessionStorage.setItem("userImage", data.user_image);
 
         if (data.role === "admin") {
           this.props.history.push("/adminPage");
@@ -73,7 +73,7 @@ class LoginPage extends Component {
       } else {
         this.setState({
           password: "",
-          warning: <Alert variant="danger">{data.message}</Alert>,
+          warning: <Alert variant="danger">{data.message || "Login failed"}</Alert>,
         });
         console.error("Login failed:", data.message);
       }

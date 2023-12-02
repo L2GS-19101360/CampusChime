@@ -30,6 +30,7 @@ class UserSettingPage extends Component {
     const contactNumber = sessionStorage.getItem("contactNumber");
     const userId = sessionStorage.getItem("userId");
     const password = sessionStorage.getItem("password");
+    // const userImage = sessionStorage.getItem("userImage");
     // const conPassword = password;
 
     super();
@@ -44,6 +45,7 @@ class UserSettingPage extends Component {
       lastName: lastName,
       email: email,
       contactNumber: contactNumber,
+      // user_Image: userImage,
       newPassword: password,
       confirmPassword: "",
 
@@ -58,9 +60,9 @@ class UserSettingPage extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   // handleInputChange = (e) => {
   //   this.setState({ [e.target.name]: e.target.value });
@@ -288,11 +290,10 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
-                        ? "bi bi-eye-slash-fill"
-                        : "bi bi-eye-fill"
-                    }`}
+                    className={`ms-2 ${this.state.showPassword
+                      ? "bi bi-eye-slash-fill"
+                      : "bi bi-eye-fill"
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -322,11 +323,10 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
-                        ? "bi bi-eye-slash-fill"
-                        : "bi bi-eye-fill"
-                    }`}
+                    className={`ms-2 ${this.state.showPassword
+                      ? "bi bi-eye-slash-fill"
+                      : "bi bi-eye-fill"
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
