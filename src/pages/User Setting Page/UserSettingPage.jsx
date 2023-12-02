@@ -60,9 +60,9 @@ class UserSettingPage extends Component {
     };
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   // handleInputChange = (e) => {
   //   this.setState({ [e.target.name]: e.target.value });
@@ -75,17 +75,21 @@ class UserSettingPage extends Component {
 
     var getId = this.state.id;
 
-    if ((!this.state.newPassword || this.state.newPassword.trim() === "") && (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")) {
-
+    if (
+      (!this.state.newPassword || this.state.newPassword.trim() === "") &&
+      (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")
+    ) {
       var xhttp = new XMLHttpRequest();
-      xhttp.open("POST", `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_id=${getId}`, true);
+      xhttp.open(
+        "POST",
+        `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_id=${getId}`,
+        true
+      );
       xhttp.send();
 
       sessionStorage.clear();
       window.location.href = "/";
-
     } else if (this.state.newPassword === this.state.confirmPassword) {
-
       var xhttp = new XMLHttpRequest();
       xhttp.open(
         "POST",
@@ -290,10 +294,11 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${this.state.showPassword
-                      ? "bi bi-eye-slash-fill"
-                      : "bi bi-eye-fill"
-                      }`}
+                    className={`ms-2 ${
+                      this.state.showPassword
+                        ? "bi bi-eye-slash-fill"
+                        : "bi bi-eye-fill"
+                    }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -323,10 +328,11 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${this.state.showPassword
-                      ? "bi bi-eye-slash-fill"
-                      : "bi bi-eye-fill"
-                      }`}
+                    className={`ms-2 ${
+                      this.state.showPassword
+                        ? "bi bi-eye-slash-fill"
+                        : "bi bi-eye-fill"
+                    }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",

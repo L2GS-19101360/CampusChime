@@ -8,14 +8,15 @@ import axios from "axios";
 
 var user_id = sessionStorage.getItem("userId");
 
-console.log(user_id);
-
 const HeroForHome = () => {
   // State variables
   const [showHero, setShowHero] = useState(true);
   const [showShop, setShowShop] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showEntrepForm, setShowEntrepForm] = useState(false);
+  const [requestDate, setRequestDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
   // Handle click to navigate to Shop
   const handleShopClick = () => {
@@ -44,9 +45,12 @@ const HeroForHome = () => {
 
   // Handle sending the request and show a success notification
   const handleSendRequest = (file, productDescription) => {
-    if (!file || !productDescription) {
-      // Handle the case where file or productDescription is not defined
-      console.error("File or productDescription is not defined.");
+    if (!file) {
+      showNotification("Please select a file before submitting.", "error");
+      return;
+    }
+    if (!productDescription) {
+      showNotification("Please provide a product description.", "error");
       return;
     }
 
@@ -54,6 +58,7 @@ const HeroForHome = () => {
     formData.append("file", file);
     formData.append("productDescription", productDescription);
     formData.append("user_id", user_id); // Add user_id to the form data
+    formData.append("requestDate", requestDate); // Add requestDate to the form data
 
     axios
       .post(
@@ -113,12 +118,6 @@ const HeroForHome = () => {
     // Handle form submission
     const handleSubmit = (event) => {
       event.preventDefault();
-
-      if (!file) {
-        console.error("Please select a file before submitting.");
-        showNotification("Please select a file before submitting.", "error");
-        return;
-      }
 
       onSendRequest(file, productDescription);
     };
