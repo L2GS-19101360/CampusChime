@@ -60,6 +60,7 @@ class RegisterPage extends Component {
             } else {
               // Store data in sessionStorage
               sessionStorage.setItem("userId", response.data);
+              sessionStorage.setItem("role", response.user_type);
               sessionStorage.setItem("firstName", this.state.newFname);
               sessionStorage.setItem("lastName", this.state.newLname);
               sessionStorage.setItem("email", this.state.newEmail);
