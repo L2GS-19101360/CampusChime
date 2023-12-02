@@ -5,10 +5,8 @@ import Loader from "../loader/loader";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
-var user_id = sessionStorage.getItem("userId");
-
-console.log(user_id);
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import SellerProductPage from '../../pages/ProductManagement/SellerProductManage';
 
 const HeroForHome = () => {
   // State variables
@@ -48,12 +46,9 @@ const HeroForHome = () => {
 
   // Handle sending the request and show a success notification
   const handleSendRequest = (file, productDescription) => {
-    if (!file) {
-      showNotification("Please select a file before submitting.", "error");
-      return;
-    }
-    if (!productDescription) {
-      showNotification("Please provide a product description.", "error");
+    if (!file || !productDescription) {
+      // Handle the case where file or productDescription is not defined
+      console.error("File or productDescription is not defined.");
       return;
     }
 
@@ -61,7 +56,6 @@ const HeroForHome = () => {
     formData.append("file", file);
     formData.append("productDescription", productDescription);
     formData.append("user_id", user_id); // Add user_id to the form data
-    formData.append("requestDate", requestDate); // Add requestDate to the form data
 
     axios
       .post(
@@ -89,29 +83,13 @@ const HeroForHome = () => {
   };
 
   // Display a notification using Toastify
-  const showNotification = (message, type = "success") => {
-    const options = {
-      position: "top-center",
-      autoClose: 2000,
-    };
-
-    switch (type) {
-      case "success":
-        toast.success(message, options);
-        break;
-      case "error":
-        toast.error(message, options);
-        break;
-      default:
-        toast(message, options);
-        break;
-    }
+  const showNotification = (message) => {
+    toast.success(message, { position: "top-center", autoClose: 2000 });
   };
 
   // SellRequestModal component
   const EntrepRequestModal = ({ onClose, onSendRequest }) => {
     const [file, setFile] = useState(null);
-    const [productDescription, setProductDescription] = useState("");
 
     // Handle file change for uploading the document
     const handleFileChange = (event) => {
@@ -122,7 +100,13 @@ const HeroForHome = () => {
     const handleSubmit = (event) => {
       event.preventDefault();
 
-      onSendRequest(file, productDescription);
+      if (!file) {
+        console.error("Please select a file before submitting.");
+        showNotification("Please select a file before submitting.", "error");
+        return;
+      }
+
+      onSendRequest(formData);
     };
 
     return (
@@ -163,7 +147,6 @@ const HeroForHome = () => {
                 as="textarea"
                 rows={3}
                 placeholder="Enter a brief description of your product..."
-                onChange={(e) => setProductDescription(e.target.value)}
               />
             </Form.Group>
 
