@@ -7,8 +7,13 @@ import { PiUserCircleGear } from "react-icons/pi";
 import LetteredAvatar from "../LetteredAvater";
 import Logo from "../../assets/CampusChimeNoname.png";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-
-function AdminNavbar({ toggleSidebar, isSidebarOpen, userDetails }) {
+function AdminNavbar({
+  toggleSidebar,
+  isSidebarOpen,
+  userDetails,
+  currentPage,
+  onPageChange,
+}) {
   const { firstName, lastName, email } = userDetails;
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
@@ -46,13 +51,18 @@ function AdminNavbar({ toggleSidebar, isSidebarOpen, userDetails }) {
             style={{ marginLeft: "10px", marginTop: "5px", cursor: "pointer" }}
           />
           <h1 style={{ margin: 0, marginLeft: "5px", cursor: "pointer" }}>
-            Dashboard
+            {currentPage}
           </h1>
         </Navbar.Brand>
       ) : (
         <>
           <Navbar.Brand
-            onClick={toggleSidebar}
+            onClick={() => {
+              toggleSidebar();
+              if (!currentPage) {
+                onPageChange("Dashboard");
+              }
+            }}
             style={{
               display: "flex",
               alignItems: "center",
@@ -60,7 +70,7 @@ function AdminNavbar({ toggleSidebar, isSidebarOpen, userDetails }) {
             }}
           >
             <Image src={Logo} style={{ width: "55px", height: "60px" }} />
-            <h1 style={{ margin: 0, marginLeft: "10px" }}>Dashboard</h1>
+            <h1 style={{ margin: 0, marginLeft: "10px" }}>{currentPage}</h1>
             <BiChevronRight
               className="fs-4"
               size={35}
