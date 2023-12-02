@@ -33,6 +33,7 @@ if ($isValid) {
 
     try {
         $stmt = $conn->prepare("INSERT INTO users(lastname, firstname, contactnumber, email, password) VALUES (?,?,?,?,?)");
+        $defaultUserType = 'customer'; // Set default user type
         $stmt->bind_param("ssiss", $newLname, $newFname, $newContact, $newEmail, $hashedPassword);
         $stmt->execute();
         $stmt->close();
@@ -49,9 +50,9 @@ if ($isValid) {
 $response = array(
     'status' => $status,
     'data' => $data,
-    'message' => $retVal
+    'message' => $retVal,
+    'user_type' => $defaultUserType
 );
 
 header('Content-Type: application/json');
 echo json_encode($response);
-?>

@@ -26,6 +26,7 @@ const HomeNavbar = () => {
 
   const firstName = sessionStorage.getItem("firstName");
   const lastName = sessionStorage.getItem("lastName");
+  const role = sessionStorage.getItem("role");
 
   return (
     <div>
@@ -97,8 +98,15 @@ const HomeNavbar = () => {
           >
             {firstName} {lastName}
           </div>
+          <div style={{ fontSize: "20px", marginLeft: "30px" }}>
+            <i
+              className="bi bi-person-check"
+              style={{ marginRight: "5px", fontSize: "20px" }}
+            ></i>
+            {role}
+          </div>
 
-          <div style={{ marginLeft: "25px", marginTop: "20px" }}>
+          <div style={{ marginLeft: "25px", marginTop: "50px" }}>
             <Link
               to="/UserSettingPage"
               style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
