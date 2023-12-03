@@ -1,43 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Table, Modal } from "react-bootstrap";
 import axios from "axios";
 import "./EntrepreneurRequestDesign.css";
 import LetteredAvatar from "../LetteredAvater";
 
-const firstName = sessionStorage.getItem("firstName");
-const lastName = sessionStorage.getItem("lastName");
-const email = sessionStorage.getItem("email");
-const UserProfile = ({ user }) => (
-  <div className="title">
-    <div className="thumb">
-      <LetteredAvatar name={`${user.first_name} ${user.last_name}`} size={55} />
-    </div>
-    <div className="candidate-list-details">
-      <div className="candidate-list-info">
-        <div className="candidate-list-title">
-          <h5 className="mb-0">
-            <a href="#">{user.user_name}</a>
-          </h5>
-        </div>
-        <div className="candidate-list-option">
-          <ul className="list-unstyled">
-            <li>
-              <i className="fas fa-filter pr-1"></i>
-              {user.category}
-            </li>
-            <li>
-              <i className="fas fa-map-marker-alt pr-1"></i>
-              {user.location}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const EntrepreneurRequest = ({ show, onClose }) => {
+const EntrepreneurRequest = () => {
   const [requests, setRequests] = useState([]);
+  const [show, setShow] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
 
   useEffect(() => {
     // Fetch entrepreneur requests when the component mounts
@@ -47,7 +17,9 @@ const EntrepreneurRequest = ({ show, onClose }) => {
   const fetchEntrepRequests = () => {
     // Make a request to get entrepreneur requests from the server
     axios
-      .get("http://localhost/CampusChime/PHP_files/get_entrep_requests.php")
+      .get(
+        "http://localhost/CampusChime/PHP_files/get_entrepreneur_requests.php"
+      )
       .then((response) => {
         if (response.data && response.data.requests) {
           // Sort requests by request date (oldest to newest)
@@ -73,15 +45,23 @@ const EntrepreneurRequest = ({ show, onClose }) => {
     // Implement logic to decline the request with the given id
     console.log(`Declined request with id ${id}`);
   };
+  const handleViewDetails = (request) => {
+    // Set the selected request and open the modal
+    setSelectedRequest(request);
+    setShow(true);
+    console.log(request.product_description); // Log the product description to the console
+    console.log(request.image);
+  };
 
-  const handleViewDetails = (id) => {
-    // Implement logic to show details for the request with the given id
-    console.log(`View details for request with id ${id}`);
+  const handleClose = () => {
+    // Close the modal and reset the selected request
+    setShow(false);
+    setSelectedRequest(null);
   };
 
   return (
-    <div className="container mt-3 mb-4">
-      <div className="col-lg-9 mt-4 mt-lg-0">
+    <div className="container-fluid mt-3 mb-4">
+      <div className="col-lg-9 mt-4 mt-lg-0 mx-auto">
         <div className="row">
           <div className="col-md-12">
             <div className="table-responsive mb-0 bg-white p-4 shadow-sm">
@@ -89,7 +69,6 @@ const EntrepreneurRequest = ({ show, onClose }) => {
                 <thead>
                   <tr>
                     <th>User</th>
-                    <th>Email</th>
                     <th>Request Date</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -97,11 +76,53 @@ const EntrepreneurRequest = ({ show, onClose }) => {
                 </thead>
                 <tbody>
                   {requests.map((request) => (
-                    <tr className="candidates-list" key={request.id}>
+                    <tr className="candidates-list" key={request.user_id}>
                       <td className="large-space">
-                        <UserProfile user={request} />
+                        <div className="title d-flex align-items-center">
+                          <div className="thumb">
+                            <LetteredAvatar
+                              name={`${request.firstname} ${request.lastname}`}
+                              size={55}
+                            />
+                          </div>
+                          <div className="candidate-list-details">
+                            <div className="candidate-list-info">
+                              <div
+                                className="candidate-list-title"
+                                style={{
+                                  marginTop: "10px",
+                                  marginLeft: "15px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  flexDirection: "column",
+                                }}
+                              >
+                                <h5 className="mb-0">
+                                  {`${request.firstname} ${request.lastname}`}
+                                </h5>
+                                <a
+                                  href={`mailto:${request.email}`}
+                                  style={{ fontSize: "13px", color: "#888" }}
+                                >
+                                  {request.email}
+                                </a>
+                              </div>
+                              <div className="candidate-list-option">
+                                <ul className="list-unstyled">
+                                  <li>
+                                    <i className="fas fa-filter pr-1"></i>
+                                    {request.category}
+                                  </li>
+                                  <li>
+                                    <i className="fas fa-map-marker-alt pr-1"></i>
+                                    {request.location}
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </td>
-                      <td>{request.email}</td>
                       <td className="large-space">
                         {new Date(request.request_date).toLocaleDateString()}
                       </td>
@@ -115,7 +136,7 @@ const EntrepreneurRequest = ({ show, onClose }) => {
                           <li>
                             <Button
                               variant="primary"
-                              onClick={() => handleViewDetails(request.id)}
+                              onClick={() => handleViewDetails(request)}
                             >
                               View Details
                             </Button>
@@ -130,6 +151,39 @@ const EntrepreneurRequest = ({ show, onClose }) => {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Request Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedRequest && (
+            <div>
+              <h5>
+                User:{" "}
+                {`${selectedRequest.firstname} ${selectedRequest.lastname}`}
+              </h5>
+              <p>Email: {selectedRequest.email}</p>
+              <p>
+                Request Date:{" "}
+                {new Date(selectedRequest.request_date).toLocaleDateString()}
+              </p>
+              <img
+                src={`http://localhost/CampusChime/PHP_files/${selectedRequest.image}`}
+                alt="Request Image"
+                style={{ maxWidth: "100%" }}
+              />
+              <p>Product Description: {selectedRequest.product_description}</p>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

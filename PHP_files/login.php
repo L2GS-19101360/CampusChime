@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $email = $row['email'];
                 $id = $row['user_id'];
                 $role = $row['role'];
-                $imageData = $row['user_image'];     
+                $imageData = $row['user_image'];
                 // $password = $row['password'];
 
                 // Set session variables
