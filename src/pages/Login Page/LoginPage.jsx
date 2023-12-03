@@ -63,7 +63,7 @@ class LoginPage extends Component {
         sessionStorage.setItem("contactNumber", data.contactNumber);
         sessionStorage.setItem("userId", data.userId);
         sessionStorage.setItem("role", data.role);
-        // sessionStorage.setItem("userImage", data.user_image);
+        sessionStorage.setItem("userImage", data.user_image);
 
         if (data.role === "admin") {
           this.props.history.push("/adminPage");

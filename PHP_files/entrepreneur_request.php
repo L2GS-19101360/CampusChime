@@ -2,7 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Include necessary libraries
 include 'db_connection.php';
 
 // Constants for allowed file extensions and max file size
@@ -12,12 +11,13 @@ const MAX_FILE_SIZE = 5242880; // 5MB
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 // Handle POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Extract data from POST request
     $file = $_FILES['file'];
     $productDescription = $_POST['productDescription'];
-    $user_id = $_POST['user_id']; // Retrieve user_id from the form data
+    $user_id = $_POST['user_id'];
 
     // Validate data
     $errors = [];
@@ -59,7 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Save request information to the database
     $status = 'pending';
-    insertRequestToDatabase($user_id, $filePath, $productDescription, $status);
+    $requestDate = date('Y-m-d H:i:s'); // Current timestamp
+    insertRequestToDatabase($user_id, $filePath, $productDescription, $status, $requestDate);
 
     // Send success response
     header('Content-Type: application/json');
@@ -77,11 +78,11 @@ function generateUniqueFileName($extension)
     return uniqid('', true) . '.' . $extension;
 }
 
-function insertRequestToDatabase($userId, $filePath, $productDescription, $status)
+function insertRequestToDatabase($userId, $filePath, $productDescription, $status, $requestDate)
 {
     global $conn; // Assuming $conn is your database connection
 
-    $sql = "INSERT INTO entrepreneur_requests (user_id, image, product_description, status) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO entrepreneur_requests (user_id, image, product_description, status, request_date) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     // Check if the statement was prepared successfully
@@ -91,7 +92,7 @@ function insertRequestToDatabase($userId, $filePath, $productDescription, $statu
         exit;
     }
 
-    $stmt->bind_param('isss', $userId, $filePath, $productDescription, $status);
+    $stmt->bind_param('issss', $userId, $filePath, $productDescription, $status, $requestDate);
     $stmt->execute();
 
     // Check if the execution was successful
@@ -103,4 +104,3 @@ function insertRequestToDatabase($userId, $filePath, $productDescription, $statu
 
     $stmt->close();
 }
-?>
