@@ -1,6 +1,6 @@
 import React, { useState, Suspense } from "react";
 import Shop from "../shop/shop";
-// import SellComponent from './SellComponent';
+///import SellerSystem from '../../pages/Seller Product Management/sellerSys';
 import Loader from "../loader/loader";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SellerProductPage from "../../pages/ProductManagement/SellerProductManage";
