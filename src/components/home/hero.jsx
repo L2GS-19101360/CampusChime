@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 var user_id = sessionStorage.getItem("userId");
+console.log(user_id)
 
 const HeroForHome = () => {
   // State variables
