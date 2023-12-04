@@ -60,9 +60,9 @@ class UserSettingPage extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   // handleInputChange = (e) => {
   //   this.setState({ [e.target.name]: e.target.value });
@@ -76,7 +76,7 @@ class UserSettingPage extends Component {
     console.log(file);
 
     this.setState({
-      user_Image: file.name,
+      user_Image: file.name
     });
 
     const formData = new FormData();
@@ -115,6 +115,10 @@ class UserSettingPage extends Component {
       });
   };
 
+
+
+
+
   handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -126,23 +130,17 @@ class UserSettingPage extends Component {
     var getId = this.state.id;
 
     // Check if no new password and no confirm password
-    if (
-      (!this.state.newPassword || this.state.newPassword.trim() === "") &&
-      (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")
-    ) {
+    if ((!this.state.newPassword || this.state.newPassword.trim() === "") && (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")) {
       // Handle the case where no password change is needed
 
       var xhttp = new XMLHttpRequest();
-      xhttp.open(
-        "POST",
-        `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_image=${filename}&user_id=${getId}`,
-        true
-      );
+      xhttp.open("POST", `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_image=${filename}&user_id=${getId}`, true);
       xhttp.send();
 
       sessionStorage.clear();
       window.location.href = "/";
       // Handle the rest of your code or redirection if needed
+
     } else if (this.state.newPassword === this.state.confirmPassword) {
       // Handle the case where a new password is provided
 
@@ -157,6 +155,7 @@ class UserSettingPage extends Component {
       sessionStorage.clear();
       window.location.href = "/";
       // Handle the rest of your code or redirection if needed
+
     } else {
       // Handle the case where passwords do not match
       this.setState({
@@ -209,6 +208,7 @@ class UserSettingPage extends Component {
     // }
   };
 
+
   togglePasswordVisibility = () => {
     this.setState((prevState) => ({
       showPassword: !prevState.showPassword,
@@ -229,21 +229,21 @@ class UserSettingPage extends Component {
 
     const inputType = this.state.showPassword ? "text" : "password";
 
-    var profileImage =
-      this.state.user_Image == null ? (
-        <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
-      ) : (
-        <img
-          src={`http://localhost/campuschime/PHP_files/user_images/${this.state.user_Image}`}
-          alt={`${LAfirstName} ${LAlastName}`}
-          style={{
-            width: "190px",
-            height: "190px",
-            borderRadius: "50%",
-            border: "1px solid black",
-          }}
-        />
-      );
+    var profileImage = this.state.user_Image === "0" ? (
+      <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
+    ) : (
+      <img
+        src={`http://localhost/campuschime/PHP_files/user_images/${this.state.user_Image}`}
+        alt={`${LAfirstName} ${LAlastName}`}
+        style={{
+          width: "190px",
+          height: "190px",
+          borderRadius: "50%",
+          border: '1px solid black'
+        }}
+      />
+    );
+
 
     return (
       <div>
@@ -306,18 +306,10 @@ class UserSettingPage extends Component {
         >
           <div>
             {profileImage}
-            <h4
-              style={{
-                marginLeft: "10px",
-                marginTop: "10px",
-              }}
-            >
-              {lastName},{firstName}
-            </h4>
-            <br />
-            <br />
-            <br />
-            <br />
+            <h4 style={{
+              marginLeft: "10px",
+              marginTop: "10px"
+            }}>{lastName},{firstName}</h4><br /><br /><br /><br />
             <Button
               variant="danger"
               onClick={handleLogout}
@@ -421,11 +413,10 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
-                        ? "bi bi-eye-slash-fill"
-                        : "bi bi-eye-fill"
-                    }`}
+                    className={`ms-2 ${this.state.showPassword
+                      ? "bi bi-eye-slash-fill"
+                      : "bi bi-eye-fill"
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -455,11 +446,10 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
-                        ? "bi bi-eye-slash-fill"
-                        : "bi bi-eye-fill"
-                    }`}
+                    className={`ms-2 ${this.state.showPassword
+                      ? "bi bi-eye-slash-fill"
+                      : "bi bi-eye-fill"
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",

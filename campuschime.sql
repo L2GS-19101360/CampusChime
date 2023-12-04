@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2023 at 02:54 PM
--- Server version: 10.4.28-MariaDB
+-- Generation Time: Dec 04, 2023 at 07:21 PM
+-- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -80,7 +80,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `role` enum('customer','entrepreneur','admin') NOT NULL DEFAULT 'customer',
-  `user_image` varchar(255) DEFAULT NULL,
+  `user_image` varchar(255) NOT NULL DEFAULT '0',
   `registered` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -91,27 +91,16 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `lastname`, `firstname`, `contactnumber`, `email`, `password`, `role`, `user_image`, `registered`) VALUES
 (36, 'Cabogoy', 'Zyguel', 9147852369, 'zyguel@gmail.com', '$2y$10$4zE5z.KRDSoJIq1OuLafQ.rsc8ZQKEUWaVkT6L5Cl2q0hEpQofEx6', 'admin', 'Zyguel.jpg', '2023-11-28 01:02:05'),
 (37, 'Ceniza', 'Jaden', 9369852147, 'jaden@gmail.com', '$2y$10$IowdE0H02yhGxJbCwjHa9OK39RS5FB9O50/I6SAeSp59B9IfE2ylC', 'admin', 'Jaden.jpg', '2023-11-28 01:02:51'),
-(38, 'Tangcay', 'Maria', 9741258963, 'maria@gmail.com', '$2y$10$5w6QrVZVDcBLOB0lkMJ2aOf.M.M0T.Xo7VDj0OJ8up28aKIlwqjZW', 'admin', NULL, '2023-11-28 01:03:33'),
+(38, 'Tangcay', 'Maria', 9741258963, 'maria@gmail.com', '$2y$10$5w6QrVZVDcBLOB0lkMJ2aOf.M.M0T.Xo7VDj0OJ8up28aKIlwqjZW', 'admin', '0', '2023-11-28 01:03:33'),
 (43, 'Suico', 'Lawerence', 9123456789, 'lawrence@gmail.com', '$2y$10$bVKjjCrE4PM9hVZGP62B5eOrzA3/BMgDdSvEXSeEqUStwhXVBZA8W', 'customer', 'pinA.png', '2023-12-02 00:27:37'),
 (44, 'Suico', 'Alexandra', 9123456789, 'alexandra@gmail.com', '$2y$10$1SkvQFxoGPTbSDlXcxYCwOlK2YnsvRlCfbq3h1nGMSJqm0YiFVIY6', 'customer', 'pinB.png', '2023-12-02 00:30:57'),
-(45, 'Jones', 'Carl', 9369852147, 'carl@gmail.com', '$2y$10$ywZ.Iuh95tc.8tGBUFN8ye/fYtMj2v6uAb785L0L.igmVP71M88ni', 'customer', NULL, '2023-12-02 00:40:56');
+(46, 'Jones', 'Carl', 9369852147, 'carl@gmail.com', '$2y$10$R7nguXyqy9NnE4h68kmyvO2G1./OSLNQTZnhmGzfLHIIUYhvlybMu', 'customer', '0', '2023-12-04 17:41:48'),
+(47, 'Doe', 'John', 9987456321, 'john@gmail.com', '$2y$10$W94419sUBcd8h8hBMc7sx.d1h2of112LWcov6C0uFqXgYPNeL3gRe', 'customer', '0', '2023-12-04 17:43:41'),
+(48, 'Doe', 'Jane', 9369852147, 'jane@gmail.com', '$2y$10$4vrEejIhPZu4tvWFRds8pOA.JPrmRS09ye4L5Wbv8qGfJ7o6HsUqG', 'customer', '0', '2023-12-04 17:46:43');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `entrepreneur_requests`
---
-ALTER TABLE `entrepreneur_requests`
-  ADD PRIMARY KEY (`request_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD KEY `products_ibfk_1` (`merchant_id`);
 
 --
 -- Indexes for table `users`
@@ -124,32 +113,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `entrepreneur_requests`
---
-ALTER TABLE `entrepreneur_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
-
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `entrepreneur_requests`
---
-ALTER TABLE `entrepreneur_requests`
-  ADD CONSTRAINT `entrepreneur_requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `users` (`user_id`);
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -65,6 +65,7 @@ class RegisterPage extends Component {
               sessionStorage.setItem("lastName", this.state.newLname);
               sessionStorage.setItem("email", this.state.newEmail);
               sessionStorage.setItem("contactNumber", this.state.newContact);
+              sessionStorage.setItem("userImage", "0");
 
               const userData = {
                 lastName: this.state.newLname,
