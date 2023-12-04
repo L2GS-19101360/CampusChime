@@ -229,7 +229,7 @@ class UserSettingPage extends Component {
 
     const inputType = this.state.showPassword ? "text" : "password";
 
-    var profileImage = this.state.user_Image == null ? (
+    var profileImage = this.state.user_Image === "0" ? (
       <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
     ) : (
       <img
