@@ -9,10 +9,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-var user_id = sessionStorage.getItem("userId");
-
 const HeroForHome = () => {
   // State variables
+  const [user_id, setUserId] = useState(() => sessionStorage.getItem("userId"));
   const [showHero, setShowHero] = useState(true);
   const [showShop, setShowShop] = useState(false);
   const [showSellerProductPage, setShowSellerProductPage] = useState(false);
@@ -22,7 +21,7 @@ const HeroForHome = () => {
     new Date().toISOString().split("T")[0]
   );
 
-  // Handle click to navigate to Shop
+  console.log(user_id);
   const handleShopClick = () => {
     setShowHero(false);
     <Suspense fallback={setIsLoading(true)}>
@@ -109,6 +108,12 @@ const HeroForHome = () => {
       case "error":
         toast.error(message, options);
         break;
+      case "warning":
+        toast.error(message, options);
+        break;
+      case "info":
+        toast.error(message, options);
+        break;
       default:
         toast(message, options);
         break;
@@ -129,7 +134,7 @@ const HeroForHome = () => {
     const handleSubmit = (event) => {
       event.preventDefault();
 
-      onSendRequest(file, productDescription);
+      onSendRequest(file, productDescription);  
     };
 
     return (
@@ -148,7 +153,9 @@ const HeroForHome = () => {
           <Form onSubmit={handleSubmit}>
             {/* Form field for uploading a valid Government ID */}
             <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label style={{ color: "black", fontSize: "17px" }}>
+              <Form.Label
+                style={{ color: "black", fontSize: "17px", marginTop: "10px" }}
+              >
                 Upload a valid Government ID
               </Form.Label>
               <Form.Control type="file" onChange={handleFileChange} />
@@ -175,7 +182,11 @@ const HeroForHome = () => {
             </Form.Group>
 
             {/* Submit button */}
-            <Button variant="outline-success" type="submit">
+            <Button
+              variant="outline-success"
+              type="submit"
+              style={{ marginLeft: "10px", marginBottom: "10px" }}
+            >
               Send Request
             </Button>
           </Form>
