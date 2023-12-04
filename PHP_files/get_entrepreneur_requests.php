@@ -5,7 +5,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Fetch the latest entrepreneur request for each user from the database
+// Fetch the latest entrepreneur requests for each user from the database
+// Add a condition to filter by status (pending, accepted, or declined)
+$statusFilter = isset($_GET['status']) ? $_GET['status'] : 'all';
+
 $sql = "SELECT er.request_id, er.user_id, er.image, er.product_description, er.status, er.request_date, er.decision_date,
                u.firstname, u.lastname, u.email
         FROM entrepreneur_requests er
@@ -14,8 +17,13 @@ $sql = "SELECT er.request_id, er.user_id, er.image, er.product_description, er.s
             SELECT MAX(request_date)
             FROM entrepreneur_requests
             WHERE user_id = er.user_id
-        )
-        ORDER BY er.request_date ASC";
+        )";
+
+if ($statusFilter !== 'all') {
+    $sql .= " AND er.status = '$statusFilter'";
+}
+
+$sql .= " ORDER BY er.request_date ASC";
 
 $result = $conn->query($sql);
 

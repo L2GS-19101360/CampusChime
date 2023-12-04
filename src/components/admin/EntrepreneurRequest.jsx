@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Button, Table, Modal } from "react-bootstrap";
+import { Button, Table, Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import "./EntrepreneurRequestDesign.css";
 import LetteredAvatar from "../LetteredAvater";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EntrepreneurRequest = () => {
   const [requests, setRequests] = useState([]);
   const [show, setShow] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [filter, setFilter] = useState("Pending");
 
   useEffect(() => {
-    // Fetch entrepreneur requests when the component mounts
     fetchEntrepRequests();
-  }, []);
-
+  }, [filter]);
   const fetchEntrepRequests = () => {
-    // Make a request to get entrepreneur requests from the server
     axios
       .get(
-        "http://localhost/CampusChime/PHP_files/get_entrepreneur_requests.php"
+        "http://localhost/CampusChime/PHP_files/get_entrepreneur_requests.php",
+        {
+          params: {
+            status: filter === "All" ? "all" : filter,
+          },
+        }
       )
       .then((response) => {
         if (response.data && response.data.requests) {
-          // Sort requests by request date (oldest to newest)
           const sortedRequests = response.data.requests.sort(
             (a, b) => new Date(a.request_date) - new Date(b.request_date)
           );
@@ -36,48 +40,120 @@ const EntrepreneurRequest = () => {
       });
   };
 
-  const handleAccept = (id) => {
-    // Implement logic to accept the request with the given id
-    console.log(`Accepted request with id ${id}`);
-  };
-
-  const handleDecline = (id) => {
-    // Implement logic to decline the request with the given id
-    console.log(`Declined request with id ${id}`);
-  };
   const handleViewDetails = (request) => {
-    // Set the selected request and open the modal
     setSelectedRequest(request);
     setShow(true);
-    console.log(request.product_description); // Log the product description to the console
-    console.log(request.image);
   };
 
   const handleClose = () => {
-    // Close the modal and reset the selected request
     setShow(false);
     setSelectedRequest(null);
   };
+  const handleAccept = () => {
+    axios
+      .post(
+        "http://localhost/CampusChime/PHP_files/handle_entrepreneur_request.php",
+        {
+          action: "update_request_status",
+          requestId: selectedRequest.request_id,
+          userId: selectedRequest.user_id,
+          status: "accepted",
+        }
+      )
+      .then((response) => {
+        if (response.data && response.data.success) {
+          toast.success("Request was accepted", {
+            position: "top-center",
+            autoClose: 2000,
+          });
 
+          // Update local state
+          setRequests((prevRequests) => {
+            return prevRequests.filter(
+              (request) => request.request_id !== selectedRequest.request_id
+            );
+          });
+
+          handleClose();
+        } else {
+          console.error("Error accepting request:", response);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleDecline = () => {
+    axios
+      .post(
+        "http://localhost/CampusChime/PHP_files/handle_entrepreneur_request.php",
+        {
+          action: "update_request_status",
+          requestId: selectedRequest.request_id,
+          status: "declined",
+        }
+      )
+      .then((response) => {
+        if (response.data && response.data.success) {
+          toast.error("Request was declined", {
+            position: "top-center",
+            autoClose: 2000,
+          });
+          setRequests((prevRequests) => {
+            return prevRequests.filter(
+              (request) => request.request_id === selectedRequest.request_id
+            );
+          });
+          handleClose();
+          fetchEntrepRequests();
+        } else {
+          console.error("Error declining request:", response);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
-    <div className="container-fluid mt-3 mb-4">
-      <div className="col-lg-9 mt-4 mt-lg-0 mx-auto">
+    <div className="container-fluid mt-3 mb-4 d-flex align-items-center justify-content-center">
+      <div className="col-lg-10 mt-4 mt-lg-0">
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-10">
+            <Dropdown className="mb-3">
+              <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Filter: {filter}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => setFilter("all")}>
+                  All
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setFilter("pending")}>
+                  Pending
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setFilter("accepted")}>
+                  Accepted
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setFilter("declined")}>
+                  Declined
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <div className="table-responsive mb-0 bg-white p-4 shadow-sm">
-              <Table className="table manage-candidates-top mb-0">
+              <Table className="table manage-candidates-top mb-0 text-center">
                 <thead>
                   <tr>
-                    <th>User</th>
-                    <th>Request Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th className="text-center">User</th>
+                    <th className="text-center">Request Date</th>
+                    <th className="text-center">Decision Date</th>
+                    <th className="text-center">Status</th>
+                    <th className="text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-center">
                   {requests.map((request) => (
-                    <tr className="candidates-list" key={request.user_id}>
-                      <td className="large-space">
+                    <tr className="request-list" key={request.user_id}>
+                      <td className="large-space align-middle">
                         <div className="title d-flex align-items-center">
                           <div className="thumb">
                             <LetteredAvatar
@@ -85,63 +161,58 @@ const EntrepreneurRequest = () => {
                               size={55}
                             />
                           </div>
-                          <div className="candidate-list-details">
-                            <div className="candidate-list-info">
-                              <div
-                                className="candidate-list-title"
-                                style={{
-                                  marginTop: "10px",
-                                  marginLeft: "15px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  flexDirection: "column",
-                                }}
-                              >
-                                <h5 className="mb-0">
-                                  {`${request.firstname} ${request.lastname}`}
-                                </h5>
-                                <a
-                                  href={`mailto:${request.email}`}
-                                  style={{ fontSize: "13px", color: "#888" }}
-                                >
-                                  {request.email}
-                                </a>
-                              </div>
-                              <div className="candidate-list-option">
-                                <ul className="list-unstyled">
-                                  <li>
-                                    <i className="fas fa-filter pr-1"></i>
-                                    {request.category}
-                                  </li>
-                                  <li>
-                                    <i className="fas fa-map-marker-alt pr-1"></i>
-                                    {request.location}
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
+                          <div
+                            className="candidate-list-title"
+                            style={{
+                              marginTop: "5px",
+                              marginLeft: "15px",
+                              display: "flex",
+                              alignItems: "center",
+                              flexDirection: "column",
+                            }}
+                          >
+                            <h5 className="mb-0">
+                              {`${request.firstname} ${request.lastname}`}
+                            </h5>
+                            <a
+                              href={`mailto:${request.email}`}
+                              style={{ fontSize: "13px", color: "#888" }}
+                            >
+                              {request.email}
+                            </a>
                           </div>
                         </div>
                       </td>
-                      <td className="large-space">
+                      <td className="align-middle">
                         {new Date(request.request_date).toLocaleDateString()}
                       </td>
-                      <td className="candidate-list-favourite-time text-center">
-                        <span className="candidate-list-time order-1">
-                          {request.status}
-                        </span>
+                      <td className="align-middle">
+                        {request.decision_date
+                          ? new Date(request.decision_date).toLocaleDateString()
+                          : "N/A"}
                       </td>
-                      <td>
-                        <ul className="list-unstyled mb-0 d-flex justify-content-end">
-                          <li>
-                            <Button
-                              variant="primary"
-                              onClick={() => handleViewDetails(request)}
-                            >
-                              View Details
-                            </Button>
-                          </li>
-                        </ul>
+                      <td className="candidate-list align-middle">
+                        <div
+                          className="status-border"
+                          style={{
+                            borderRadius: "10px",
+                            padding: "5px",
+                            backgroundColor: "#d1cac5",
+                            color: "#cc8e33",
+                            fontWeight: "bold",
+                            display: "inline-block",
+                          }}
+                        >
+                          {request.status}
+                        </div>
+                      </td>
+                      <td className="align-middle">
+                        <Button
+                          variant="primary"
+                          onClick={() => handleViewDetails(request)}
+                        >
+                          View Details
+                        </Button>
                       </td>
                     </tr>
                   ))}
@@ -151,39 +222,163 @@ const EntrepreneurRequest = () => {
           </div>
         </div>
       </div>
-
       {/* Modal */}
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Request Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal show={show} onHide={handleClose} size="lg">
+        <Modal.Header closeButton style={{ backgroundColor: "black" }}>
           {selectedRequest && (
-            <div>
-              <h5>
-                User:{" "}
-                {`${selectedRequest.firstname} ${selectedRequest.lastname}`}
-              </h5>
-              <p>Email: {selectedRequest.email}</p>
-              <p>
-                Request Date:{" "}
-                {new Date(selectedRequest.request_date).toLocaleDateString()}
-              </p>
-              <img
-                src={`http://localhost/CampusChime/PHP_files/${selectedRequest.image}`}
-                alt="Request Image"
-                style={{ maxWidth: "100%" }}
-              />
-              <p>Product Description: {selectedRequest.product_description}</p>
+            <Modal.Title style={{ color: "white" }}>
+              Request Detail - #{selectedRequest.request_id}
+            </Modal.Title>
+          )}
+        </Modal.Header>
+
+        <Modal.Body className="modal-body-shadow">
+          {selectedRequest && (
+            <div className="row g-0">
+              <div
+                className="col-md-7 p-4"
+                style={{ boxShadow: "inset -1px 0 1px -1px rgba(0, 0, 0, 1)" }}
+              >
+                <div
+                  style={{
+                    border: "2px solid",
+                    borderRadius: "20px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={`http://localhost/CampusChime/PHP_files/${selectedRequest.image}`}
+                    alt="Request Image"
+                    style={{ width: "100%", borderRadius: "8px" }}
+                  />
+                </div>
+                <div className="text-center mt-3">
+                  <span
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                      color: "#9c27b0",
+                    }}
+                  >
+                    Image Submitted:
+                  </span>
+                </div>
+                <div
+                  className="textbox-container"
+                  style={{ marginTop: "30px" }}
+                >
+                  <textarea
+                    value={selectedRequest.product_description}
+                    readOnly
+                    className="form-control"
+                    rows="4"
+                    style={{ borderRadius: "10px", resize: "none" }}
+                  />
+                  <div className="text-center mt-3">
+                    <span
+                      style={{
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        color: "#9c27b0",
+                      }}
+                    >
+                      Product Description:
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-5 p-2 d-flex flex-column justify-content-center align-items-center">
+                <div className="p-2 text-center">
+                  <div className="profile">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <LetteredAvatar
+                        name={`${selectedRequest.firstname} ${selectedRequest.lastname}`}
+                        size={100}
+                      />
+                    </div>
+                  </div>
+                  <div className="about-user" style={{ marginTop: "20px" }}>
+                    <table className="table table-borderless">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div className="d-flex flex-column">
+                              <span className="heading d-block">
+                                {`${selectedRequest.user_id}`}
+                              </span>
+                              <span className="subheadings">User ID:</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="d-flex flex-column">
+                              <span className="heading d-block">
+                                {selectedRequest.firstname}{" "}
+                                {selectedRequest.lastname}
+                              </span>
+                              <span className="subheadings">User Name:</span>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div className="d-flex flex-column">
+                              <span className="heading d-block">
+                                {selectedRequest.email}
+                              </span>
+                              <span className="subheadings">Email:</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="d-flex flex-column">
+                              {" "}
+                              <span className="heading d-block">
+                                {new Date(
+                                  selectedRequest.request_date
+                                ).toLocaleDateString()}
+                              </span>
+                              <span className="subheadings">Request Date:</span>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <Button
+                      variant="outline-danger"
+                      onClick={handleDecline}
+                      style={{ marginRight: "10px" }}
+                    >
+                      Decline Request
+                    </Button>
+                    <Button
+                      variant="success"
+                      onClick={handleAccept}
+                      style={{ marginRight: "5px" }}
+                    >
+                      Accept Request
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            variant="dark"
+            onClick={handleClose}
+            style={{ marginRight: "5px" }}
+          >
             Close
           </Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer />
     </div>
   );
 };
