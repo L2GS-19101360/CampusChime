@@ -14,7 +14,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import WebLogo from "../../assets/CampusChimeNoname.png";
 import Logo from "../../assets/CampusChime.png";
 import { EnvelopeFill } from "react-bootstrap-icons";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 class LoginPage extends Component {
   state = {
     password: "",
@@ -54,7 +55,10 @@ class LoginPage extends Component {
       console.log("Server Response:", data);
 
       if (data.success) {
-        console.log("Login successful");
+        toast.success("Login successful", {
+          position: "top-center",
+          autoClose: 2000,
+        });
 
         // Store session data on the client side
         sessionStorage.setItem("firstName", data.firstName);
@@ -73,7 +77,9 @@ class LoginPage extends Component {
       } else {
         this.setState({
           password: "",
-          warning: <Alert variant="danger">{data.message || "Login failed"}</Alert>,
+          warning: (
+            <Alert variant="danger">{data.message || "Login failed"}</Alert>
+          ),
         });
         console.error("Login failed:", data.message);
       }
@@ -216,6 +222,7 @@ class LoginPage extends Component {
     );
   }
 }
+<ToastContainer />;
 
 LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
