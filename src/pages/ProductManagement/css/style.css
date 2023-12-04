@@ -23,7 +23,7 @@
 /* =============== Sidebar =============== */
 .sidebar{
     position: fixed;
-    top: 5;
+    top: 1;
     left: 0;
     height: 100%;
     width: 260px;
