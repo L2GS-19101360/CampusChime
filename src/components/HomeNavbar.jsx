@@ -31,8 +31,6 @@ const HomeNavbar = () => {
 
   var IsImageNull = userImage === "0";
 
-  console.log(IsImageNull);
-
   return (
     <div>
       <Navbar
@@ -82,7 +80,7 @@ const HomeNavbar = () => {
                 width: "55px",
                 height: "55px",
                 borderRadius: "50%",
-                border: '1px solid black'
+                border: "1px solid black",
               }}
               onClick={handleOffcanvasShow}
             />
@@ -116,7 +114,7 @@ const HomeNavbar = () => {
                   width: "150px",
                   height: "150px",
                   borderRadius: "50%",
-                  border: '1px solid black'
+                  border: "1px solid black",
                 }}
                 onClick={handleOffcanvasShow}
               />

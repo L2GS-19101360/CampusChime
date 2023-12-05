@@ -150,16 +150,27 @@ const HeroForHome = () => {
         </Modal.Header>
 
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
+          <Form
+            onSubmit={handleSubmit}
+            style={{
+              marginLeft: "10px",
+              marginRight: "10px",
+              marginTop: "10px",
+            }}
+          >
             {/* Form field for uploading a valid Government ID */}
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label
-                style={{ color: "black", fontSize: "17px", marginTop: "10px" }}
+                style={{
+                  color: "black",
+                  fontSize: "17px",
+                  marginTop: "10px",
+                }}
               >
                 Upload a valid Government ID
               </Form.Label>
               <Form.Control type="file" onChange={handleFileChange} />
-              <Form.Text className="text-muted">
+              <Form.Text className="text-muted ">
                 (e.g., driver's license, national ID, passport).
               </Form.Text>
             </Form.Group>
