@@ -134,7 +134,7 @@ const HeroForHome = () => {
     const handleSubmit = (event) => {
       event.preventDefault();
 
-      onSendRequest(file, productDescription);  
+      onSendRequest(file, productDescription);
     };
 
     return (
