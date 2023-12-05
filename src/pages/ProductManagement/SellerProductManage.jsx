@@ -35,15 +35,12 @@ const SellerProductPage = () => {
           logo.addEventListener("click", () => {
             sidebar.classList.toggle("close");
           });
-          
-
-
-
+        /*  
         const script = document.createElement('script');
         script.src = './js/main.js';
         script.async = true;
         document.body.appendChild(script);
-        
+        */
         
 
         const link = document.createElement('link');
