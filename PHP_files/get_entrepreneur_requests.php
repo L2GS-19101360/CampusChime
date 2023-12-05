@@ -10,7 +10,7 @@ if (session_status() == PHP_SESSION_NONE) {
 $statusFilter = isset($_GET['status']) ? $_GET['status'] : 'all';
 
 $sql = "SELECT er.request_id, er.user_id, er.image, er.product_description, er.status, er.request_date, er.decision_date,
-               u.firstname, u.lastname, u.email
+               u.firstname, u.lastname, u.email, u.user_image
         FROM entrepreneur_requests er
         INNER JOIN users u ON er.user_id = u.user_id
         WHERE er.request_date = (
