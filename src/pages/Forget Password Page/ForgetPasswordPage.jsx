@@ -21,11 +21,11 @@ class ForgetPasswordPage extends Component {
 
   handleEmailSubmit = async (e) => {
     e.preventDefault();
-
+  
     const email = e.target.elements.forgetPasswordEmail.value;
-
+  
     console.log(email);
-
+  
     this.setState({
       sentEmailDisplay: (
         <div className="alert alert-primary" role="alert">
@@ -33,7 +33,7 @@ class ForgetPasswordPage extends Component {
         </div>
       ),
     });
-
+  
     try {
       const response = await fetch(
         "http://localhost:8081/send-forgetpassword-email",
@@ -45,9 +45,10 @@ class ForgetPasswordPage extends Component {
           body: JSON.stringify({ email }),
         }
       );
-
+  
       if (response.ok) {
         console.log("Email sent successfully");
+        // Optionally, you can redirect the user to a success page or display a message.
       } else {
         console.error("Failed to send email");
       }
