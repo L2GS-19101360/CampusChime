@@ -122,7 +122,7 @@ const HeroForHome = () => {
 
   // SellRequestModal component
   const EntrepRequestModal = ({ onClose, onSendRequest }) => {
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState("");
     const [productDescription, setProductDescription] = useState("");
 
     // Handle file change for uploading the document

@@ -61,11 +61,6 @@ class LoginPage extends Component {
       console.log("Server Response:", data);
 
       if (data.success) {
-        toast.success("Login successful", {
-          position: "top-center",
-          autoClose: 2000,
-        });
-
         // Store session data on the client side
         sessionStorage.setItem("firstName", data.firstName);
         sessionStorage.setItem("lastName", data.lastName);
@@ -76,12 +71,16 @@ class LoginPage extends Component {
         sessionStorage.setItem("userImage", data.user_image);
         sessionStorage.setItem("active_status", data.active_status);
 
+        toast.success(`Welcome, ${data.firstName} ${data.lastName}`, {
+          position: "top-center",
+          autoClose: 4000,
+        });
         if (data.role === "admin") {
           this.props.history.push("/adminPage");
         } else {
-          if (data.active_status != 0){
+          if (data.active_status != 0) {
             this.props.history.push("/homePage");
-          } else{
+          } else {
             //Ask Jaden tomorrow in Web Dev
           }
         }
