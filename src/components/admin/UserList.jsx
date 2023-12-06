@@ -132,12 +132,12 @@ const UserList = () => {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {users.map((user) => (
+                  {users.filter((user) => user.role !== "admin").map((user) => (
                     <tr key={user.user_id}>
                       <td className="large-space align-middle">
                         <div className="title d-flex align-items-center">
                           <div className="thumb">
-                            {user.user_image === "1" ? (
+                            {user.user_image === "#%&{}>" ? (
                               <LetteredAvatar
                                 name={`${user.firstname} ${user.lastname}`}
                                 size={55}
