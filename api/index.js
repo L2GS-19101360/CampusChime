@@ -29,6 +29,72 @@ app.get('/', (req, res) => {
   res.send(`Hello ${lastName}, ${firstName}`);
 });
 
+app.post('/approve-entrepreneur', (req, res) => {
+  const { email } = req.body;
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'campuschime@gmail.com',
+      pass: 'eald qvml yari ucjf',
+    },
+  });
+
+  var mailOptions = {
+    from: 'campuschime@gmail.com',
+    to: email,
+    subject: 'Entrepreneur Status Approved',
+    html: `
+    <p>Your Entrepreneur account status has been <span style="font-weight: bold; color: green;">Approved</span></p>. 
+    <br/><p>please contact our support team at <span style="font-weight: bold;">campuschime@gmail.com</span></p>.
+    <br/><p>Thank you for your understanding and cooperation.</p>
+    `,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).send('Email sent successfully');
+    }
+  });
+});
+
+app.post('/decline-entrepreneur', (req, res) => {
+  const { email } = req.body;
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'campuschime@gmail.com',
+      pass: 'eald qvml yari ucjf',
+    },
+  });
+
+  var mailOptions = {
+    from: 'campuschime@gmail.com',
+    to: email,
+    subject: 'Entrepreneur Status Declined',
+    html: `
+    <p>Your Entrepreneur account status has been <span style="font-weight: bold; color: red;">Declined</span></p>. 
+    <br/><p>please contact our support team at <span style="font-weight: bold;">campuschime@gmail.com</span></p>.
+    <br/><p>Thank you for your understanding and cooperation.</p>
+    `,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).send('Email sent successfully');
+    }
+  });
+});
+
 app.post('/reactive-account-email', (req, res) => {
   const { email } = req.body;
 

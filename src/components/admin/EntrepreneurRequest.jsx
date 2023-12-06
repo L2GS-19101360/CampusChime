@@ -76,6 +76,11 @@ const EntrepreneurRequest = () => {
             );
           });
 
+          const userEmail = selectedRequest.email; // Use selectedRequest.email instead of user.email
+          axios.post("http://localhost:8081/approve-entrepreneur", {
+            email: userEmail,
+          });
+
           handleClose();
         } else {
           console.error("Error accepting request:", response);
@@ -107,6 +112,12 @@ const EntrepreneurRequest = () => {
               (request) => request.request_id === selectedRequest.request_id
             );
           });
+
+          const userEmail = selectedRequest.email; // Use selectedRequest.email instead of user.email
+          axios.post("http://localhost:8081/decline-entrepreneur", {
+            email: userEmail,
+          });
+
           handleClose();
           fetchEntrepRequests();
         } else {
@@ -221,8 +232,8 @@ const EntrepreneurRequest = () => {
                             color: request.status === "accepted"
                                 ? "green"
                                 : request.status === "pending"
-                                ? "#636363"
-                                : "red",
+                                  ? "#636363"
+                                  : "red",
                             fontWeight: "bold",
                             display: "inline-block",
                           }}
