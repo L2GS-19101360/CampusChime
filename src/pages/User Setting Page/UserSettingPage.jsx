@@ -115,49 +115,46 @@ class UserSettingPage extends Component {
       });
   };
 
-
-
-
-
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Get the filename from the component state
     var filename = this.state.user_Image;
-    console.log(filename);
-
-    // Get other necessary values from the state
     var getId = this.state.id;
 
-    // Check if no new password and no confirm password
-    if ((!this.state.newPassword || this.state.newPassword.trim() === "") && (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")) {
-      // Handle the case where no password change is needed
+    if (
+      (!this.state.newPassword || this.state.newPassword.trim() === "") &&
+      (!this.state.confirmPassword || this.state.confirmPassword.trim() === "")
+    ) {
+      try {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open(
+          "POST",
+          `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_image=${filename}&user_id=${getId}`,
+          true
+        );
+        xhttp.send();
 
-      var xhttp = new XMLHttpRequest();
-      xhttp.open("POST", `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&user_image=${filename}&user_id=${getId}`, true);
-      xhttp.send();
-
-      sessionStorage.clear();
-      window.location.href = "/";
-      // Handle the rest of your code or redirection if needed
-
+        sessionStorage.clear();
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Error updating account:", error);
+      }
     } else if (this.state.newPassword === this.state.confirmPassword) {
-      // Handle the case where a new password is provided
+      try {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open(
+          "POST",
+          `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&user_image=${filename}&user_id=${getId}`,
+          true
+        );
+        xhttp.send();
 
-      var xhttp = new XMLHttpRequest();
-      xhttp.open(
-        "POST",
-        `http://localhost/campuschime/PHP_files/updateAccount.php?lastname=${this.state.lastName}&firstname=${this.state.firstName}&contactnumber=${this.state.contactNumber}&email=${this.state.email}&password=${this.state.newPassword}&user_image=${filename}&user_id=${getId}`,
-        true
-      );
-      xhttp.send();
-
-      sessionStorage.clear();
-      window.location.href = "/";
-      // Handle the rest of your code or redirection if needed
-
+        sessionStorage.clear();
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Error updating account:", error);
+      }
     } else {
-      // Handle the case where passwords do not match
       this.setState({
         alertMessage: (
           <div className="alert alert-danger" role="alert">
@@ -166,46 +163,6 @@ class UserSettingPage extends Component {
         ),
       });
     }
-
-    // Check if a file is selected
-    // if (filename) {
-    //   // Include the filename in the form submission
-    //   const formData = new FormData();
-    //   formData.append("file", filename);
-
-    //   // Fetch request to upload the file
-    //   fetch("http://localhost/campuschime/PHP_files/updateAccount.php", {
-    //     method: "POST",
-    //     body: formData,
-    //   })
-    //     .then((response) => {
-    //       console.log("Server Response:", response);
-
-    //       if (!response.ok) {
-    //         throw new Error(`HTTP error! Status: ${response.status}`);
-    //       }
-
-    //       return response.json();
-    //     })
-    //     .then((data) => {
-    //       console.log("Data received from the server:", data);
-
-    //       if (data && data.filename) {
-    //         // Handle the response or update state if needed
-    //         const filename = data.filename;
-    //         console.log("Filename received:", filename);
-
-    //         this.setState({
-    //           user_Image: filename,
-    //         });
-    //       } else {
-    //         console.error("Error: Unexpected response format from the server.");
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error uploading image:", error);
-    //     });
-    // }
   };
 
 
@@ -229,7 +186,7 @@ class UserSettingPage extends Component {
 
     const inputType = this.state.showPassword ? "text" : "password";
 
-    var profileImage = this.state.user_Image == null ? (
+    var profileImage = this.state.user_Image === "#%&{}>" ? (
       <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
     ) : (
       <img

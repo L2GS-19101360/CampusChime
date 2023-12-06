@@ -8,6 +8,7 @@ import magnifying from "./assets/nfc-magnifying-glass.svg";
 import cart from "./assets/cart-arrow-down.svg";
 import arrow from "./assets/interactive.svg";
 import "./App.css";
+import loginImage from "./assets/loginImage.jpg";
 
 // sample only
 const entrepreneurs = [
@@ -15,7 +16,6 @@ const entrepreneurs = [
   { id: 2, name: "Lorenze Suico", image: "https://via.placeholder.com/150" },
   { id: 3, name: "Zyguel Cabs", image: "https://via.placeholder.com/150" },
 ];
-
 
 class App extends Component {
   constructor() {
@@ -28,16 +28,12 @@ class App extends Component {
 
   render() {
     return (
-      <div style={{paddingBottom: '8%'}}>
+      <div style={{ paddingBottom: "8%" }}>
         <MainNavbar />
 
-        <Carousel style={{ height: "500px"}}>
-          <Carousel.Item style={{ backgroundColor: "red", height: "500px" }}>
-            <img
-              className="d-block w-100"
-              // src="https://via.placeholder.com/400x200"
-              alt="First slide" 
-            />
+        <Carousel style={{ height: "500px" }}>
+          <Carousel.Item style={{ height: "500px" }}>
+            <img className="d-block w-100" src={loginImage} alt="First slide" />
           </Carousel.Item>
           <Carousel.Item style={{ backgroundColor: "blue", height: "500px" }}>
             <img
@@ -64,9 +60,19 @@ class App extends Component {
           </p>
         </div>
 
-        <Row xs={1} md={3} style={{ marginLeft: "260px", marginTop: "50px", maxWidth: "1600px" }}>
+        <Row
+          xs={1}
+          md={3}
+          style={{ marginLeft: "260px", marginTop: "50px", maxWidth: "1600px" }}
+        >
           <Col>
-            <Card style={{ height: "300px", width: "300px", backgroundColor: '#C0C0C0' }}>
+            <Card
+              style={{
+                height: "300px",
+                width: "300px",
+                backgroundColor: "#C0C0C0",
+              }}
+            >
               <Card.Img
                 variant="top"
                 src={magnifying}
@@ -85,7 +91,13 @@ class App extends Component {
           </Col>
 
           <Col>
-            <Card style={{ height: "300px", width: "300px", backgroundColor: '#C0C0C0' }}>
+            <Card
+              style={{
+                height: "300px",
+                width: "300px",
+                backgroundColor: "#C0C0C0",
+              }}
+            >
               <Card.Img
                 variant="top"
                 src={arrow}
@@ -105,7 +117,13 @@ class App extends Component {
           </Col>
 
           <Col>
-            <Card style={{ height: "300px", width: "300px", backgroundColor: '#C0C0C0' }}>
+            <Card
+              style={{
+                height: "300px",
+                width: "300px",
+                backgroundColor: "#C0C0C0",
+              }}
+            >
               <Card.Img
                 variant="top"
                 src={cart}
@@ -125,7 +143,12 @@ class App extends Component {
         </Row>
 
         <h1
-          style={{ fontSize: "4em", textAlign: "center", marginTop: "150px", color: "black"}}
+          style={{
+            fontSize: "4em",
+            textAlign: "center",
+            marginTop: "150px",
+            color: "black",
+          }}
         >
           ENTREPRENEURS
         </h1>
@@ -175,7 +198,6 @@ class App extends Component {
             </Carousel.Item>
           ))}
         </Carousel>
-
       </div>
     );
   }

@@ -1,13 +1,25 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Form, Button, Navbar, FloatingLabel, Alert } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Navbar,
+  FloatingLabel,
+  Alert,
+  Nav,
+} from "react-bootstrap";
 import WebLogo from "../../assets/CampusChimeNoname.png";
-import Logo from "../../assets/CampusChime.png";
 import {
   PersonCircle,
   TelephoneFill,
   EnvelopeFill,
 } from "react-bootstrap-icons";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import registerImage from "../../assets/register.jpg";
+import "./RegisterDesign.css";
+import { ChevronRight } from "react-bootstrap-icons";
 
 class RegisterPage extends Component {
   constructor() {
@@ -30,6 +42,9 @@ class RegisterPage extends Component {
     }));
   };
 
+  handleGoBack = () => {
+    this.props.history.push("/");
+  };
   handleRegisterAccount = (event) => {
     event.preventDefault();
 
@@ -44,7 +59,7 @@ class RegisterPage extends Component {
 
       xhttp.onreadystatechange = () => {
         if (xhttp.status === 200 && xhttp.readyState === 4) {
-          console.log(xhttp.responseText); // Log the response to the console
+          console.log(xhttp.responseText);
 
           try {
             var response = JSON.parse(xhttp.responseText);
@@ -58,6 +73,10 @@ class RegisterPage extends Component {
                 ),
               });
             } else {
+              toast.success("Registration successful", {
+                position: "top-center",
+                autoClose: 2000,
+              });
               // Store data in sessionStorage
               sessionStorage.setItem("userId", response.data);
               sessionStorage.setItem("role", response.user_type);
@@ -65,6 +84,7 @@ class RegisterPage extends Component {
               sessionStorage.setItem("lastName", this.state.newLname);
               sessionStorage.setItem("email", this.state.newEmail);
               sessionStorage.setItem("contactNumber", this.state.newContact);
+              sessionStorage.setItem("userImage", "#%&{}>");
 
               const userData = {
                 lastName: this.state.newLname,
@@ -90,8 +110,9 @@ class RegisterPage extends Component {
   };
 
   render() {
-    var inputType = this.state.showPassword ? "text" : "password";
-    var eyeIcons = this.state.showPassword
+    const { loading } = this.state;
+    const inputType = this.state.showPassword ? "text" : "password";
+    const eyeIcons = this.state.showPassword
       ? "bi bi-eye-slash-fill"
       : "bi bi-eye-fill";
 
@@ -107,206 +128,256 @@ class RegisterPage extends Component {
             CampusChime
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarNav" />
-          <Navbar.Collapse id="navbarNav"></Navbar.Collapse>
+          <Navbar.Collapse id="navbarNav">
+            <Nav className="mr-auto"></Nav>
+          </Navbar.Collapse>
         </Navbar>
 
-        <div
-          className="card mb-3"
-          style={{
-            backgroundColor: "white",
-            maxWidth: "50%",
-            position: "relative",
-            left: "25%",
-            top: "115px",
-          }}
-          id="registerCard"
-        >
-          <div className="row g-0">
-            <div
-              className="col-md-4"
-              style={{ backgroundColor: "gray", textAlign: "center" }}
-            >
-              <img
-                src={Logo}
-                alt=""
-                style={{ height: "235px", width: "235px" }}
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h1>Register Page</h1>
-                {this.state.warning}
-                <Form
-                  onSubmit={this.handleRegisterAccount}
-                  style={{ marginTop: "20px" }}
+        <section className="vh-100" style={{ backgroundColor: "#aeb6c4" }}>
+          <div className="container py-5 h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col col-xl-10">
+                <div
+                  className="card"
+                  style={{
+                    borderRadius: "1rem",
+                    width: "95%",
+                    boxShadow: "2px 4px 8px rgba(0, 0, 0, 0.6)",
+                  }}
                 >
-                  <FloatingLabel
-                    controlId="newLname"
-                    label="Last Name"
-                    className="mb-3"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Last Name"
-                      required
-                      value={this.state.newLname}
-                      onChange={(e) =>
-                        this.setState({ newLname: e.target.value })
-                      }
-                    />
-                    <PersonCircle
-                      size={20}
+                  <div className="row g-0">
+                    <div
+                      className="col-md-6 col-lg-6 d-none d-md-block"
                       style={{
-                        position: "absolute",
-                        top: "20px",
-                        right: "10px",
+                        background: `url(${registerImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
                       }}
-                    />
-                  </FloatingLabel>
+                    ></div>
+                    <div className="col-md-6 col-lg-6">
+                      <div className="d-flex flex-column justify-content-start align-items-start">
+                        <div
+                          className="card-body p-lg-6 text-black"
+                          style={{ width: "100%" }}
+                        >
+                          <div className=" d-flex justify-content-end">
+                            <ChevronRight
+                              size={20}
+                              onClick={this.handleGoBack}
+                              style={{ cursor: "pointer" }}
+                              color="#2d61b3"
+                            />
+                          </div>
+                          <form onSubmit={this.handleRegisterAccount}>
+                            <h1
+                              className="fw-bold mb-3 pb-1"
+                              style={{
+                                letterSpacing: "1px",
+                                textAlign: "center",
+                                marginTop: "20px",
+                                color: "#2d61b3",
+                              }}
+                            >
+                              Register
+                            </h1>
+                            <p
+                              style={{
+                                fontSize: "16px",
+                                marginBottom: "20px",
+                                color: "#888888",
+                              }}
+                            >
+                              Welcome! To create a new account. Please fill in
+                              the details below.
+                            </p>
 
-                  <FloatingLabel
-                    controlId="newFname"
-                    label="First Name"
-                    className="mb-3"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="First Name"
-                      required
-                      value={this.state.newFname}
-                      onChange={(e) =>
-                        this.setState({ newFname: e.target.value })
-                      }
-                    />
-                    <PersonCircle
-                      size={20}
-                      style={{
-                        position: "absolute",
-                        top: "20px",
-                        right: "10px",
-                      }}
-                    />
-                  </FloatingLabel>
+                            {this.state.warning}
 
-                  <FloatingLabel
-                    controlId="newContact"
-                    label="Contact Number"
-                    className="mb-3"
-                  >
-                    <Form.Control
-                      type="tel"
-                      placeholder="Contact Number"
-                      required
-                      value={this.state.newContact}
-                      onChange={(e) =>
-                        this.setState({ newContact: e.target.value })
-                      }
-                    />
-                    <TelephoneFill
-                      size={20}
-                      style={{
-                        position: "absolute",
-                        top: "20px",
-                        right: "10px",
-                      }}
-                    />
-                  </FloatingLabel>
+                            <FloatingLabel
+                              controlId="newLname"
+                              label="Last Name"
+                              style={{ color: "#0d6efd", marginTop: "10px" }}
+                            >
+                              <Form.Control
+                                type="text"
+                                placeholder="Last Name"
+                                required
+                                value={this.state.newLname}
+                                onChange={(e) =>
+                                  this.setState({ newLname: e.target.value })
+                                }
+                              />
+                              <PersonCircle
+                                size={20}
+                                style={{
+                                  position: "absolute",
+                                  top: "20px",
+                                  right: "10px",
+                                }}
+                              />
+                            </FloatingLabel>
 
-                  <FloatingLabel
-                    controlId="newEmail"
-                    label="Email address"
-                    className="mb-3"
-                  >
-                    <Form.Control
-                      type="email"
-                      placeholder="Email Address"
-                      required
-                      value={this.state.newEmail}
-                      onChange={(e) =>
-                        this.setState({ newEmail: e.target.value })
-                      }
-                    />
-                    <EnvelopeFill
-                      size={20}
-                      style={{
-                        position: "absolute",
-                        top: "20px",
-                        right: "10px",
-                      }}
-                    />
-                  </FloatingLabel>
+                            <FloatingLabel
+                              controlId="newFname"
+                              label="First Name"
+                              style={{ color: "#0d6efd", marginTop: "20px" }}
+                            >
+                              <Form.Control
+                                type="text"
+                                placeholder="First Name"
+                                required
+                                value={this.state.newFname}
+                                onChange={(e) =>
+                                  this.setState({ newFname: e.target.value })
+                                }
+                              />
+                              <PersonCircle
+                                size={20}
+                                style={{
+                                  position: "absolute",
+                                  top: "20px",
+                                  right: "10px",
+                                }}
+                              />
+                            </FloatingLabel>
 
-                  <FloatingLabel
-                    controlId="newPassword1"
-                    label="Password"
-                    className="mb-3"
-                  >
-                    <Form.Control
-                      type={inputType}
-                      placeholder="Password"
-                      required
-                      value={this.state.newPassword}
-                      onChange={(e) =>
-                        this.setState({ newPassword: e.target.value })
-                      }
-                    />
-                    <i
-                      className={`ms-2 ${eyeIcons}`}
-                      onClick={this.togglePassword}
-                      style={{
-                        fontSize: "20px",
-                        cursor: "pointer",
-                        position: "absolute",
-                        top: "15px",
-                        right: "10px",
-                      }}
-                    ></i>
-                  </FloatingLabel>
+                            <FloatingLabel
+                              controlId="newContact"
+                              label="Contact Number"
+                              style={{ color: "#0d6efd", marginTop: "20px" }}
+                            >
+                              <Form.Control
+                                type="tel"
+                                placeholder="Contact Number"
+                                required
+                                value={this.state.newContact}
+                                onChange={(e) =>
+                                  this.setState({
+                                    newContact: e.target.value,
+                                  })
+                                }
+                              />
+                              <TelephoneFill
+                                size={20}
+                                style={{
+                                  position: "absolute",
+                                  top: "20px",
+                                  right: "10px",
+                                }}
+                              />
+                            </FloatingLabel>
 
-                  <FloatingLabel
-                    controlId="newPassword2"
-                    label="Confirm Password"
-                    className="mb-3"
-                  >
-                    <Form.Control
-                      type={inputType}
-                      placeholder="Confirm Password"
-                      required
-                      value={this.state.conPassword}
-                      onChange={(e) =>
-                        this.setState({ conPassword: e.target.value })
-                      }
-                    />
-                    <i
-                      className={`ms-2 ${eyeIcons}`}
-                      onClick={this.togglePassword}
-                      style={{
-                        fontSize: "20px",
-                        cursor: "pointer",
-                        position: "absolute",
-                        top: "15px",
-                        right: "10px",
-                      }}
-                    ></i>
-                  </FloatingLabel>
+                            <FloatingLabel
+                              controlId="newEmail"
+                              label="Email address"
+                              style={{ color: "#0d6efd", marginTop: "20px" }}
+                            >
+                              <Form.Control
+                                type="email"
+                                placeholder="Email Address"
+                                required
+                                value={this.state.newEmail}
+                                onChange={(e) =>
+                                  this.setState({ newEmail: e.target.value })
+                                }
+                              />
+                              <EnvelopeFill
+                                size={20}
+                                style={{
+                                  position: "absolute",
+                                  top: "20px",
+                                  right: "10px",
+                                }}
+                              />
+                            </FloatingLabel>
 
-                  <Button
-                    style={{ marginBottom: "10px" }}
-                    variant="outline-primary"
-                    type="submit"
-                  >
-                    Register
-                  </Button>
-                </Form>
-                Already Have an Account? &nbsp;
-                <Link to="/LoginPage">Login here</Link>
+                            <FloatingLabel
+                              controlId="newPassword1"
+                              label="Password"
+                              style={{ color: "#0d6efd", marginTop: "20px" }}
+                            >
+                              <Form.Control
+                                type={inputType}
+                                placeholder="Password"
+                                required
+                                value={this.state.newPassword}
+                                onChange={(e) =>
+                                  this.setState({
+                                    newPassword: e.target.value,
+                                  })
+                                }
+                              />
+                              <i
+                                className={`ms-2 ${eyeIcons}`}
+                                onClick={this.togglePassword}
+                                style={{
+                                  fontSize: "20px",
+                                  cursor: "pointer",
+                                  position: "absolute",
+                                  top: "15px",
+                                  right: "10px",
+                                }}
+                              ></i>
+                            </FloatingLabel>
+
+                            <FloatingLabel
+                              controlId="newPassword2"
+                              label="Confirm Password"
+                              style={{ color: "#0d6efd", marginTop: "20px" }}
+                            >
+                              <Form.Control
+                                type={inputType}
+                                placeholder="Confirm Password"
+                                required
+                                value={this.state.conPassword}
+                                onChange={(e) =>
+                                  this.setState({
+                                    conPassword: e.target.value,
+                                  })
+                                }
+                              />
+                              <i
+                                className={`ms-2 ${eyeIcons}`}
+                                onClick={this.togglePassword}
+                                style={{
+                                  fontSize: "20px",
+                                  cursor: "pointer",
+                                  position: "absolute",
+                                  top: "15px",
+                                  right: "10px",
+                                }}
+                              ></i>
+                            </FloatingLabel>
+                            <div className="text-center">
+                              <Button
+                                style={{ marginTop: "20px", width: "30%" }}
+                                variant="outline-primary"
+                                type="submit"
+                                disabled={loading}
+                              >
+                                {loading ? "Registering..." : "Register"}
+                              </Button>
+                            </div>
+                          </form>
+                          <div className="mt-4">
+                            Already have an account?{" "}
+                            <Link to="/LoginPage">
+                              {" "}
+                              <span className="loginLink">Login here</span>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     );
   }
 }
-
+<ToastContainer />;
 export default withRouter(RegisterPage);

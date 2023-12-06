@@ -9,7 +9,6 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
-import WebLogo from "../assets/CampusChimePurple.png";
 import LetteredAvatar from "./LetteredAvater";
 import logo from "../assets/CampusChimeNoname.png";
 
@@ -29,8 +28,8 @@ const HomeNavbar = () => {
   const role = sessionStorage.getItem("role");
   const userImage = sessionStorage.getItem("userImage");
 
-  var IsImageNull = userImage == null;
-
+  var IsImageNull = userImage === "#%&{}>";
+  console.log(IsImageNull);
   return (
     <div>
       <Navbar
@@ -80,7 +79,7 @@ const HomeNavbar = () => {
                 width: "55px",
                 height: "55px",
                 borderRadius: "50%",
-                border: '1px solid black'
+                border: "1px solid black",
               }}
               onClick={handleOffcanvasShow}
             />
@@ -114,7 +113,7 @@ const HomeNavbar = () => {
                   width: "150px",
                   height: "150px",
                   borderRadius: "50%",
-                  border: '1px solid black'
+                  border: "1px solid black",
                 }}
                 onClick={handleOffcanvasShow}
               />

@@ -17,6 +17,10 @@ function AdminNavbar({
   const { firstName, lastName, email } = userDetails;
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
+  var userImage = sessionStorage.getItem("userImage");
+
+  var IsImageNULL = userImage === "0";
+
   const handleDropdownToggle = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -95,7 +99,20 @@ function AdminNavbar({
                 alignItems: "center",
               }}
             >
-              <LetteredAvatar name={`${firstName} ${lastName}`} size={55} />
+              {IsImageNULL ? (
+                <LetteredAvatar name={`${firstName} ${lastName}`} size={55} />
+              ) : (
+                <img
+                  src={`http://localhost/campuschime/PHP_files/user_images/${userImage}`}
+                  alt={`${firstName} ${lastName}`}
+                  style={{
+                    width: "55px",
+                    height: "55px",
+                    borderRadius: "50%",
+                    border: "1px solid black",
+                  }}
+                />
+              )}
             </div>
 
             <Dropdown.Menu
@@ -114,7 +131,21 @@ function AdminNavbar({
                   marginBottom: "10px",
                 }}
               >
-                <LetteredAvatar name={`${firstName} ${lastName}`} size={40} />
+                {/* <LetteredAvatar name={`${firstName} ${lastName}`} size={40} /> */}
+                {IsImageNULL ? (
+                  <LetteredAvatar name={`${firstName} ${lastName}`} size={40} />
+                ) : (
+                  <img
+                    src={`http://localhost/campuschime/PHP_files/user_images/${userImage}`}
+                    alt={`${firstName} ${lastName}`}
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                      border: "1px solid black",
+                    }}
+                  />
+                )}
                 <span
                   style={{
                     marginLeft: "10px",

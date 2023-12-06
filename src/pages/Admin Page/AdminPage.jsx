@@ -7,6 +7,8 @@ import Dashboard from "../../components/admin/Dashboard";
 import UserList from "../../components/admin/UserList";
 import EntrepreneurRequest from "../../components/admin/EntrepreneurRequest";
 import "./AdminDesign.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AdminPage() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);

@@ -12,8 +12,12 @@ import {
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import WebLogo from "../../assets/CampusChimeNoname.png";
-import Logo from "../../assets/CampusChime.png";
+import loginImage from "../../assets/loginImage.jpg";
 import { EnvelopeFill } from "react-bootstrap-icons";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./LoginDesign.css";
+import { ChevronRight } from "react-bootstrap-icons";
 
 class LoginPage extends Component {
   state = {
@@ -29,6 +33,9 @@ class LoginPage extends Component {
     }));
   };
 
+  handleGoBack = () => {
+    this.props.history.push("/");
+  };
   handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,8 +61,6 @@ class LoginPage extends Component {
       console.log("Server Response:", data);
 
       if (data.success) {
-        console.log("Login successful");
-
         // Store session data on the client side
         sessionStorage.setItem("firstName", data.firstName);
         sessionStorage.setItem("lastName", data.lastName);
@@ -64,16 +69,27 @@ class LoginPage extends Component {
         sessionStorage.setItem("userId", data.userId);
         sessionStorage.setItem("role", data.role);
         sessionStorage.setItem("userImage", data.user_image);
+        sessionStorage.setItem("active_status", data.active_status);
 
+        toast.success(`Welcome, ${data.firstName} ${data.lastName}`, {
+          position: "top-center",
+          autoClose: 4000,
+        });
         if (data.role === "admin") {
           this.props.history.push("/adminPage");
         } else {
-          this.props.history.push("/homePage");
+          if (data.active_status != 0) {
+            this.props.history.push("/homePage");
+          } else {
+            //Ask Jaden tomorrow in Web Dev
+          }
         }
       } else {
         this.setState({
           password: "",
-          warning: <Alert variant="danger">{data.message || "Login failed"}</Alert>,
+          warning: (
+            <Alert variant="danger">{data.message || "Login failed"}</Alert>
+          ),
         });
         console.error("Login failed:", data.message);
       }
@@ -114,109 +130,160 @@ class LoginPage extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <div
-          className="card mb-3"
-          style={{
-            backgroundColor: "white",
-            maxWidth: "43%",
-            position: "relative",
-            left: "30%",
-            top: "240px",
-            borderColor: "#0d6efd",
-          }}
-        >
-          <div className="row g-0">
-            <div
-              className="col-md-4"
-              style={{ backgroundColor: "gray", textAlign: "center" }}
-            >
-              <img
-                src={Logo}
-                alt=""
-                style={{ height: "160px", width: "160px" }}
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h1>Login Page</h1>
-                {this.state.warning}
-                <Form
-                  onSubmit={this.handleSubmit}
-                  style={{ marginTop: "20px" }}
+        <section className="vh-100" style={{ backgroundColor: "#aeb6c4" }}>
+          <div className="container py-5 h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col col-xl-10">
+                <div
+                  className="card"
+                  style={{
+                    borderRadius: "1rem",
+                    width: "95%",
+                    boxShadow: "2px 4px 8px rgba(0, 0, 0, 0.6)",
+                  }}
                 >
-                  <FloatingLabel
-                    controlId="loginEmail"
-                    label="Email address"
-                    style={{ color: "#0d6efd" }}
-                  >
-                    <Form.Control
-                      type="email"
-                      placeholder="Email"
-                      required
-                      style={{ borderColor: "#0d6efd" }}
-                    />
-
-                    <EnvelopeFill
-                      size={20}
+                  <div className="row g-0">
+                    <div
+                      className="col-md-6 col-lg-6 d-none d-md-block"
                       style={{
-                        position: "absolute",
-                        top: "20px",
-                        right: "10px",
-                        color: "1a1e21",
+                        background: `url(${loginImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
                       }}
-                    />
-                  </FloatingLabel>
+                    ></div>
+                    <div className="col-md-6 col-lg-6">
+                      <div className="d-flex flex-column justify-content-start align-items-start">
+                        <div
+                          className="card-body p-4 p-lg-6 text-black"
+                          style={{ width: "100%" }}
+                        >
+                          <div className=" d-flex justify-content-end">
+                            <ChevronRight
+                              size={20}
+                              onClick={this.handleGoBack}
+                              style={{ cursor: "pointer" }}
+                              color="#2d61b3"
+                            />
+                          </div>
 
-                  <FloatingLabel
-                    style={{ marginTop: "20px" }}
-                    controlId="loginPassword"
-                    label="Password"
-                  >
-                    <Form.Control
-                      type={inputType}
-                      value={this.state.password}
-                      onChange={(e) =>
-                        this.setState({ password: e.target.value })
-                      }
-                      placeholder="Password"
-                      required
-                    />
-                    <i
-                      className={`ms-2 ${eyeIcons}`}
-                      onClick={this.togglePassword}
-                      style={{
-                        fontSize: "20px",
-                        cursor: "pointer",
-                        position: "absolute",
-                        top: "15px",
-                        right: "10px",
-                      }}
-                    ></i>
-                  </FloatingLabel>
+                          <form onSubmit={this.handleSubmit}>
+                            <h1
+                              className="fw-bold mb-3 pb-1"
+                              style={{
+                                letterSpacing: "1px",
+                                textAlign: "center",
+                                marginTop: "50px",
+                                color: "#2d61b3",
+                              }}
+                            >
+                              Login
+                            </h1>
+                            <p
+                              style={{
+                                fontSize: "16px",
+                                marginBottom: "20px",
+                                color: "#888888",
+                              }}
+                            >
+                              Welcome back! Please enter email and password to
+                              sign in to your account.
+                            </p>
 
-                  <Link to="/forgetPasswordPage">Forget Password?</Link>
-                  <br />
+                            <FloatingLabel
+                              controlId="loginEmail"
+                              label="Email address"
+                              style={{ color: "#0d6efd", marginTop: "10px" }}
+                            >
+                              <Form.Control
+                                type="email"
+                                placeholder="Email"
+                                required
+                                style={{ borderColor: "#0d6efd" }}
+                              />
+                              <EnvelopeFill
+                                size={20}
+                                style={{
+                                  position: "absolute",
+                                  top: "20px",
+                                  right: "10px",
+                                }}
+                              />
+                            </FloatingLabel>
 
-                  <Button
-                    style={{ marginTop: "15px", marginBottom: "10px" }}
-                    variant="outline-primary"
-                    type="submit"
-                    disabled={loading}
-                  >
-                    {loading ? "Logging in..." : "Login"}
-                  </Button>
-                </Form>
-                Don't have an account?{" "}
-                <Link to="/RegisterPage">Register here</Link>
+                            <FloatingLabel
+                              style={{ color: "#0d6efd", marginTop: "20px" }}
+                              controlId="loginPassword"
+                              label="Password"
+                            >
+                              <Form.Control
+                                type={inputType}
+                                value={this.state.password}
+                                onChange={(e) =>
+                                  this.setState({ password: e.target.value })
+                                }
+                                placeholder="Password"
+                                required
+                                style={{ borderColor: "#0d6efd" }}
+                              />
+                              <i
+                                className={`ms-2 ${eyeIcons}`}
+                                onClick={this.togglePassword}
+                                style={{
+                                  fontSize: "20px",
+                                  cursor: "pointer",
+                                  position: "absolute",
+                                  top: "15px",
+                                  right: "10px",
+                                }}
+                              ></i>
+                            </FloatingLabel>
+
+                            <div className=" d-flex justify-content-end">
+                              <Link
+                                to="/forgetPasswordPage"
+                                className="forgetPass"
+                                style={{
+                                  fontSize: "14px",
+                                }}
+                              >
+                                <span className="registerLink">
+                                  Forget Password?
+                                </span>
+                              </Link>
+                            </div>
+                            <div className=" text-center">
+                              <Button
+                                style={{ marginBottom: "10px", width: "30%" }}
+                                variant="outline-primary"
+                                type="submit"
+                                disabled={loading}
+                              >
+                                {loading ? "Logging in..." : "Login"}
+                              </Button>
+                            </div>
+                          </form>
+                          <div className="mt-2">
+                            Don't have an account?{" "}
+                            <Link to="/RegisterPage">
+                              <span className="registerLink">
+                                Register here
+                              </span>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     );
   }
 }
-
+<ToastContainer />;
 LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
 };
