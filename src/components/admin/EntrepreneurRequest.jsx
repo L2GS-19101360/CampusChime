@@ -218,8 +218,7 @@ const EntrepreneurRequest = () => {
                             padding: "5px",
                             backgroundColor: "#efefef",
                             color: "#5143a9",
-                            color:
-                              request.status === "accepted"
+                            color: request.status === "accepted"
                                 ? "green"
                                 : request.status === "pending"
                                 ? "#636363"
