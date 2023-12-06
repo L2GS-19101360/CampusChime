@@ -1,5 +1,6 @@
 import React from "react";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Dashboard() {
   return (
     <div
@@ -7,7 +8,7 @@ function Dashboard() {
       style={{
         backgroundColor: "rgba(255, 255, 255, 0.6)",
         borderRadius: "10px",
-        height: "100%",
+        // height: "100%",
         marginLeft: "20px",
         marginRight: "10px",
         marginTop: "50px",
@@ -105,6 +106,7 @@ function Dashboard() {
           </tr>
         </tbody>
       </table>
+      <ToastContainer />
     </div>
   );
 }

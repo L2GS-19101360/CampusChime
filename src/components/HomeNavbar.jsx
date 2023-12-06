@@ -9,7 +9,6 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
-import WebLogo from "../assets/CampusChimePurple.png";
 import LetteredAvatar from "./LetteredAvater";
 import logo from "../assets/CampusChimeNoname.png";
 
@@ -30,7 +29,7 @@ const HomeNavbar = () => {
   const userImage = sessionStorage.getItem("userImage");
 
   var IsImageNull = userImage === "#%&{}>";
-
+  console.log(IsImageNull);
   return (
     <div>
       <Navbar
