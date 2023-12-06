@@ -1,14 +1,18 @@
 // ProductPage.jsx
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 /*import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 */
+import Dash from './dashboard/dash';
+import Products from './products/products';
 import './css/style.css'; 
 
 
 const SellerProductPage = () => {
     useEffect(() => {
+      setShowDash(true);
+      setShowProducts(false);  
         const listItems = document.querySelectorAll(".sidebar-list li");
         const handleItemClick = (item) => {
             let isActive = item.classList.contains("active");
@@ -64,12 +68,24 @@ const SellerProductPage = () => {
           });
         };
       }, []);
+
+      //State variables
+      const [showDash, setShowDash] = useState(true);
+      const [showProducts, setShowProducts] = useState(true);
+      const handleProductClick  = () => {
+        setShowDash(false);
+        setShowProducts(true);
+      };
+      const handleDashClick  = () => {
+        setShowDash(true);
+        setShowProducts(false);
+      };
  return (
   <div>
     <div className="sidebar close">
     {/* ========== Logo ============  */}
     <a href="#" className="logo-box">
-      <i className="bx bxl-xing" />
+    <i class='bx bxs-bar-chart-alt-2' ></i>
       <div className="logo-name">C.C. Seller</div>
     </a>
     {/* ========== List ============  */}
@@ -77,28 +93,35 @@ const SellerProductPage = () => {
       {/* -------- Non Dropdown List Item ------- */}
       <li>
         <div className="title">
-          <a href="#" className="link">
+          <a href="#" className="link" onClick={handleDashClick}>
             <i className="bx bx-grid-alt" />
             <span className="name">Dashboard</span>
           </a>
           {/* <i class='bx bxs-chevron-down'></i> */}
         </div>
         <div className="submenu">
-          <a href="#" className="link submenu-title">
+          <a href="#" className="link submenu-title" onClick={handleDashClick}>
             Dashboard
           </a>
           {/* submenu links here  */}
         </div>
       </li>
       {/* -------- Dropdown List Item ------- */}
-      <li className="dropdown">
+      <li>
         <div className="title">
-          <a href="#" className="link">
+          <a href="#" className="link" onClick={handleProductClick}>
             <i className="bx bx-collection" />
-            <span className="name">Category</span>
+            <span className="name">Products</span>
           </a>
-          <i className="bx bxs-chevron-down" />
+         {/* <i className="bx bxs-chevron-down" />*/}
         </div>
+        <div className="submenu">
+          <a href="#" className="link submenu-title" onClick={handleProductClick}>
+            Products
+          </a>
+          {/* submenu links here  */}
+        </div>
+        {/*
         <div className="submenu">
           <a href="#" className="link submenu-title">
             Category
@@ -113,6 +136,7 @@ const SellerProductPage = () => {
             PHP &amp; MySQL
           </a>
         </div>
+          */}
       </li>
       {/* -------- Dropdown List Item ------- */}
       <li className="dropdown">
@@ -248,8 +272,10 @@ const SellerProductPage = () => {
   <section className="home">
     <div className="toggle-sidebar">
       <i className="bx bx-menu" />
-      <div className="text">Toggle</div>
+      <div className="text">Toggle Menu</div>
     </div>
+   {showDash && <Dash />}
+   {showProducts && <Products />}
   </section>
   </div>
  );

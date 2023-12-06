@@ -11,6 +11,8 @@ const EntrepreneurRequest = () => {
   const [show, setShow] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [filter, setFilter] = useState("Pending");
+  var userImage = sessionStorage.getItem("userImage");
+  var IsImageNULL = userImage === "0";
 
   useEffect(() => {
     fetchEntrepRequests();
@@ -156,10 +158,23 @@ const EntrepreneurRequest = () => {
                       <td className="large-space align-middle">
                         <div className="title d-flex align-items-center">
                           <div className="thumb">
-                            <LetteredAvatar
-                              name={`${request.firstname} ${request.lastname}`}
-                              size={55}
-                            />
+                            {request.user_image === "0" ? (
+                              <LetteredAvatar
+                                name={`${request.firstname} ${request.lastname}`}
+                                size={55}
+                              />
+                            ) : (
+                              <img
+                                src={`http://localhost/campuschime/PHP_files/user_images/${request.user_image}`}
+                                alt={`${request.firstname} ${request.lastname}`}
+                                style={{
+                                  width: "55px",
+                                  height: "55px",
+                                  borderRadius: "50%",
+                                  border: "1px solid black",
+                                }}
+                              />
+                            )}
                           </div>
                           <div
                             className="candidate-list-title"
@@ -197,8 +212,8 @@ const EntrepreneurRequest = () => {
                           style={{
                             borderRadius: "10px",
                             padding: "5px",
-                            backgroundColor: "#d1cac5",
-                            color: "#cc8e33",
+                            backgroundColor: "#efefef",
+                            color: "#5143a9",
                             fontWeight: "bold",
                             display: "inline-block",
                           }}
@@ -297,10 +312,23 @@ const EntrepreneurRequest = () => {
                         justifyContent: "center",
                       }}
                     >
-                      <LetteredAvatar
-                        name={`${selectedRequest.firstname} ${selectedRequest.lastname}`}
-                        size={100}
-                      />
+                      {selectedRequest.user_image === "0" ? (
+                        <LetteredAvatar
+                          name={`${selectedRequest.firstname} ${selectedRequest.lastname}`}
+                          size={100}
+                        />
+                      ) : (
+                        <img
+                          src={`http://localhost/campuschime/PHP_files/user_images/${selectedRequest.user_image}`}
+                          alt={`${selectedRequest.firstname} ${selectedRequest.lastname}`}
+                          style={{
+                            width: "50%",
+                            height: "50%",
+                            borderRadius: "50%  ",
+                            border: "1px solid black",
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="about-user" style={{ marginTop: "20px" }}>
@@ -348,20 +376,21 @@ const EntrepreneurRequest = () => {
                         </tr>
                       </tbody>
                     </table>
-                    <Button
-                      variant="outline-danger"
-                      onClick={handleDecline}
-                      style={{ marginRight: "10px" }}
+                    <div
+                      className="d-flex justify-content-center"
+                      style={{ marginTop: "40px" }}
                     >
-                      Decline Request
-                    </Button>
-                    <Button
-                      variant="success"
-                      onClick={handleAccept}
-                      style={{ marginRight: "5px" }}
-                    >
-                      Accept Request
-                    </Button>
+                      <Button
+                        variant="outline-danger"
+                        onClick={handleDecline}
+                        style={{ marginRight: "10px" }}
+                      >
+                        Decline&nbsp;Request
+                      </Button>
+                      <Button variant="success" onClick={handleAccept}>
+                        Accept&nbsp;Request
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
