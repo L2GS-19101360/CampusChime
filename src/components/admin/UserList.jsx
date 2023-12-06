@@ -36,10 +36,12 @@ const UserList = () => {
   }, [roleFilter, statusFilter]);
 
   const handleUserStatus = (userId) => {
-    const newStatus =
-      users.find((user) => user.user_id === userId).active_status === 1 ? 0 : 1;
+    const user = users.find((user) => user.user_id === userId);
+    const newStatus = user.active_status === 1 ? 0 : 1;
+
     console.log("User ID:", userId);
     console.log("New Status:", newStatus);
+
     axios
       .post("http://localhost/CampusChime/PHP_files/handle_user_list.php", {
         userId: userId,
@@ -62,11 +64,21 @@ const UserList = () => {
                 : user
             )
           );
+
+          // Send email to the user when the account is deactivated
+          if (newStatus === 0) {
+            const userEmail = user.email; // Assuming your user object has an 'email' property
+            axios.post("http://localhost:8081/deactive-account-email", {
+              email: userEmail,
+            });
+          } else {
+            const userEmail = user.email; // Assuming your user object has an 'email' property
+            axios.post("http://localhost:8081/reactive-account-email", {
+              email: userEmail,
+            });
+          }
         } else {
-          console.error(
-            "Error activating/deactivating user account:",
-            response
-          );
+          console.error("Error activating/deactivating user account:", response);
         }
       })
       .catch((error) => {
