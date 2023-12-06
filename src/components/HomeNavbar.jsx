@@ -29,7 +29,7 @@ const HomeNavbar = () => {
   const role = sessionStorage.getItem("role");
   const userImage = sessionStorage.getItem("userImage");
 
-  var IsImageNull = userImage === "0";
+  var IsImageNull = userImage === "#%&{}>";
 
   return (
     <div>

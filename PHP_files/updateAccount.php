@@ -19,7 +19,7 @@ $updateEmail = trim($_GET['email']);
 $updatePassword = trim($_GET['password']);
 $updateImageName = trim($_GET['user_image']);
 
-$updateImage = ''; // Initialize variable
+$updateImage = '';
 
 if (isset($_FILES['file'])) {
     $file = $_FILES['file'];
@@ -50,10 +50,12 @@ if ($isValid) {
             $retVal = $e->getMessage();
         }
     } else {
-        // Handle the case where the password is updated
+        // Hash the new password
+        $hashedPassword = password_hash($updatePassword, PASSWORD_DEFAULT);
+
         try {
             $stmt = $conn->prepare("UPDATE users SET lastname=?, firstname=?, contactnumber=?, email=?, password=?, user_image=? WHERE user_id=?");
-            $stmt->bind_param("ssisssi", $updateLname, $updateFname, $updateContact, $updateEmail, $updatePassword, $updateImageName, $getId);
+            $stmt->bind_param("ssisssi", $updateLname, $updateFname, $updateContact, $updateEmail, $hashedPassword, $updateImageName, $getId);
             $stmt->execute();
             $stmt->close();
 
@@ -70,8 +72,9 @@ $response = array(
     'status' => $status,
     'data' => $data,
     'message' => $retVal,
-    'filename' => $updateImage, // Send the filename back to the frontend
+    'filename' => $updateImage,
 );
 
 header('Content-Type: application/json');
 echo json_encode($response);
+?>
