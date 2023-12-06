@@ -16,6 +16,8 @@ import loginImage from "../../assets/loginImage.jpg";
 import { EnvelopeFill } from "react-bootstrap-icons";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./LoginDesign.css";
+import { ChevronRight } from "react-bootstrap-icons";
 
 class LoginPage extends Component {
   state = {
@@ -31,6 +33,9 @@ class LoginPage extends Component {
     }));
   };
 
+  handleGoBack = () => {
+    this.props.history.push("/");
+  };
   handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -145,9 +150,18 @@ class LoginPage extends Component {
                     <div className="col-md-6 col-lg-6">
                       <div className="d-flex flex-column justify-content-start align-items-start">
                         <div
-                          className="card-body p-4 p-lg-5 text-black"
+                          className="card-body p-4 p-lg-6 text-black"
                           style={{ width: "100%" }}
                         >
+                          <div className=" d-flex justify-content-end">
+                            <ChevronRight
+                              size={20}
+                              onClick={this.handleGoBack}
+                              style={{ cursor: "pointer" }}
+                              color="#2d61b3"
+                            />
+                          </div>
+
                           <form onSubmit={this.handleSubmit}>
                             <h1
                               className="fw-bold mb-3 pb-1"
@@ -167,8 +181,8 @@ class LoginPage extends Component {
                                 color: "#888888",
                               }}
                             >
-                              Welcome! Please enter email and password to sign
-                              in to your account.
+                              Welcome back! Please enter email and password to
+                              sign in to your account.
                             </p>
 
                             <FloatingLabel
@@ -220,27 +234,38 @@ class LoginPage extends Component {
                               ></i>
                             </FloatingLabel>
 
-                            <div className="d-flex justify-content-between">
-                              <div></div>
+                            <div className=" d-flex justify-content-end">
                               <Link
                                 to="/forgetPasswordPage"
-                                style={{ alignSelf: "flex-end" }}
+                                className="forgetPass"
+                                style={{
+                                  fontSize: "14px",
+                                }}
                               >
-                                Forget Password?
+                                <span className="registerLink">
+                                  Forget Password?
+                                </span>
                               </Link>
                             </div>
-
-                            <Button
-                              style={{ marginBottom: "20px", width: "20%" }}
-                              variant="outline-primary"
-                              type="submit"
-                              disabled={loading}
-                            >
-                              {loading ? "Logging in..." : "Login"}
-                            </Button>
+                            <div className=" text-center">
+                              <Button
+                                style={{ marginBottom: "10px", width: "30%" }}
+                                variant="outline-primary"
+                                type="submit"
+                                disabled={loading}
+                              >
+                                {loading ? "Logging in..." : "Login"}
+                              </Button>
+                            </div>
                           </form>
-                          Don't have an account?{" "}
-                          <Link to="/RegisterPage">Register here</Link>
+                          <div className="mt-2">
+                            Don't have an account?{" "}
+                            <Link to="/RegisterPage">
+                              <span className="registerLink">
+                                Register here
+                              </span>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>

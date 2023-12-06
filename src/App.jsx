@@ -8,6 +8,7 @@ import magnifying from "./assets/nfc-magnifying-glass.svg";
 import cart from "./assets/cart-arrow-down.svg";
 import arrow from "./assets/interactive.svg";
 import "./App.css";
+import loginImage from "./assets/loginImage.jpg";
 
 // sample only
 const entrepreneurs = [
@@ -31,12 +32,8 @@ class App extends Component {
         <MainNavbar />
 
         <Carousel style={{ height: "500px" }}>
-          <Carousel.Item style={{ backgroundColor: "red", height: "500px" }}>
-            <img
-              className="d-block w-100"
-              // src="https://via.placeholder.com/400x200"
-              alt="First slide"
-            />
+          <Carousel.Item style={{ height: "500px" }}>
+            <img className="d-block w-100" src={loginImage} alt="First slide" />
           </Carousel.Item>
           <Carousel.Item style={{ backgroundColor: "blue", height: "500px" }}>
             <img

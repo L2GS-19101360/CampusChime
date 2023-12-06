@@ -19,11 +19,7 @@ function AdminNavbar({
 
   var userImage = sessionStorage.getItem("userImage");
 
-  console.log(userImage);
-
   var IsImageNULL = userImage === "0";
-
-  console.log(IsImageNULL);
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!isDropdownOpen);
