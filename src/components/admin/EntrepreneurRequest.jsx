@@ -117,6 +117,7 @@ const EntrepreneurRequest = () => {
         console.error(error);
       });
   };
+
   return (
     <div className="container-fluid mt-3 mb-4 d-flex align-items-center justify-content-center">
       <div className="col-lg-10 mt-4 mt-lg-0">

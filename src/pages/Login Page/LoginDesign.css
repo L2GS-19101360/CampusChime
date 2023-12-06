@@ -1,10 +1,19 @@
-.showPassword{
-    display: inline-flex;
-    align-items: center;
-    width: 100%;
+.showPassword {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
 }
-.bi-eye-fill, .bi-eye-slash-fill{
-    font-size: x-large;
-    cursor: pointer;
-    margin-left: 10px;
+.bi-eye-fill,
+.bi-eye-slash-fill {
+  font-size: x-large;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.registerLink:hover {
+  text-decoration: underline;
+}
+
+.forgetPass:hover {
+  text-decoration: underline;
 }
