@@ -124,8 +124,8 @@ const EntrepreneurRequest = () => {
         <div className="row">
           <div className="col-md-10">
             <Dropdown className="mb-3">
-              <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                Filter: {filter}
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Status: {filter}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => setFilter("all")}>
@@ -142,7 +142,10 @@ const EntrepreneurRequest = () => {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            <div className="table-responsive mb-0 bg-white p-4 shadow-sm">
+            <div
+              className="table-responsive mb-0 bg-white p-4 shadow-sm"
+              style={{ maxHeight: "85vh", overflowY: "auto" }}
+            >
               <Table className="table manage-candidates-top mb-0 text-center">
                 <thead>
                   <tr>
@@ -215,6 +218,12 @@ const EntrepreneurRequest = () => {
                             padding: "5px",
                             backgroundColor: "#efefef",
                             color: "#5143a9",
+                            color:
+                              request.status === "accepted"
+                                ? "green"
+                                : request.status === "pending"
+                                ? "#636363"
+                                : "red",
                             fontWeight: "bold",
                             display: "inline-block",
                           }}
