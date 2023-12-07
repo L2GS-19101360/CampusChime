@@ -10,23 +10,43 @@ import arrow from "./assets/interactive.svg";
 import "./App.css";
 import loginImage from "./assets/loginImage.jpg";
 import Footer from "./components/footer/footer";
+import LetteredAvatar from "../src/components/LetteredAvater.jsx";
 // sample only
-const entrepreneurs = [
-  { id: 1, name: "Jaden Ceniza", image: "https://via.placeholder.com/150" },
-  { id: 2, name: "Lorenze Suico", image: "https://via.placeholder.com/150" },
-  { id: 3, name: "Zyguel Cabs", image: "https://via.placeholder.com/150" },
-];
+
 
 class App extends Component {
   constructor() {
     super();
+    this.state = {
+      entrepreneurArray: [],
+    }
   }
 
-  componentDidMount() {}
+  componentDidMount() {
 
-  componentWillUnmount() {}
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "http://localhost/campuschime/PHP_files/displayEntrepreneur.php", true);
+    xhttp.send();
+
+    xhttp.onreadystatechange = () => {
+
+      if (xhttp.status === 200 && xhttp.readyState === 4) {
+        var response = JSON.parse(xhttp.responseText);
+        console.log(response);
+        this.setState({ entrepreneurArray: response }, () => {
+          console.log(this.state.entrepreneurArray.data);
+        });
+      }
+
+    }
+
+  }
+
+  componentWillUnmount() { }
 
   render() {
+    const { entrepreneurArray } = this.state;
+
     return (
       <div style={{ paddingBottom: "8%" }}>
         <MainNavbar />
@@ -158,46 +178,45 @@ class App extends Component {
             backgroundColor: "#8f7f61",
             height: "300px",
             marginTop: "5px",
-            marginLeft: "500px",
-            marginRight: "500px",
           }}
         >
-          {/* js logic not correct but just for steps when needed  */}
-          {entrepreneurs.map((entrepreneur) => (
-            <Carousel.Item key={entrepreneur.id}>
-              <Row className="mt-5" style={{ textAlign: "center" }}>
-                <Col style={{ marginTop: "-10px" }}>
-                  <img
-                    src={entrepreneur.image}
-                    alt={entrepreneur.name}
-                    className="rounded-circle"
-                    style={{ marginRight: "-100px" }}
-                  />
-                  <h3 style={{ marginLeft: "100px" }}>{entrepreneur.name}</h3>
-                </Col>
-
-                <Col style={{ marginTop: "-10px" }}>
-                  <img
-                    src={entrepreneur.image}
-                    alt={entrepreneur.name}
-                    className="rounded-circle"
-                  />
-                  <h3>{entrepreneur.name}</h3>
-                </Col>
-
-                <Col style={{ marginTop: "-10px" }}>
-                  <img
-                    src={entrepreneur.image}
-                    alt={entrepreneur.name}
-                    className="rounded-circle"
-                    style={{ marginLeft: "-100px" }}
-                  />
-                  <h3 style={{ marginRight: "100px" }}>{entrepreneur.name}</h3>
-                </Col>
-              </Row>
-            </Carousel.Item>
-          ))}
+          {entrepreneurArray.data &&
+            entrepreneurArray.data.map((entrepreneur, index) => (
+              index % 3 === 0 && ( // Check if it's the first item in the set
+                <Carousel.Item key={index}>
+                  <Row className="mt-5" style={{ textAlign: "center" }}>
+                    {entrepreneurArray.data
+                      .slice(index, index + 3)
+                      .map((entrepreneur, subIndex) => (
+                        <Col
+                          key={subIndex}
+                          className="d-flex flex-column align-items-center"
+                        >
+                          {entrepreneur.user_image === "#%&{}>" ? (
+                            <LetteredAvatar
+                              name={`${entrepreneur.firstname} ${entrepreneur.lastname}`}
+                              size={150}
+                            />
+                          ) : (
+                            <img
+                              src={`http://localhost/campuschime/PHP_files/user_images/${entrepreneur.user_image}`}
+                              alt={entrepreneur.name}
+                              className="rounded-circle"
+                              height={150}
+                              width={150}
+                            />
+                          )}
+                          <h3 style={{ marginTop: "10px" }}>
+                            {entrepreneur.firstname} {entrepreneur.lastname}
+                          </h3>
+                        </Col>
+                      ))}
+                  </Row>
+                </Carousel.Item>
+              )
+            ))}
         </Carousel>
+
       </div>
     );
   }
