@@ -106,9 +106,6 @@ const UserList = () => {
                   <Dropdown.Item onClick={() => setRoleFilter("Entrepreneur")}>
                     Entrepreneur
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setRoleFilter("Admin")}>
-                    Admin
-                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <Dropdown style={{ marginLeft: "20px" }}>
