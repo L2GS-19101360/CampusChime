@@ -1,0 +1,24 @@
+Based on your existing products table structure and the information from the search results, we can create a transactions table and a transaction_products table.
+
+The transactions table will store information about each transaction, such as the transaction ID, the date and time of the transaction, the total amount, and the customer ID.
+
+The transaction_products table will serve as a junction table that links the transactions table and the products table, allowing us to represent a many-to-many relationship between transactions and products. Each row in the transaction_products table will represent a product sold in a transaction, and will include the transaction ID, the product ID, and the quantity of the product sold in that transaction.
+
+Here's how you might define these tables:
+
+CREATE TABLE `transactions` (
+ `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+ `transaction_date` timestamp NOT NULL DEFAULT current_timestamp(),
+ `total_amount` decimal(10,2) NOT NULL,
+ `customer_id` int(11) NOT NULL,
+ PRIMARY KEY (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `transaction_products` (
+ `transaction_id` int(11) NOT NULL,
+ `product_id` int(11) NOT NULL,
+ `quantity` int(11) NOT NULL,
+ PRIMARY KEY (`transaction_id`, `product_id`),
+ FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`transaction_id`),
+ FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
