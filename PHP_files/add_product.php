@@ -3,7 +3,7 @@
 include 'db_connection.php';
 
 // Constants for allowed file extensions and max file size
-const ALLOWED_EXTENSIONS = ['pdf', 'jpg', 'png', 'jpeg'];
+const ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg'];
 const MAX_FILE_SIZE = 5242880; // 5MB
 const UPLOADS_DIRECTORY = 'files/'; // Directory to store uploaded files
 
