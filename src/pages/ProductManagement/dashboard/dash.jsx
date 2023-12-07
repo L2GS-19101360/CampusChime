@@ -43,7 +43,7 @@ const Dash = () => {
             <div className="card-body">
                 <h5 className="card-title text-center fs-3">Sales</h5>
                 <section className="d-inline">
-                <i class='bx bxs-badge-dollar bx-md'></i>
+                <i className='bx bxs-badge-dollar bx-md'></i>
                 </section>
                 <p className="card-text d-inline fs-3 align-top px-2">{sales}</p>
             </div>
@@ -54,7 +54,7 @@ const Dash = () => {
             <div className="card-body">
                 <h5 className="card-title text-center fs-3">Add to Cart/s</h5>
                 <section className="d-inline">
-                <i class='bx bxs-cart-add bx-md'></i>
+                <i className='bx bxs-cart-add bx-md'></i>
                 </section>
                 <p className="card-text d-inline fs-3 align-top px-2">{addToCart}</p>
             </div>
@@ -65,7 +65,7 @@ const Dash = () => {
             <div className="card-body">
                 <h5 className="card-title text-center fs-3">Inventory</h5>
                 <section className="d-inline">
-                <i class='bx bxs-cabinet bx-md'></i>
+                <i className='bx bxs-cabinet bx-md'></i>
                 </section>
                 <p className="card-text d-inline fs-3 align-top px-2">{addToCart}</p>
             </div>
@@ -76,7 +76,7 @@ const Dash = () => {
             <div className="card-body">
                 <h5 className="card-title text-center fs-3">Products in Sale</h5>
                 <section className="d-inline">
-                <i class='bx bxs-offer bx-md'></i>
+                <i className='bx bxs-offer bx-md'></i>
                 </section>
                 <p className="card-text d-inline fs-3 align-top px-2">{addToCart}</p>
             </div>

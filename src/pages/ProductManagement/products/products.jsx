@@ -31,10 +31,10 @@ const Products = () => {
   
     return (
       <div>
-        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabIndex="0">
           <Container className="container-fluid">
             <AddProductModal />
-            <button type="button" class="btn btn-outline-primary my-3"  data-bs-toggle="modal" data-bs-target="#addProductModal">Add Product</button>
+            <button type="button" className="btn btn-outline-primary my-3"  data-bs-toggle="modal" data-bs-target="#addProductModal">Add Product</button>
             
             <ResponsiveTable className="table table-striped">
               <thead>
@@ -55,7 +55,7 @@ const Products = () => {
                   <span class="badge text-bg-danger p-1 mx-1">On Sale</span>
                   <span class="badge text-bg-warning p-1 mx-1">Reported</span>
                   </td>
-                  
+
                   <td>
                    <button className="btn btn-primary m-1 d-inline">Edit</button>
                    <button className="btn btn-danger m-1 d-inline">Delete</button>
