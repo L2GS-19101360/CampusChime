@@ -6,6 +6,7 @@ import AdminNavbar from "../../components/admin/AdminNavbar";
 import Dashboard from "../../components/admin/Dashboard";
 import UserList from "../../components/admin/UserList";
 import EntrepreneurRequest from "../../components/admin/EntrepreneurRequest";
+import ProductManagement from "../../components/admin/ProductManagement";
 import "./AdminDesign.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -103,6 +104,20 @@ function AdminPage() {
               </a>
               <a
                 className={`list-group-item py-3 ${
+                  currentPage === "Product Management" && "active"
+                }`}
+                style={{
+                  borderTopRightRadius: "20px",
+                  borderBottomRightRadius: "20px",
+                  marginBottom: "10px",
+                }}
+                onClick={() => handlePageChange("Product Management")}
+              >
+                <i className="bi bi-box fs-5 me-3 "></i>
+                <span>Product Management</span>
+              </a>
+              <a
+                className={`list-group-item py-3 ${
                   currentPage === "Entrepreneur Requests" && "active"
                 }`}
                 style={{
@@ -136,6 +151,9 @@ function AdminPage() {
             currentPage={currentPage}
             onPageChange={(page) => setCurrentPage(page)}
           />
+          {currentPage === "Product Management" && (
+            <ProductManagement Toggle={() => setSidebarOpen(!isSidebarOpen)} />
+          )}
           {currentPage === "Entrepreneur Requests" && (
             <EntrepreneurRequest
               Toggle={() => setSidebarOpen(!isSidebarOpen)}

@@ -12,7 +12,6 @@ const EntrepreneurRequest = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [filter, setFilter] = useState("Pending");
   var userImage = sessionStorage.getItem("userImage");
-  var IsImageNULL = userImage === "0";
 
   useEffect(() => {
     fetchEntrepRequests();
@@ -76,6 +75,11 @@ const EntrepreneurRequest = () => {
             );
           });
 
+          const userEmail = selectedRequest.email; // Use selectedRequest.email instead of user.email
+          axios.post("http://localhost:8081/approve-entrepreneur", {
+            email: userEmail,
+          });
+
           handleClose();
         } else {
           console.error("Error accepting request:", response);
@@ -107,6 +111,12 @@ const EntrepreneurRequest = () => {
               (request) => request.request_id === selectedRequest.request_id
             );
           });
+
+          const userEmail = selectedRequest.email; // Use selectedRequest.email instead of user.email
+          axios.post("http://localhost:8081/decline-entrepreneur", {
+            email: userEmail,
+          });
+
           handleClose();
           fetchEntrepRequests();
         } else {
@@ -162,7 +172,7 @@ const EntrepreneurRequest = () => {
                       <td className="large-space align-middle">
                         <div className="title d-flex align-items-center">
                           <div className="thumb">
-                            {request.user_image === "0" ? (
+                            {request.user_image === "#%&{}>" ? (
                               <LetteredAvatar
                                 name={`${request.firstname} ${request.lastname}`}
                                 size={55}
@@ -248,13 +258,14 @@ const EntrepreneurRequest = () => {
         </div>
       </div>
       {/* Modal */}
-      <Modal show={show} onHide={handleClose} size="lg">
+      <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton style={{ backgroundColor: "black" }}>
           {selectedRequest && (
             <Modal.Title style={{ color: "white" }}>
               Request Detail - #{selectedRequest.request_id}
             </Modal.Title>
           )}
+          F
         </Modal.Header>
 
         <Modal.Body className="modal-body-shadow">
@@ -322,7 +333,7 @@ const EntrepreneurRequest = () => {
                         justifyContent: "center",
                       }}
                     >
-                      {selectedRequest.user_image === "0" ? (
+                      {selectedRequest.user_image === "#%&{}>" ? (
                         <LetteredAvatar
                           name={`${selectedRequest.firstname} ${selectedRequest.lastname}`}
                           size={100}
@@ -348,18 +359,19 @@ const EntrepreneurRequest = () => {
                           <td>
                             <div className="d-flex flex-column">
                               <span className="heading d-block">
-                                {`${selectedRequest.user_id}`}
+                                {selectedRequest.firstname}{" "}
+                                {selectedRequest.lastname}
                               </span>
-                              <span className="subheadings">User ID:</span>
+                              <span className="subheadings">User Name:</span>
                             </div>
                           </td>
                           <td>
                             <div className="d-flex flex-column">
                               <span className="heading d-block">
-                                {selectedRequest.firstname}{" "}
-                                {selectedRequest.lastname}
+                                {`${selectedRequest.user_id}`}
                               </span>
-                              <span className="subheadings">User Name:</span>
+                              <span className="subheadings">User ID:</span>
+                              <br />
                             </div>
                           </td>
                         </tr>

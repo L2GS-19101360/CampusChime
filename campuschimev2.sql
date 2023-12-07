@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 07, 2023 at 02:17 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.0
+-- Host: 127.0.0.1:3306
+-- Generation Time: Dec 07, 2023 at 06:49 PM
+-- Server version: 8.0.31
+-- PHP Version: 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,15 +27,18 @@ SET time_zone = "+00:00";
 -- Table structure for table `entrepreneur_requests`
 --
 
-CREATE TABLE `entrepreneur_requests` (
-  `request_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `product_description` text DEFAULT NULL,
-  `status` enum('pending','accepted','declined') DEFAULT 'pending',
-  `request_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `decision_date` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `entrepreneur_requests`;
+CREATE TABLE IF NOT EXISTS `entrepreneur_requests` (
+  `request_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `product_description` text COLLATE utf8mb4_general_ci,
+  `status` enum('pending','accepted','declined') COLLATE utf8mb4_general_ci DEFAULT 'pending',
+  `request_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `decision_date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`request_id`),
+  KEY `user_id_fk` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `entrepreneur_requests`
@@ -45,7 +48,8 @@ INSERT INTO `entrepreneur_requests` (`request_id`, `user_id`, `image`, `product_
 (22, 43, 'uploads/656b6fef483bd4.70962929.png', 'yessir', 'accepted', '2023-12-02 10:57:03', '2023-12-05 00:37:45'),
 (23, 61, 'uploads/6570be070d57c2.72681922.jpg', 'Books', 'accepted', '2023-12-06 11:31:35', '2023-12-06 18:52:14'),
 (24, 47, 'uploads/6571537dd55c25.08331024.png', 'asdfsfd', 'declined', '2023-12-06 22:09:17', '2023-12-07 05:09:30'),
-(25, 62, 'uploads/65717b020dc743.27862688.png', 'asf', 'accepted', '2023-12-07 00:57:54', '2023-12-07 07:58:06');
+(25, 62, 'uploads/65717b020dc743.27862688.png', 'asf', 'accepted', '2023-12-07 00:57:54', '2023-12-07 07:58:06'),
+(26, 63, 'uploads/6571c968026af0.14466111.png', 'Make me seller haiya', 'accepted', '2023-12-07 05:32:24', '2023-12-07 13:33:11');
 
 -- --------------------------------------------------------
 
@@ -53,24 +57,27 @@ INSERT INTO `entrepreneur_requests` (`request_id`, `user_id`, `image`, `product_
 -- Table structure for table `products`
 --
 
-CREATE TABLE `products` (
-  `product_id` int(11) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `product_description` text DEFAULT NULL,
-  `product_category` varchar(255) DEFAULT NULL,
-  `product_color` varchar(255) DEFAULT NULL,
-  `product_size` varchar(255) DEFAULT NULL,
-  `date_added` timestamp NOT NULL DEFAULT current_timestamp(),
-  `is_deleted` tinyint(1) DEFAULT 0,
-  `is_sale` tinyint(1) DEFAULT 0,
-  `is_displayed` tinyint(1) DEFAULT 1,
-  `product_qty` int(11) DEFAULT 0,
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE IF NOT EXISTS `products` (
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `product_description` text COLLATE utf8mb4_general_ci,
+  `product_category` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `product_color` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `product_size` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_deleted` tinyint(1) DEFAULT '0',
+  `is_sale` tinyint(1) DEFAULT '0',
+  `is_displayed` tinyint(1) DEFAULT '1',
+  `product_qty` int DEFAULT '0',
   `original_price` decimal(10,2) NOT NULL,
-  `ratings` float DEFAULT 0,
-  `number_of_add_to_carts` int(11) DEFAULT 0,
-  `merchant_id` int(11) DEFAULT NULL,
-  `product_image` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `ratings` float DEFAULT '0',
+  `number_of_add_to_carts` int DEFAULT '0',
+  `merchant_id` int DEFAULT NULL,
+  `product_image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`product_id`),
+  KEY `products_ibfk_1` (`merchant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -80,7 +87,39 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (1, 'Product 1', 'Description for Product 1', 'Category A', 'Red', 'Medium', '2023-12-07 06:37:26', 0, 0, 1, 10, '29.99', 4.5, 20, 43, 'product1.jpg'),
 (2, 'Product 2', 'Description for Product 2', 'Category B', 'Blue', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 15, '49.99', 3.8, 15, 43, 'product2.jpg'),
 (3, 'Product 3', 'Description for Product 3', 'Category A', 'Green', 'Small', '2023-12-07 06:37:26', 0, 0, 1, 5, '19.99', 4.2, 10, 47, 'product3.jpg'),
-(4, 'Product 4', 'Description for Product 4', 'Category C', 'Yellow', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 8, '39.99', 4, 12, 61, 'product4.jpg');
+(4, 'Product 4', 'Description for Product 4', 'Category C', 'Yellow', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 8, '39.99', 4, 12, 61, 'product4.jpg'),
+(8, 'AMD RYZEN 7 6800H', 'AMD APU', 'APU', 'RED', '0', '2023-12-07 18:22:05', 0, 0, 1, 50, '25000.00', 0, 0, 63, 'files/17019733258615.png'),
+(9, 'TRY AHAIN', 'OK', 'A', 'A', '0', '2023-12-07 18:24:48', 0, 0, 1, 12, '555.00', 0, 0, 63, 'files/17019734884447.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `transaction_id` int NOT NULL AUTO_INCREMENT,
+  `transaction_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `total_amount` decimal(10,2) NOT NULL,
+  `customer_id` int NOT NULL,
+  PRIMARY KEY (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction_products`
+--
+
+DROP TABLE IF EXISTS `transaction_products`;
+CREATE TABLE IF NOT EXISTS `transaction_products` (
+  `transaction_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`transaction_id`,`product_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -88,18 +127,20 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
-  `lastname` varchar(100) NOT NULL,
-  `firstname` varchar(100) NOT NULL,
-  `contactnumber` bigint(20) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `role` enum('customer','entrepreneur','admin') NOT NULL DEFAULT 'customer',
-  `user_image` varchar(255) NOT NULL DEFAULT '#%&{}>',
-  `active_status` int(11) NOT NULL DEFAULT 1,
-  `registered` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `lastname` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `firstname` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `contactnumber` bigint NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` enum('customer','entrepreneur','admin') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'customer',
+  `user_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '#%&{}>',
+  `active_status` int NOT NULL DEFAULT '1',
+  `registered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -117,53 +158,8 @@ INSERT INTO `users` (`user_id`, `lastname`, `firstname`, `contactnumber`, `email
 (51, 'Cat', 'Tom', 9123456789, 'tom@gmail', '$2y$10$0ZwnfoxNjl5n6l/PPuNIQ.aMClXvpzEZ7pbywU/o101NVsdg5a4PO', 'customer', '#%&{}>', 0, '2023-12-06 05:30:50'),
 (52, 'Mouse', 'Jerry', 9321654987, 'jerry@gmail.com', '$2y$10$4..iqjGv5fPn4iC8rTaksuhXVG/WEDe5xhhn6IF1OiAj.lZ/.sT.W', 'customer', '#%&{}>', 0, '2023-12-06 05:31:34'),
 (61, 'Test', 'Test', 9369852147, 'tt2852537@gmail.com', '$2y$10$JWdlE59N0BYF/W5oZR/0WuPjK.Kje9fK3675YQoQqvtCOUW7hfJeK', 'entrepreneur', 'DELETE.jpg', 1, '2023-12-06 07:28:13'),
-(62, 'jaden', 'ceniza', 32423435, '22102267@usc.edu.ph', '$2y$10$W7xuohcTRSwaQBywEmF4BOWEhozda9CMk0EhKOnN3L0abloZsSshe', 'entrepreneur', '#%&{}>', 0, '2023-12-07 07:57:42');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `entrepreneur_requests`
---
-ALTER TABLE `entrepreneur_requests`
-  ADD PRIMARY KEY (`request_id`),
-  ADD KEY `user_id_fk` (`user_id`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`product_id`),
-  ADD KEY `products_ibfk_1` (`merchant_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `entrepreneur_requests`
---
-ALTER TABLE `entrepreneur_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+(62, 'jaden', 'ceniza', 32423435, '22102267@usc.edu.ph', '$2y$10$W7xuohcTRSwaQBywEmF4BOWEhozda9CMk0EhKOnN3L0abloZsSshe', 'entrepreneur', '#%&{}>', 0, '2023-12-07 07:57:42'),
+(63, 'LIM', 'CHANG', 0, 'iluvccp@gmail.com', '$2y$10$1/6ErPr.Scc/mc7TT5OhqerqhRCDSkJiC89.h0Mp3Gx1wGxciTeCq', 'entrepreneur', 'shipImport2.png', 1, '2023-12-07 13:31:58');
 
 --
 -- Constraints for dumped tables
@@ -180,6 +176,13 @@ ALTER TABLE `entrepreneur_requests`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `transaction_products`
+--
+ALTER TABLE `transaction_products`
+  ADD CONSTRAINT `transaction_products_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`transaction_id`),
+  ADD CONSTRAINT `transaction_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

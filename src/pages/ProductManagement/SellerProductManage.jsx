@@ -85,7 +85,7 @@ const SellerProductPage = () => {
     <div className="sidebar close">
     {/* ========== Logo ============  */}
     <a href="#" className="logo-box">
-    <i class='bx bxs-bar-chart-alt-2' ></i>
+    <i className='bx bxs-bar-chart-alt-2' ></i>
       <div className="logo-name">C.C. Seller</div>
     </a>
     {/* ========== List ============  */}
@@ -110,7 +110,7 @@ const SellerProductPage = () => {
       <li>
         <div className="title">
           <a href="#" className="link" onClick={handleProductClick}>
-            <i className="bx bx-collection" />
+            <i className='bx bx-package'></i>
             <span className="name">Products</span>
           </a>
          {/* <i className="bx bxs-chevron-down" />*/}
@@ -267,6 +267,7 @@ const SellerProductPage = () => {
         </div>
       </li>
     </ul>
+  
   </div>
   {/* ============= Home Section =============== */}
   <section className="home">
@@ -277,6 +278,7 @@ const SellerProductPage = () => {
    {showDash && <Dash />}
    {showProducts && <Products />}
   </section>
+ 
   </div>
  );
 };
