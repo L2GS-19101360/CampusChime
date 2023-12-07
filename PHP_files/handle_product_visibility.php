@@ -3,17 +3,17 @@ include 'db_connection.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($data['userId']) && isset($data['status'])) {
-    $userId = filter_var($data['userId'], FILTER_VALIDATE_INT);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($data['productId']) && isset($data['status'])) {
+    $productId = filter_var($data['productId'], FILTER_VALIDATE_INT);
     $newStatus = filter_var($data['status'], FILTER_VALIDATE_INT);
 
-    // Ensure values are not false or null
-    if ($userId === false || $userId === null || $newStatus === false || $newStatus === null) {
+
+    if ($productId === false || $productId === null || $newStatus === false || $newStatus === null) {
         echo json_encode(['success' => false, 'error' => 'Invalid input']);
         return;
     }
 
-    // Validate status values against allowed enum values
+
     $allowedStatusValues = [0, 1];
     if (!in_array($newStatus, $allowedStatusValues, true)) {
         echo json_encode(['success' => false, 'error' => 'Invalid status value']);
@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($data['userId']) && isset($d
     }
 
 
-    // Update the user's active_status using prepared statements
-    $query = "UPDATE users SET active_status = ? WHERE user_id = ?";
+    // Update the product's visibility using prepared statements
+    $query = "UPDATE products SET is_displayed = ? WHERE product_id = ?";
     $stmt = mysqli_prepare($conn, $query);
 
-    mysqli_stmt_bind_param($stmt, "ii", $newStatus, $userId);
+    mysqli_stmt_bind_param($stmt, "ii", $newStatus, $productId);
 
     $result = mysqli_stmt_execute($stmt);
 
@@ -37,12 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($data['userId']) && isset($d
         mysqli_close($conn);
         return;
     }
-    
 
+    // After updating the product visibility in the database
     echo json_encode(['success' => true]);
 
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 } else {
-    echo json_encode(['success' => false, 'error' => 'Invalid request method or missing userId/status']);
+    echo json_encode(['success' => false, 'error' => 'Invalid request method or missing productId/status']);
 }

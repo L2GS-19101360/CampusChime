@@ -14,7 +14,7 @@ import AboutUsPageLogin from './pages/About Us Page/AboutUsPage(Login).jsx'
 import UserSettingPage from './pages/User Setting Page/UserSettingPage.jsx'
 import ForgetPasswordPage from './pages/Forget Password Page/ForgetPasswordPage.jsx'
 import AdminPage from './pages/Admin Page/AdminPage.jsx'
-
+import Footer from './components/footer/footer.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <div>
     <Router>
@@ -28,5 +28,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/forgetPasswordPage' component={ForgetPasswordPage}/>
       <Route path='/adminPage' component={AdminPage}/>
     </Router>
+    <Footer />
   </div>
 )

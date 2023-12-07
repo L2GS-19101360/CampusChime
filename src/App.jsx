@@ -9,7 +9,7 @@ import cart from "./assets/cart-arrow-down.svg";
 import arrow from "./assets/interactive.svg";
 import "./App.css";
 import loginImage from "./assets/loginImage.jpg";
-
+import Footer from "./components/footer/footer";
 // sample only
 const entrepreneurs = [
   { id: 1, name: "Jaden Ceniza", image: "https://via.placeholder.com/150" },
