@@ -15,7 +15,7 @@ const AddProductModal = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
         const user_id = sessionStorage.getItem("userId");
-        console.log(user_id);
+        //console.log(user_id);
         const formData = new FormData();
         formData.append('productName', productData.productName);
         formData.append('productDescription', productData.productDescription);
