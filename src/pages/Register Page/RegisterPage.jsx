@@ -68,7 +68,7 @@ class RegisterPage extends Component {
               this.setState({
                 warning: (
                   <div className="alert alert-danger" role="alert">
-                    Email already Exist!
+                    Email already Exists!
                   </div>
                 ),
               });
@@ -77,6 +77,7 @@ class RegisterPage extends Component {
                 position: "top-center",
                 autoClose: 2000,
               });
+
               // Store data in sessionStorage
               sessionStorage.setItem("userId", response.data);
               sessionStorage.setItem("role", response.user_type);
@@ -99,6 +100,13 @@ class RegisterPage extends Component {
             }
           } catch (error) {
             console.error("Error parsing JSON:", error);
+            this.setState({
+              warning: (
+                <div className="alert alert-danger" role="alert">
+                  An error occurred while processing your request.
+                </div>
+              ),
+            });
           }
         }
       };
@@ -359,6 +367,7 @@ class RegisterPage extends Component {
                               </Button>
                             </div>
                           </form>
+
                           <div className="mt-4">
                             Already have an account?{" "}
                             <Link to="/LoginPage">

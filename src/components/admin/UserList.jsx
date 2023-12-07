@@ -136,6 +136,7 @@ const UserList = () => {
                 <thead>
                   <tr>
                     <th className="text-center">User</th>
+                    <th className="text-center">ID</th>
                     <th className="text-center">Contact Number</th>
                     <th className="text-center">Role</th>
                     <th className="text-center">Status</th>
@@ -189,6 +190,7 @@ const UserList = () => {
                             </div>
                           </div>
                         </td>
+                        <td className="align-middle">{user.user_id}</td>
                         <td className="align-middle">{user.contactnumber}</td>
                         <td className="align-middle">{user.role}</td>
                         <td className="candidate-list align-middle">
