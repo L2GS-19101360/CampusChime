@@ -14,7 +14,8 @@ const AddProductModal = () => {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        const user_id = sessionStorage.getItem("userId");
+        console.log(user_id);
         const formData = new FormData();
         formData.append('productName', productData.productName);
         formData.append('productDescription', productData.productDescription);
@@ -24,7 +25,8 @@ const AddProductModal = () => {
         formData.append('productQuantity', productData.productQuantity);
         formData.append('productPrice', productData.productPrice);
         formData.append('productFile', productData.productFile);
-    
+        formData.append('user_id', user_id); // Append user_id to formData
+      
         try {
           const response = await axios.post('http://localhost/CampusChime/PHP_files/add_product.php', formData);
           console.log(response.data);
@@ -95,11 +97,12 @@ const AddProductModal = () => {
                                         name="productFile" 
                                         onChange={handleInputChange}
                                         />
+                                     
                                 </div>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" className="btn btn-primary">Submit</button>
+                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Submit</button>
                             </div>
                         </form>
                     </div>
