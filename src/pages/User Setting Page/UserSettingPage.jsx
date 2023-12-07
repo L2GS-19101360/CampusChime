@@ -60,9 +60,9 @@ class UserSettingPage extends Component {
     };
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   // handleInputChange = (e) => {
   //   this.setState({ [e.target.name]: e.target.value });
@@ -76,7 +76,7 @@ class UserSettingPage extends Component {
     console.log(file);
 
     this.setState({
-      user_Image: file.name
+      user_Image: file.name,
     });
 
     const formData = new FormData();
@@ -165,7 +165,6 @@ class UserSettingPage extends Component {
     }
   };
 
-
   togglePasswordVisibility = () => {
     this.setState((prevState) => ({
       showPassword: !prevState.showPassword,
@@ -186,21 +185,21 @@ class UserSettingPage extends Component {
 
     const inputType = this.state.showPassword ? "text" : "password";
 
-    var profileImage = this.state.user_Image === "#%&{}>" ? (
-      <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
-    ) : (
-      <img
-        src={`http://localhost/campuschime/PHP_files/user_images/${this.state.user_Image}`}
-        alt={`${LAfirstName} ${LAlastName}`}
-        style={{
-          width: "190px",
-          height: "190px",
-          borderRadius: "50%",
-          border: '1px solid black'
-        }}
-      />
-    );
-
+    var profileImage =
+      this.state.user_Image === "#%&{}>" ? (
+        <LetteredAvatar name={`${LAfirstName} ${LAlastName}`} size={190} />
+      ) : (
+        <img
+          src={`http://localhost/campuschime/PHP_files/user_images/${this.state.user_Image}`}
+          alt={`${LAfirstName} ${LAlastName}`}
+          style={{
+            width: "190px",
+            height: "190px",
+            borderRadius: "50%",
+            border: "1px solid black",
+          }}
+        />
+      );
 
     return (
       <div>
@@ -247,26 +246,30 @@ class UserSettingPage extends Component {
         <Container
           style={{
             backgroundColor: "white",
-            marginTop: "20px",
+            marginTop: "50px",
+            marginBottom: "50px",
             padding: "20px",
             width: "100%",
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-around",
-            borderBottom: "1px solid black",
           }}
         >
           <div>
             {profileImage}
-            <h4 style={{
-              marginLeft: "10px",
-              marginTop: "10px"
-            }}>{lastName},{firstName}</h4><br /><br /><br /><br />
+            <h4
+              style={{
+                marginLeft: "10px",
+                marginTop: "10px",
+              }}
+            >
+              {lastName},{firstName}
+            </h4>
+            <br />
+            <br />
+            <br />
+            <br />
             <Button
               variant="danger"
               onClick={handleLogout}
@@ -370,10 +373,11 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${this.state.showPassword
-                      ? "bi bi-eye-slash-fill"
-                      : "bi bi-eye-fill"
-                      }`}
+                    className={`ms-2 ${
+                      this.state.showPassword
+                        ? "bi bi-eye-slash-fill"
+                        : "bi bi-eye-fill"
+                    }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -403,10 +407,11 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${this.state.showPassword
-                      ? "bi bi-eye-slash-fill"
-                      : "bi bi-eye-fill"
-                      }`}
+                    className={`ms-2 ${
+                      this.state.showPassword
+                        ? "bi bi-eye-slash-fill"
+                        : "bi bi-eye-fill"
+                    }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -439,58 +444,6 @@ class UserSettingPage extends Component {
               </Button>
             </Form>
           </div>
-        </Container>
-
-        <Container
-          style={{
-            marginTop: "700px",
-            width: "100%",
-            backgroundColor: "White",
-            marginBottom: "100px",
-          }}
-        >
-          <h2 style={{ textAlign: "center" }}>Product List</h2>
-          <Table striped bordered hover style={{ marginTop: "40px" }}>
-            <thead>
-              <tr style={{ textAlign: "center" }}>
-                <th style={{ width: "20%" }}>Image</th>{" "}
-                <th style={{ width: "20%" }}>Name</th>{" "}
-                <th style={{ width: "20%" }}>Actions</th>{" "}
-              </tr>
-            </thead>
-            <tbody style={{ textAlign: "center" }}>
-              {this.state.products.map((product) => (
-                <tr key={product.id}>
-                  <td>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      style={{ width: "150px" }}
-                    />
-                  </td>
-                  <td className="align-middle" style={{ fontSize: "23px" }}>
-                    {product.name}
-                  </td>
-                  <td style={{ textAlign: "center" }} className="align-middle">
-                    <Button
-                      variant="outline-primary"
-                      onClick={() => this.editProduct(product.id)}
-                    >
-                      Edit
-                    </Button>
-
-                    <Button
-                      variant="danger"
-                      onClick={() => this.removeProduct(product.id)}
-                      style={{ marginLeft: "10px" }}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
         </Container>
       </div>
     );
