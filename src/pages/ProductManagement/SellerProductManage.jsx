@@ -110,7 +110,7 @@ const SellerProductPage = () => {
       <li>
         <div className="title">
           <a href="#" className="link" onClick={handleProductClick}>
-            <i className="bx bx-collection" />
+            <i class='bx bx-package'></i>
             <span className="name">Products</span>
           </a>
          {/* <i className="bx bxs-chevron-down" />*/}
