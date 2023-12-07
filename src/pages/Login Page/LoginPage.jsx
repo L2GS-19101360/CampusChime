@@ -58,7 +58,6 @@ class LoginPage extends Component {
       );
 
       const data = response.data;
-      console.log("Server Response:", data);
 
       if (data.success) {
         // Store session data on the client side
@@ -75,19 +74,33 @@ class LoginPage extends Component {
           position: "top-center",
           autoClose: 4000,
         });
+
         if (data.role === "admin") {
           this.props.history.push("/adminPage");
         } else {
-          if (data.active_status != 0) {
+          if (data.active_status !== 0) {
             this.props.history.push("/homePage");
           } else {
-            //Ask Jaden tomorrow in Web Dev
+            this.setState({
+              alert: (
+                <Alert variant="danger">
+                  <span style={{ color: "red", fontWeight: "bold" }}>
+                    Account deactivated.
+                  </span>{" "}
+                  <br /> Please contact{" "}
+                  <a href="mailto:campuschime@gmail.com">
+                    campuschime@gmail.com
+                  </a>{" "}
+                  for assistance.
+                </Alert>
+              ),
+            });
           }
         }
       } else {
         this.setState({
           password: "",
-          warning: (
+          alert: (
             <Alert variant="danger">{data.message || "Login failed"}</Alert>
           ),
         });
@@ -97,9 +110,7 @@ class LoginPage extends Component {
       console.error("Error during login:", error);
       this.setState({
         password: "",
-        warning: (
-          <Alert variant="danger">An error occurred during login.</Alert>
-        ),
+        alert: <Alert variant="danger">An error occurred during login.</Alert>,
       });
     } finally {
       this.setState({ loading: false });
@@ -107,7 +118,7 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, alert } = this.state;
     const inputType = this.state.showPassword ? "text" : "password";
     const eyeIcons = this.state.showPassword
       ? "bi bi-eye-slash-fill"
@@ -188,7 +199,7 @@ class LoginPage extends Component {
                               Welcome back! Please enter email and password to
                               sign in to your account.
                             </p>
-
+                            {alert && <div className="mt-2">{alert}</div>}
                             <FloatingLabel
                               controlId="loginEmail"
                               label="Email address"
@@ -262,6 +273,7 @@ class LoginPage extends Component {
                               </Button>
                             </div>
                           </form>
+
                           <div className="mt-2">
                             Don't have an account?{" "}
                             <Link to="/RegisterPage">

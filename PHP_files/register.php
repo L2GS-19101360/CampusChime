@@ -5,6 +5,7 @@ $retVal = "Addition failed.";
 $isValid = true;
 $status = 400;
 $data = -1;
+$defaultUserType = null; // Initialize $defaultUserType
 
 $newLname = trim($_GET['lastname']);
 $newFname = trim($_GET['firstname']);
@@ -33,7 +34,7 @@ if ($isValid) {
 
     try {
         $stmt = $conn->prepare("INSERT INTO users(lastname, firstname, contactnumber, email, password) VALUES (?,?,?,?,?)");
-        $defaultUserType = 'customer'; // Set default user type
+        $defaultUserType = 'customer'; 
         $stmt->bind_param("ssiss", $newLname, $newFname, $newContact, $newEmail, $hashedPassword);
         $stmt->execute();
         $stmt->close();
