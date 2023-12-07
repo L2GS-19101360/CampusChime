@@ -1,5 +1,7 @@
 .heading {
   font-weight: 500;
+  font-size: 15px;
+
 }
 
 .subheadings {
@@ -10,3 +12,4 @@
 .modal-body {
   padding: 0rem;
 }
+
