@@ -1,6 +1,8 @@
 import React from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClockComponent from "../ClockComponent";
+
 function Dashboard() {
   return (
     <div
@@ -15,6 +17,9 @@ function Dashboard() {
       }}
     >
       <div className="container-fluid">
+
+        <ClockComponent/> {/*Jaden, feel free it desgin this component */}  
+        
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 my-2">
           <div className="col-md-3 col-sm-6 p-1">
             <div className="p-3 bg-white shadow p-3 d-flex justify-content-around align-items-center rounded">
