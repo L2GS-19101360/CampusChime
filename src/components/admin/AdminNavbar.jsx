@@ -38,7 +38,7 @@ function AdminNavbar({
         marginLeft: "10px",
         marginRight: "10px",
         borderRadius: "20px",
-        backgroundColor: "rgba(255, 255, 255, 0.6)",
+        backgroundColor: "rgba(255, 255, 255, 0.9)",
       }}
     >
       {isSidebarOpen ? (
@@ -131,7 +131,6 @@ function AdminNavbar({
                   marginBottom: "10px",
                 }}
               >
-                {/* <LetteredAvatar name={`${firstName} ${lastName}`} size={40} /> */}
                 {IsImageNULL ? (
                   <LetteredAvatar name={`${firstName} ${lastName}`} size={40} />
                 ) : (
@@ -171,7 +170,7 @@ function AdminNavbar({
                   margin: "5px auto",
                 }}
               />
-              <Dropdown.Item as={Link} to="/UserSettingPage">
+              <Dropdown.Item as={Link} to="/UserSettingPageAdmin">
                 <span
                   style={{
                     color: "black",

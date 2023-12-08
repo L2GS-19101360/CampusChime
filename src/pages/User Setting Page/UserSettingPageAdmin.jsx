@@ -20,7 +20,7 @@ const handleLogout = () => {
   window.location.href = "/";
 };
 
-class UserSettingPage extends Component {
+class UserSettingPageAdmin extends Component {
   constructor() {
     const LAfirstName = sessionStorage.getItem("firstName");
     const LAlastName = sessionStorage.getItem("lastName");
@@ -219,44 +219,21 @@ class UserSettingPage extends Component {
 
     return (
       <div>
-        <Navbar
-          className="navbar bg-dark border-bottom border-body"
-          data-bs-theme="dark"
-        >
-          <Navbar.Brand as={Link} to="/HomePage">
+        <Navbar bg="dark" expand="lg" variant="dark">
+          <Navbar.Brand href="/adminPage">
             <img
               src={WebLogo}
-              alt="CampusChime Logo"
+              alt=""
               style={{ width: "50px", marginBottom: "5px" }}
             />{" "}
             CampusChime
           </Navbar.Brand>
-
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/HomePage">
-                Home
-              </Nav.Link>
-              <Nav.Link as={Link} to="/AboutUsPageLogin">
-                About Us
-              </Nav.Link>
-              <Nav.Link as={Link} to="/EntrepreneurPage">
-                Entrepreneur
-              </Nav.Link>
-            </Nav>
-          </div>
+          <Nav>
+            {" "}
+            <Nav.Link as={Link} to="/adminPage">
+              Admin
+            </Nav.Link>
+          </Nav>
         </Navbar>
 
         <Container
@@ -466,4 +443,4 @@ class UserSettingPage extends Component {
   }
 }
 
-export default UserSettingPage;
+export default UserSettingPageAdmin;

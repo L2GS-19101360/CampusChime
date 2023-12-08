@@ -33,7 +33,10 @@ function AdminPage() {
   };
 
   return (
-    <div className="container-fluid bg-white min-vh-100">
+    <div
+      className="container-fluid  min-vh-100"
+      style={{ backgroundColor: "D5DEEF" }}
+    >
       <div className="row" style={{ backgroundColor: "#D5DEEF" }}>
         <Offcanvas
           show={isSidebarOpen}
@@ -141,7 +144,7 @@ function AdminPage() {
           }`}
           style={{
             width: isSidebarOpen ? "calc(100% - 300px)" : "100%",
-            backgroundColor: "#D5DEEF",
+            backgroundColor: "rgba(255, 255, 255, 0.6)",
           }}
         >
           <AdminNavbar
