@@ -6,47 +6,46 @@ import Logo from "../assets/CampusChimeNoname.png";
 const MainNavbar = () => {
   return (
     <Navbar
-      className="navbar bg-dark border-bottom border-body"
+      className="navbar"
+      style={{ backgroundColor: "rgba(255, 255, 255, 0.6)" }}
       expand="lg"
-      variant="dark"
+      variant="light"
     >
-      <Container className="d-flex justify-content-between align-items-center ">
-        <Navbar.Brand as={Link} to="/">
-          <img
-            src={Logo}
-            alt="CampusChime Logo"
-            style={{ width: "50px", marginBottom: "5px" }}
-          />{" "}
-          CampusChime
-        </Navbar.Brand>
+      <Navbar.Brand as={Link} to="/" style={{ fontSize: "20px" }}>
+        <img
+          src={Logo}
+          alt="CampusChime Logo"
+          style={{ width: "50px", marginBottom: "5px" }}
+        />{" "}
+        CampusChime
+      </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="navbarNav" />
+      <Navbar.Toggle aria-controls="navbarNav" />
 
-        <Navbar.Collapse id="navbarNav">
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">
-              Home
-            </Nav.Link>
-            <Nav.Link as={Link} to="/AboutUsPage">
-              About Us
-            </Nav.Link>
-            <Nav.Link as={Link} to="/EntrepreneurPage">
-              Entrepreneur
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
+      <Navbar.Collapse id="navbarNav">
+        <Nav style={{ fontSize: "18px" }}>
+          <Nav.Link as={Link} to="/">
+            Home
+          </Nav.Link>
+          <Nav.Link as={Link} to="/AboutUsPage">
+            About Us
+          </Nav.Link>
+          <Nav.Link as={Link} to="/EntrepreneurPage">
+            Entrepreneur
+          </Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
 
-        <div className="d-flex">
-          <Link to="/LoginPage">
-            <Button variant="outline-light" className="me-2">
-              Login Account
-            </Button>
-          </Link>
-          <Link to="/RegisterPage">
-            <Button variant="outline-light">Register Account</Button>
-          </Link>
-        </div>
-      </Container>
+      <div className="d-flex" style={{ marginRight: "100px" }}>
+        <Link to="/LoginPage">
+          <Button variant="primary" className="me-2">
+            Login Account
+          </Button>
+        </Link>
+        <Link to="/RegisterPage">
+          <Button variant="outline-primary">Register Account </Button>
+        </Link>
+      </div>
     </Navbar>
   );
 };

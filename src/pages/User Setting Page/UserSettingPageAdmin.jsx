@@ -219,11 +219,16 @@ class UserSettingPageAdmin extends Component {
 
     return (
       <div>
-        <Navbar bg="dark" expand="lg" variant="dark">
-          <Navbar.Brand href="/adminPage">
+        <Navbar
+          className="navbar"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+          expand="lg"
+          variant="light"
+        >
+          <Navbar.Brand as={Link} to="/HomePage" style={{ fontSize: "20px" }}>
             <img
               src={WebLogo}
-              alt=""
+              alt="CampusChime Logo"
               style={{ width: "50px", marginBottom: "5px" }}
             />{" "}
             CampusChime
@@ -247,6 +252,10 @@ class UserSettingPageAdmin extends Component {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-around",
+            border: "solid",
+            borderColor: "blue",
+            borderWidth: "1px",
+            borderRadius: "10px",
           }}
         >
           <div>
@@ -267,7 +276,7 @@ class UserSettingPageAdmin extends Component {
               variant="danger"
               onClick={handleLogout}
               style={{
-                marginLeft: "28px",
+                marginLeft: "20px",
                 marginTop: "30px",
               }}
             >

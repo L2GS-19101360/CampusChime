@@ -220,10 +220,12 @@ class UserSettingPage extends Component {
     return (
       <div>
         <Navbar
-          className="navbar bg-dark border-bottom border-body"
-          data-bs-theme="dark"
+          className="navbar"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+          expand="lg"
+          variant="light"
         >
-          <Navbar.Brand as={Link} to="/HomePage">
+          <Navbar.Brand as={Link} to="/HomePage" style={{ fontSize: "20px" }}>
             <img
               src={WebLogo}
               alt="CampusChime Logo"
@@ -231,18 +233,6 @@ class UserSettingPage extends Component {
             />{" "}
             CampusChime
           </Navbar.Brand>
-
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
 
           <div className="collapse navbar-collapse" id="navbarNav">
             <Nav className="me-auto">
@@ -270,6 +260,10 @@ class UserSettingPage extends Component {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-around",
+            border: "solid",
+            borderColor: "blue",
+            borderWidth: "1px",
+            borderRadius: "10px",
           }}
         >
           <div>
@@ -290,7 +284,7 @@ class UserSettingPage extends Component {
               variant="danger"
               onClick={handleLogout}
               style={{
-                marginLeft: "28px",
+                marginLeft: "20px",
                 marginTop: "30px",
               }}
             >

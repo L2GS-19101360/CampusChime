@@ -44,15 +44,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route exact path="/" component={App} />
       <Route path="/loginPage" component={LoginPage} />
       <Route path="/registerPage" component={RegisterPage} />
+      <Route path="/forgetPasswordPage" component={ForgetPasswordPage} />
+      <Route path="/aboutUsPage" component={AboutUsPage} />
       <ProtectedRoute path="/homePage" component={HomePage} />
-      <ProtectedRoute path="/aboutUsPage" component={AboutUsPage} />
       <ProtectedRoute path="/aboutUsPageLogin" component={AboutUsPageLogin} />
       <ProtectedRoute path="/userSettingPage" component={UserSettingPage} />
       <ProtectedRoute
         path="/userSettingPageAdmin"
         component={UserSettingPageAdmin}
       />
-
       <ProtectedRoute
         path="/forgetPasswordPage"
         component={ForgetPasswordPage}

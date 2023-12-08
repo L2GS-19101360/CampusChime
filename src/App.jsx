@@ -11,25 +11,26 @@ import "./App.css";
 import loginImage from "./assets/loginImage.jpg";
 import Footer from "./components/footer/footer";
 import LetteredAvatar from "../src/components/LetteredAvater.jsx";
-// sample only
-
+import { BorderWidth } from "react-bootstrap-icons";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       entrepreneurArray: [],
-    }
+    };
   }
 
   componentDidMount() {
-
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "http://localhost/campuschime/PHP_files/displayEntrepreneur.php", true);
+    xhttp.open(
+      "GET",
+      "http://localhost/campuschime/PHP_files/displayEntrepreneur.php",
+      true
+    );
     xhttp.send();
 
     xhttp.onreadystatechange = () => {
-
       if (xhttp.status === 200 && xhttp.readyState === 4) {
         var response = JSON.parse(xhttp.responseText);
         console.log(response);
@@ -37,12 +38,10 @@ class App extends Component {
           console.log(this.state.entrepreneurArray.data);
         });
       }
-
-    }
-
+    };
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   render() {
     const { entrepreneurArray } = this.state;
@@ -90,7 +89,8 @@ class App extends Component {
               style={{
                 height: "300px",
                 width: "300px",
-                backgroundColor: "#C0C0C0",
+                borderColor: "blue",
+                borderWidth: "2px",
               }}
             >
               <Card.Img
@@ -115,7 +115,8 @@ class App extends Component {
               style={{
                 height: "300px",
                 width: "300px",
-                backgroundColor: "#C0C0C0",
+                borderColor: "blue",
+                borderWidth: "2px",
               }}
             >
               <Card.Img
@@ -141,7 +142,8 @@ class App extends Component {
               style={{
                 height: "300px",
                 width: "300px",
-                backgroundColor: "#C0C0C0",
+                borderColor: "blue",
+                borderWidth: "2px",
               }}
             >
               <Card.Img
@@ -175,48 +177,49 @@ class App extends Component {
 
         <Carousel
           style={{
-            backgroundColor: "#8f7f61",
+            backgroundColor: "#304c81 ",
             height: "300px",
             marginTop: "5px",
           }}
         >
           {entrepreneurArray.data &&
-            entrepreneurArray.data.map((entrepreneur, index) => (
-              index % 3 === 0 && ( // Check if it's the first item in the set
-                <Carousel.Item key={index}>
-                  <Row className="mt-5" style={{ textAlign: "center" }}>
-                    {entrepreneurArray.data
-                      .slice(index, index + 3)
-                      .map((entrepreneur, subIndex) => (
-                        <Col
-                          key={subIndex}
-                          className="d-flex flex-column align-items-center"
-                        >
-                          {entrepreneur.user_image === "#%&{}>" ? (
-                            <LetteredAvatar
-                              name={`${entrepreneur.firstname} ${entrepreneur.lastname}`}
-                              size={150}
-                            />
-                          ) : (
-                            <img
-                              src={`http://localhost/campuschime/PHP_files/user_images/${entrepreneur.user_image}`}
-                              alt={entrepreneur.name}
-                              className="rounded-circle"
-                              height={150}
-                              width={150}
-                            />
-                          )}
-                          <h3 style={{ marginTop: "10px" }}>
-                            {entrepreneur.firstname} {entrepreneur.lastname}
-                          </h3>
-                        </Col>
-                      ))}
-                  </Row>
-                </Carousel.Item>
-              )
-            ))}
+            entrepreneurArray.data.map(
+              (entrepreneur, index) =>
+                index % 3 === 0 && ( // Check if it's the first item in the set
+                  <Carousel.Item key={index}>
+                    <Row className="mt-5" style={{ textAlign: "center" }}>
+                      {entrepreneurArray.data
+                        .slice(index, index + 3)
+                        .map((entrepreneur, subIndex) => (
+                          <Col
+                            key={subIndex}
+                            className="d-flex flex-column align-items-center"
+                          >
+                            {entrepreneur.user_image === "#%&{}>" ? (
+                              <LetteredAvatar
+                                name={`${entrepreneur.firstname} ${entrepreneur.lastname}`}
+                                size={150}
+                              />
+                            ) : (
+                              <img
+                                src={`http://localhost/campuschime/PHP_files/user_images/${entrepreneur.user_image}`}
+                                alt={entrepreneur.name}
+                                className="rounded-circle"
+                                height={150}
+                                width={150}
+                                style={{ border: "2px solid white" }}
+                              />
+                            )}
+                            <h3 style={{ marginTop: "10px" }}>
+                              {entrepreneur.firstname} {entrepreneur.lastname}
+                            </h3>
+                          </Col>
+                        ))}
+                    </Row>
+                  </Carousel.Item>
+                )
+            )}
         </Carousel>
-
       </div>
     );
   }
