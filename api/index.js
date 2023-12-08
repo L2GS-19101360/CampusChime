@@ -29,6 +29,50 @@ app.get('/', (req, res) => {
   res.send(`Hello ${lastName}, ${firstName}`);
 });
 
+app.post('/account-registered', (req, res) => {
+  const { email, lastName, firstName, contactNumber } = req.body;
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'campuschime@gmail.com',
+      pass: 'eald qvml yari ucjf',
+    },
+  });
+
+  var mailOptions = {
+    from: 'campuschime@gmail.com',
+    to: email,
+    subject: 'Account Registration',
+    html: `
+      <p>Dear ${firstName} ${lastName},</p>
+      <p>Thank you for registering an account with Campus Chime!</p>
+      <p>Your registration was successful, and you are now part of our community.</p>
+      <p>Here are the details we have on file:</p>
+      <ul>
+        <li>Last Name: ${lastName}</li>
+        <li>First Name: ${firstName}</li>
+        <li>Contact Number: ${contactNumber}</li>
+        <li>Email: ${email}</li>
+      </ul>
+      <p>If you have any questions or need assistance, feel free to contact us.</p>
+      <br>
+      <p>Best regards,</p>
+      <p>The Campus Chime Team</p>
+    `,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).send('Email sent successfully');
+    }
+  });
+});
+
 app.post('/approve-entrepreneur', (req, res) => {
   const { email } = req.body;
 
