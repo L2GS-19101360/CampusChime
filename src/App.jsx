@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import MainNavbar from "./components/Navbar";
-import { Carousel, Card, Col, Row } from "react-bootstrap";
+import { Carousel, Card, Col, Row, Button } from "react-bootstrap";
 import magnifying from "./assets/nfc-magnifying-glass.svg";
 import cart from "./assets/cart-arrow-down.svg";
 import arrow from "./assets/interactive.svg";
 import "./App.css";
-import loginImage from "./assets/loginImage.jpg";
+import carousel1 from "./assets/carousel1.jpg";
+import carousel2 from "./assets/carousel2.jpg";
+import background from "./assets/background.jpg";
+
 import Footer from "./components/footer/footer";
 import LetteredAvatar from "../src/components/LetteredAvater.jsx";
 import { BorderWidth } from "react-bootstrap-icons";
@@ -52,21 +56,54 @@ class App extends Component {
 
         <Carousel style={{ height: "500px" }}>
           <Carousel.Item style={{ height: "500px" }}>
-            <img className="d-block w-100" src={loginImage} alt="First slide" />
-          </Carousel.Item>
-          <Carousel.Item style={{ backgroundColor: "blue", height: "500px" }}>
             <img
               className="d-block w-100"
-              // src={"https://via.placeholder.com/400x200"}
-              alt="Second slide"
+              src={carousel1}
+              alt="First slide"
+              style={{ objectFit: "contain" }}
             />
+            <div
+              className="carousel-text-overlay"
+              style={{ marginTop: "40px" }}
+            >
+              <p style={{ color: "black" }}>
+                Step into a realm of innovation and creativity! Discover unique
+                products crafted by our talented student entrepreneurs at
+                CampusChime. Connect with the spirit of entrepreneurship, and
+                when you're ready, hit 'Get Started' to explore the
+                extraordinary. Join us in shaping a vibrant community of
+                student-led ventures – Chime in with CampusChime!
+              </p>
+              <Link to="/RegisterPage">
+                <Button variant="primary" size="lg">
+                  Get Started
+                </Button>
+              </Link>
+            </div>
           </Carousel.Item>
-          <Carousel.Item style={{ backgroundColor: "yellow", height: "500px" }}>
+          <Carousel.Item style={{ height: "500px" }}>
             <img
               className="d-block w-100"
-              // src={"https://via.placeholder.com/400x200"}
-              alt="Second slide"
+              src={carousel2}
+              alt="First slide"
+              style={{ objectFit: "fill" }}
             />
+            <div
+              className="carousel-text-overlay"
+              style={{ marginTop: "70px" }}
+            >
+              <p style={{ color: "black" }}>
+                Explore CampusChime, a dedicated platform for college campuses.
+                Unleash your entrepreneurial spirit, connect with clients, and
+                become part of a thriving community of student-led ventures.
+                Ready to embark on this journey?
+              </p>
+              <Link to="/AbourUsPage">
+                <Button variant="outline-primary" size="lg">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
           </Carousel.Item>
         </Carousel>
 
