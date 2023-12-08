@@ -55,6 +55,28 @@ const Products = () => {
     const handleRowClick = (index) => {
       setSelectedRow(index === selectedRow ? null : index);
     };
+    const handleEdit = (productId) => {
+      console.log(`Edit product with ID: ${productId}`);
+      // Here you can add the logic to navigate to the edit page
+    };
+    const handleDelete = async (productId) => {
+      try {
+          const response = await axios({
+              method: 'post',
+              url: 'http://localhost/CampusChime/PHP_files/crud_products.php',
+              data: `action=delete_product&product_id=${productId}`,
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          });
+          const data = response.data;
+          console.log(data);
+          // After successfully deleting the product, fetch the products again to update the list
+          fetchProducts();
+      } catch (error) {
+          console.error("Error deleting product: ", error);
+      }
+    };
+    // Function to delete product
+     
   
     return (
       <div>

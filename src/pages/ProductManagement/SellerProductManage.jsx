@@ -79,7 +79,7 @@ const SellerProductPage = () => {
     setShowProducts(false);
   };
   return (
-    <div>
+    <div className="">
       <div className="sidebar close">
         {/* ========== Logo ============  */}
         <a href="#" className="logo-box">
@@ -275,13 +275,16 @@ const SellerProductPage = () => {
         </ul>
       </div>
       {/* ============= Home Section =============== */}
-      <section className="home">
+      <section className="home-p mx-1">
         <div className="toggle-sidebar">
           <i className="bx bx-menu" />
           <div className="text">Toggle Menu</div>
         </div>
+        <div className="row">
+        <div className="d-inline">This will span 6 columns on medium devices and up.</div>
         {showDash && <Dash />}
         {showProducts && <Products />}
+        </div>
       </section>
     </div>
   );
