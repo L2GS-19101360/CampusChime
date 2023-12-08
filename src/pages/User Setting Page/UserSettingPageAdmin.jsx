@@ -225,7 +225,7 @@ class UserSettingPageAdmin extends Component {
           expand="lg"
           variant="light"
         >
-          <Navbar.Brand as={Link} to="/HomePage" style={{ fontSize: "20px" }}>
+          <Navbar.Brand as={Link} to="/adminPage" style={{ fontSize: "20px" }}>
             <img
               src={WebLogo}
               alt="CampusChime Logo"
