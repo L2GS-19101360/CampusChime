@@ -91,7 +91,7 @@ const Products = () => {
                   <th>Product Name</th>
                   <th>Quantity</th>
                   <th>Price</th>
-                  <th>Statuses</th>
+                  <th>Statuses (1 = True : 0 = False)</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -101,9 +101,9 @@ const Products = () => {
                                     <td>{product.product_name}</td>
                                     <td>{product.product_qty}</td>
                                     <td>{product.original_price}</td>
-                                    <td><span class="badge text-bg-success p-1 mx-1">Active</span>
-                                    <span className="badge text-bg-danger p-1 mx-1">On Sale</span>
-                                    <span className="badge text-bg-warning p-1 mx-1">Reported</span>
+                                    <td><span class="badge text-bg-success p-1 mx-1">Active: {product.is_displayed}</span>
+                                    <span className="badge text-bg-danger p-1 mx-1">On Sale: {product.is_sale}</span>
+                                    <span className="badge text-bg-warning p-1 mx-1">Reported: {product.is_reported}</span>
                                     </td>
                                     <td>
                                         <button className="btn btn-primary m-1 d-inline" onClick={() => handleEdit(product.product_id)}>Edit</button>
