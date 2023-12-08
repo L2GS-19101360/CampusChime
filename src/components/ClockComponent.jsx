@@ -91,7 +91,10 @@ const ClockComponent = () => {
           </div>
         </div>
       </div>
-      <p className="light-on " style={{ color: "#0203dd", fontWeight: "bold" }}>
+      <p
+        className="light-on "
+        style={{ color: "#0203dd", fontWeight: "bold",  }}
+      >
         {formattedDate}
       </p>
     </div>

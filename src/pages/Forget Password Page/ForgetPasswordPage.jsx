@@ -25,11 +25,11 @@ class ForgetPasswordPage extends Component {
 
   handleEmailSubmit = async (e) => {
     e.preventDefault();
-  
+
     const email = e.target.elements.forgetPasswordEmail.value;
-  
+
     console.log(email);
-  
+
     this.setState({
       loading: true,
       sentEmailDisplay: (
@@ -38,7 +38,7 @@ class ForgetPasswordPage extends Component {
         </div>
       ),
     });
-  
+
     try {
       const response = await fetch(
         "http://localhost:8081/send-forgetpassword-email",
@@ -50,7 +50,7 @@ class ForgetPasswordPage extends Component {
           body: JSON.stringify({ email }),
         }
       );
-  
+
       if (response.ok) {
         console.log("Email sent successfully");
         // Optionally, you can redirect the user to a success page or display a message.
@@ -69,11 +69,16 @@ class ForgetPasswordPage extends Component {
 
     return (
       <div>
-        <Navbar bg="dark" expand="lg" variant="dark">
-          <Navbar.Brand href="/">
+        <Navbar
+          className="navbar"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+          expand="lg"
+          variant="light"
+        >
+          <Navbar.Brand as={Link} to="/" style={{ fontSize: "20px" }}>
             <img
               src={WebLogo}
-              alt=""
+              alt="CampusChime Logo"
               style={{ width: "50px", marginBottom: "5px" }}
             />{" "}
             CampusChime
