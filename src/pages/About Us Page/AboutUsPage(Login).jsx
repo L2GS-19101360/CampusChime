@@ -93,7 +93,6 @@ class AboutUsPageLogin extends Component {
               <br />
               <h6 style={{ textAlign: "center" }}>Ceniza, Jaden P. (BSIT) </h6>
             </li>
-            <li style={{ marginLeft: "10px", marginRight: "10px" }}>Maria</li>
           </ul>
         </div>
       </div>
