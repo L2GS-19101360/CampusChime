@@ -1,0 +1,82 @@
+/* DAYS OF THE WEEK */
+div.days {
+  margin: 0 auto;
+  color: #ffffff;
+}
+
+div.days .day {
+  display: inline-block;
+}
+
+div.days .day p {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+div.clock {
+  margin: 5px 0;
+}
+
+div.clock div {
+  display: inline-block;
+  position: relative;
+}
+
+div.clock div p {
+  font-size: 100px;
+  position: relative;
+  z-index: 100;
+}
+
+div.clock .placeholder {
+  color: #ffffff;
+  position: absolute;
+  top: 0;
+  z-index: 50;
+  /* background-color: white; */
+}
+
+div.clock .meridian {
+  margin-left: 15px;
+}
+
+/* AM OR PM */
+.am-pm {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  width: 20px;
+}
+
+div.am-pm div p {
+  font-size: 12px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.am,
+.pm {
+  color: #131212;
+}
+
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* CLASS THAT CHANGES COLOR OF TEXT TO APPEAR LIKE ITS "ON" */
+.light-on {
+  color: #000000;
+}
+
+/* Active state for AM and PM */
+.am.active,
+.pm.active {
+  color: #0203dd; /* Adjust the color for the active state as needed */
+}
+
+div.days .day p.active {
+  color: #0203dd; /* Adjust the color for the active day as needed */
+}
