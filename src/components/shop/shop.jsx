@@ -84,12 +84,13 @@ const Shop = () => {
                                      {product.sale_price > 0 && (
                                          <div className="badge bg-danger text-white position-absolute" style={{ top: '0.5rem', right: '0.5rem' }}>Sale</div>
                                      )}
-                                     <img className="card-img-top img-fluid" src={`http://localhost/campuschime/PHP_files/product_img/${product.product_image}`} alt={product.product_name} />
+                                     <img className="card-img-top img-fluid h-50" src={`http://localhost/campuschime/PHP_files/product_img/${product.product_image}`} alt={product.product_name} />
                                      <div className="card-body p-4">
                                          <div className="text-center">
                                              <h5 className="fw-bolder">{product.product_name}</h5>
                                              {product.original_price && <span className="text-muted text-decoration-line-through">Php{product.original_price}</span>}
                                              ${product.sale_price > 0 ? product.sale_price : product.original_price}
+                                             <p className="text-center">{product.product_description}</p>
                                          </div>
                                      </div>
                                      <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
