@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import registerImage from "../../assets/register.jpg";
 import "./RegisterDesign.css";
 import { ChevronRight } from "react-bootstrap-icons";
+import axios from "axios";
 
 class RegisterPage extends Component {
   constructor() {
@@ -93,9 +94,20 @@ class RegisterPage extends Component {
                 email: this.state.newEmail,
               };
 
-              this.props.history.push({
-                pathname: "/HomePage",
-                search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
+              // Redirect to the home page
+              this.props.history.push("/homePage");
+
+              // this.props.history.push({
+              //   pathname: "/HomePage",
+              //   search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
+              // });
+
+              // const userEmail = user.email; // Assuming your user object has an 'email' property
+              axios.post("http://localhost:8081/account-registered", {
+                lastName: this.state.newLname,
+                firstName: this.state.newFname,
+                contactNumber: this.state.newContact,
+                email: this.state.newEmail,
               });
             }
           } catch (error) {
