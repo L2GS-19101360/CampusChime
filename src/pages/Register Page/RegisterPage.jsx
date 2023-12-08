@@ -46,8 +46,25 @@ class RegisterPage extends Component {
   handleGoBack = () => {
     this.props.history.push("/");
   };
+
+  validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   handleRegisterAccount = (event) => {
     event.preventDefault();
+
+    if (!this.validateEmail(this.state.newEmail)) {
+      this.setState({
+        warning: (
+          <div className="alert alert-danger" role="alert">
+            Please enter a valid email address.
+          </div>
+        ),
+      });
+      return;
+    }
 
     if (this.state.newPassword === this.state.conPassword) {
       var xhttp = new XMLHttpRequest();
