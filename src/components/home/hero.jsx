@@ -21,7 +21,7 @@ const HeroForHome = () => {
     new Date().toISOString().split("T")[0]
   );
 
-  console.log(user_id);
+
   const handleShopClick = () => {
     setShowHero(false);
     <Suspense fallback={setIsLoading(true)}>
