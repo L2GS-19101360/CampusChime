@@ -81,8 +81,8 @@ const Shop = () => {
                          {filteredProducts.map(product => (
                              <div className="col mb-5" key={product.id}>
                                  <div className="card h-100">
-                                     {product.sale_price > 0 && (
-                                         <div className="badge bg-danger text-white position-absolute" style={{ top: '0.5rem', right: '0.5rem' }}>Sale</div>
+                                     {Number(product.sale_price) > 0 && (
+                                         <div className="badge bg-danger text-white" style={{ top: '0.5rem', right: '0.5rem' }}>Sale</div>
                                      )}
                                      <img className="card-img-top img-fluid h-50" src={`http://localhost/campuschime/PHP_files/product_img/${product.product_image}`} alt={product.product_name} />
                                      <div className="card-body p-4">
