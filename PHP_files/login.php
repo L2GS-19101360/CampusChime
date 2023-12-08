@@ -10,14 +10,20 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
+ 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $postdata = file_get_contents("php://input");
     $request = json_decode($postdata);
-
+    
     if (isset($request->email) && isset($request->password)) {
         $email = $conn->real_escape_string($request->email);
+        // Server-side Email Validation
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(["success" => false, "message" => "Invalid email format"]);
+            exit();
+        }
 
         $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
         $stmt->bind_param("s", $email);
@@ -29,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashedPasswordFromDatabase = $row['password'];
 
             if (password_verify($request->password, $hashedPasswordFromDatabase)) {
+               
                 $firstName = $row['firstname'];
                 $lastName = $row['lastname'];
                 $contactNumber = $row['contactnumber'];
@@ -64,7 +71,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // "password" => $password,
                 ]);
             } else {
-                echo json_encode(["success" => false, "message" => "Invalid email or password"]);
+                $attempts = $_SESSION['attempts'] ?? 0;
+                $attempts++;
+                $_SESSION['attempts'] = $attempts;
+
+                if ($attempts > 3) {
+                    echo json_encode(["success" => false, "message" => "Disabled input momentarily."]);
+                    sleep($attempts * 2);
+                   
+                }
+
+                echo json_encode(["success" => false, "message" => "Invalid email or password. Please try again."]);
             }
         } else {
             echo json_encode(["success" => false, "message" => "Invalid email or password"]);
