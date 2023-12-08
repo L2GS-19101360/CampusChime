@@ -144,8 +144,13 @@ const HeroForHome = () => {
             Entrepreneur Request
           </Modal.Title>
           <p style={{ fontSize: "16px", color: "black", marginTop: "20px" }}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat,
-            a! Accusantium quisquam vero recusandae numquam ipsum veritatis
+            "Unlock the Entrepreneurial Journey! Sell your product by filling
+            out the request form and submitting. Keep an eye on your email for
+            updates on the status of your request."
+            <hr />
+            Feel free to contact us at{" "}
+            <a href="mailto:campuschime@gmail.com">campuschime@gmail.com</a> for
+            any additional inquiries.
           </p>
         </Modal.Header>
 
@@ -194,7 +199,7 @@ const HeroForHome = () => {
 
             {/* Submit button */}
             <Button
-              variant="outline-success"
+              variant="outline-primary"
               type="submit"
               style={{ marginLeft: "10px", marginBottom: "10px" }}
             >
@@ -242,7 +247,6 @@ const HeroForHome = () => {
                     type="button"
                     className="btn-danger btn btn-lg px-4"
                     onClick={handleSellClick}
-                    //placed it all in handSellClick function
                   >
                     Sell
                   </button>
