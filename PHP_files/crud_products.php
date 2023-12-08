@@ -1,9 +1,11 @@
 <?php
+// Include your database connection file here
+include 'db_connection.php';
 
-    // Include your database connection file here
-    include 'db_connect.php';
-
-    // Check if request is made through POST method
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Content-Type: application/json");
+// Check if request is made through POST method
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Get the action from the POST request
         $action = $_POST['action'];
@@ -30,7 +32,12 @@
 
     // Function to get products
     function getProducts() {
-        // Write your code here to fetch products
+        global $conn;
+        $merchant_id = $_POST['merchant_id'];
+        $sql = "SELECT * FROM products WHERE merchant_id = $merchant_id AND is_deleted = 0";
+        $result = mysqli_query($conn, $sql);
+        $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        echo json_encode($products);
     }
 
     // Function to edit product
@@ -40,6 +47,14 @@
 
     // Function to delete product
     function deleteProduct() {
-        // Write your code here to delete product
+        global $conn;
+        $product_id = $_POST['product_id'];
+        $sql = "UPDATE products SET is_deleted = 1 WHERE product_id = $product_id";
+        if (mysqli_query($conn, $sql)) {
+          echo json_encode(array("statusCode"=> 200));
+      } else {
+          echo json_encode(array("statusCode"=> 201, "error"=> mysqli_error($conn)));
     }
+    }
+
 ?>

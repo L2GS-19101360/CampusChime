@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 07, 2023 at 06:49 PM
+-- Generation Time: Dec 08, 2023 at 01:20 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `is_deleted` tinyint(1) DEFAULT '0',
   `is_sale` tinyint(1) DEFAULT '0',
   `is_displayed` tinyint(1) DEFAULT '1',
+  `is_reported` int NOT NULL,
   `product_qty` int DEFAULT '0',
   `original_price` decimal(10,2) NOT NULL,
   `ratings` float DEFAULT '0',
@@ -77,19 +78,20 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`product_id`),
   KEY `products_ibfk_1` (`merchant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_category`, `product_color`, `product_size`, `date_added`, `is_deleted`, `is_sale`, `is_displayed`, `product_qty`, `original_price`, `ratings`, `number_of_add_to_carts`, `merchant_id`, `product_image`) VALUES
-(1, 'Product 1', 'Description for Product 1', 'Category A', 'Red', 'Medium', '2023-12-07 06:37:26', 0, 0, 1, 10, '29.99', 4.5, 20, 43, 'product1.jpg'),
-(2, 'Product 2', 'Description for Product 2', 'Category B', 'Blue', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 15, '49.99', 3.8, 15, 43, 'product2.jpg'),
-(3, 'Product 3', 'Description for Product 3', 'Category A', 'Green', 'Small', '2023-12-07 06:37:26', 0, 0, 1, 5, '19.99', 4.2, 10, 47, 'product3.jpg'),
-(4, 'Product 4', 'Description for Product 4', 'Category C', 'Yellow', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 8, '39.99', 4, 12, 61, 'product4.jpg'),
-(8, 'AMD RYZEN 7 6800H', 'AMD APU', 'APU', 'RED', '0', '2023-12-07 18:22:05', 0, 0, 1, 50, '25000.00', 0, 0, 63, 'files/17019733258615.png'),
-(9, 'TRY AHAIN', 'OK', 'A', 'A', '0', '2023-12-07 18:24:48', 0, 0, 1, 12, '555.00', 0, 0, 63, 'files/17019734884447.png');
+INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_category`, `product_color`, `product_size`, `date_added`, `is_deleted`, `is_sale`, `is_displayed`, `is_reported`, `product_qty`, `original_price`, `ratings`, `number_of_add_to_carts`, `merchant_id`, `product_image`) VALUES
+(1, 'Product 1', 'Description for Product 1', 'Category A', 'Red', 'Medium', '2023-12-07 06:37:26', 0, 0, 1, 0, 10, '29.99', 4.5, 20, 43, 'product1.jpg'),
+(2, 'Product 2', 'Description for Product 2', 'Category B', 'Blue', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 0, 15, '49.99', 3.8, 15, 43, 'product2.jpg'),
+(3, 'Product 3', 'Description for Product 3', 'Category A', 'Green', 'Small', '2023-12-07 06:37:26', 0, 0, 1, 0, 5, '19.99', 4.2, 10, 47, 'product3.jpg'),
+(4, 'Product 4', 'Description for Product 4', 'Category C', 'Yellow', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 0, 8, '39.99', 4, 12, 61, 'product4.jpg'),
+(11, 'Generator', 'Kawasaki Generator 2023 5000W', 'Power Generator', 'white', '1', '2023-12-08 03:36:00', 1, 0, 1, 0, 50, '120000.00', 0, 0, 63, '17020065605331.png'),
+(12, 'MakeShift Product', 'Makeshift', 'DIY', 'WHite', '0', '2023-12-08 08:53:54', 1, 0, 1, 0, 12, '1000.00', 0, 0, 63, '17020256342743.png'),
+(13, 'Test', 'Test', 'Test', '1', '5', '2023-12-08 12:41:51', 0, 0, 1, 0, 65, '25.00', 0, 0, 63, '17020393118066.png');
 
 -- --------------------------------------------------------
 
@@ -140,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `active_status` int NOT NULL DEFAULT '1',
   `registered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -159,7 +161,9 @@ INSERT INTO `users` (`user_id`, `lastname`, `firstname`, `contactnumber`, `email
 (52, 'Mouse', 'Jerry', 9321654987, 'jerry@gmail.com', '$2y$10$4..iqjGv5fPn4iC8rTaksuhXVG/WEDe5xhhn6IF1OiAj.lZ/.sT.W', 'customer', '#%&{}>', 0, '2023-12-06 05:31:34'),
 (61, 'Test', 'Test', 9369852147, 'tt2852537@gmail.com', '$2y$10$JWdlE59N0BYF/W5oZR/0WuPjK.Kje9fK3675YQoQqvtCOUW7hfJeK', 'entrepreneur', 'DELETE.jpg', 1, '2023-12-06 07:28:13'),
 (62, 'jaden', 'ceniza', 32423435, '22102267@usc.edu.ph', '$2y$10$W7xuohcTRSwaQBywEmF4BOWEhozda9CMk0EhKOnN3L0abloZsSshe', 'entrepreneur', '#%&{}>', 0, '2023-12-07 07:57:42'),
-(63, 'LIM', 'CHANG', 0, 'iluvccp@gmail.com', '$2y$10$1/6ErPr.Scc/mc7TT5OhqerqhRCDSkJiC89.h0Mp3Gx1wGxciTeCq', 'entrepreneur', 'shipImport2.png', 1, '2023-12-07 13:31:58');
+(63, 'LIM', 'CHANG', 0, 'iluvccp@gmail.com', '$2y$10$1/6ErPr.Scc/mc7TT5OhqerqhRCDSkJiC89.h0Mp3Gx1wGxciTeCq', 'entrepreneur', 'shipImport2.png', 1, '2023-12-07 13:31:58'),
+(64, 'Hacker', 'Smith', 12346789, 'h', '$2y$10$K1RuPetkKaw92dKBdsB/HuXVNNbnqJSrapt.81jcxYToXlGSW1tjK', 'customer', '#%&{}>', 1, '2023-12-08 05:38:08'),
+(65, 'hack', 'smith', 123456789, 'heyaa@gmail.com', '$2y$10$EPkGSgSLA3FBGm6O0UVWa.GD5yiSa0HUdCZpSb3Vc3hBH9II9dEgG', 'customer', '#%&{}>', 1, '2023-12-08 07:42:29');
 
 --
 -- Constraints for dumped tables

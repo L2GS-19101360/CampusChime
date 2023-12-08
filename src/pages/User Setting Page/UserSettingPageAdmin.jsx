@@ -20,7 +20,7 @@ const handleLogout = () => {
   window.location.href = "/";
 };
 
-class UserSettingPage extends Component {
+class UserSettingPageAdmin extends Component {
   constructor() {
     const LAfirstName = sessionStorage.getItem("firstName");
     const LAlastName = sessionStorage.getItem("lastName");
@@ -225,7 +225,7 @@ class UserSettingPage extends Component {
           expand="lg"
           variant="light"
         >
-          <Navbar.Brand as={Link} to="/HomePage" style={{ fontSize: "20px" }}>
+          <Navbar.Brand as={Link} to="/adminPage" style={{ fontSize: "20px" }}>
             <img
               src={WebLogo}
               alt="CampusChime Logo"
@@ -233,20 +233,12 @@ class UserSettingPage extends Component {
             />{" "}
             CampusChime
           </Navbar.Brand>
-
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/HomePage">
-                Home
-              </Nav.Link>
-              <Nav.Link as={Link} to="/AboutUsPageLogin">
-                About Us
-              </Nav.Link>
-              <Nav.Link as={Link} to="/EntrepreneurPage">
-                Entrepreneur
-              </Nav.Link>
-            </Nav>
-          </div>
+          <Nav>
+            {" "}
+            <Nav.Link as={Link} to="/adminPage">
+              Admin
+            </Nav.Link>
+          </Nav>
         </Navbar>
 
         <Container
@@ -460,4 +452,4 @@ class UserSettingPage extends Component {
   }
 }
 
-export default UserSettingPage;
+export default UserSettingPageAdmin;

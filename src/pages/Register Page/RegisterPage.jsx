@@ -155,11 +155,16 @@ class RegisterPage extends Component {
 
     return (
       <div>
-        <Navbar bg="dark" expand="lg" variant="dark">
-          <Navbar.Brand href="/">
+        <Navbar
+          className="navbar"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+          expand="lg"
+          variant="light"
+        >
+          <Navbar.Brand as={Link} to="/" style={{ fontSize: "20px" }}>
             <img
               src={WebLogo}
-              alt=""
+              alt="CampusChime Logo"
               style={{ width: "50px", marginBottom: "5px" }}
             />{" "}
             CampusChime

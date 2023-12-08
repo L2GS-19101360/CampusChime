@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AddProductModal from './modals/addProduct';
+import axios from 'axios';
 const Container = styled.div`
   overflow-x: auto;
 `;
@@ -24,10 +25,58 @@ const TableRow = styled.tr`
 
 const Products = () => {
     const [selectedRow, setSelectedRow] = useState(null);
+    const [products, setProducts] = useState([]);
+    const user_id = sessionStorage.getItem("userId");
+    useEffect(() => {
+      fetchProducts();
+    }, []);
+
+    const fetchProducts = async () => {
+      try {
+          const response = await axios({
+              method: 'post',
+              url: 'http://localhost/CampusChime/PHP_files/crud_products.php',
+              data: `action=get_products&merchant_id=${user_id}`,
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          });
+          const data = response.data;
+          console.log(data);
+          if (Array.isArray(data)) {
+              setProducts(data);
+          } else {
+              console.error("Error: server response is not an array");
+              setProducts([]); // set products to an empty array
+          }
+      } catch (error) {
+          console.error("Error fetching products: ", error);
+      }
+  };
 
     const handleRowClick = (index) => {
       setSelectedRow(index === selectedRow ? null : index);
     };
+    const handleEdit = (productId) => {
+      console.log(`Edit product with ID: ${productId}`);
+      // Here you can add the logic to navigate to the edit page
+    };
+    const handleDelete = async (productId) => {
+      try {
+          const response = await axios({
+              method: 'post',
+              url: 'http://localhost/CampusChime/PHP_files/crud_products.php',
+              data: `action=delete_product&product_id=${productId}`,
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          });
+          const data = response.data;
+          console.log(data);
+          // After successfully deleting the product, fetch the products again to update the list
+          fetchProducts();
+      } catch (error) {
+          console.error("Error deleting product: ", error);
+      }
+    };
+    // Function to delete product
+     
   
     return (
       <div>
@@ -42,51 +91,26 @@ const Products = () => {
                   <th>Product Name</th>
                   <th>Quantity</th>
                   <th>Price</th>
-                  <th>Statuses</th>
+                  <th>Statuses (1 = True : 0 = False)</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Name</td>
-                  <td>Qty</td>
-                  <td>Price</td>
-                  <td><span class="badge text-bg-success p-1 mx-1">Active</span>
-                  <span class="badge text-bg-danger p-1 mx-1">On Sale</span>
-                  <span class="badge text-bg-warning p-1 mx-1">Reported</span>
-                  </td>
-
-                  <td>
-                   <button className="btn btn-primary m-1 d-inline">Edit</button>
-                   <button className="btn btn-danger m-1 d-inline">Delete</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Name</td>
-                  <td>Qty</td>
-                  <td>Price</td>
-                  <td><span class="badge text-bg-success p-1 mx-1">Active</span>
-                  <span class="badge text-bg-danger p-1 mx-1">On Sale</span>
-                  <span class="badge text-bg-warning p-1 mx-1">Reported</span>
-                  </td>
-                  <td>
-                   <button className="btn btn-primary m-1 d-inline">Edit</button>
-                   <button className="btn btn-danger m-1 d-inline">Delete</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Name</td>
-                  <td>Qty</td>
-                  <td>Price</td>
-                  <td><span class="badge text-bg-success p-1 mx-1">Active</span>
-                  <span class="badge text-bg-danger p-1 mx-1">On Sale</span>
-                  <span class="badge text-bg-warning p-1 mx-1">Reported</span>
-                  </td>
-                  <td>
-                   <button className="btn btn-primary m-1 d-inline">Edit</button>
-                   <button className="btn btn-danger m-1 d-inline">Delete</button>
-                  </td>
-                </tr>
+              {products.map((product, index) => (
+                                <tr key={index}>
+                                    <td>{product.product_name}</td>
+                                    <td>{product.product_qty}</td>
+                                    <td>{product.original_price}</td>
+                                    <td><span class="badge text-bg-success p-1 mx-1">Active: {product.is_displayed}</span>
+                                    <span className="badge text-bg-danger p-1 mx-1">On Sale: {product.is_sale}</span>
+                                    <span className="badge text-bg-warning p-1 mx-1">Reported: {product.is_reported}</span>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-primary m-1 d-inline" onClick={() => handleEdit(product.product_id)}>Edit</button>
+                                        <button className="btn btn-danger m-1 d-inline" onClick={() => handleDelete(product.product_id)}>Delete</button>
+                                    </td>
+                                  </tr>
+                ))}
                 {/* Add more rows as needed */}
               </tbody>
             </ResponsiveTable>

@@ -33,36 +33,35 @@ const HomeNavbar = () => {
   return (
     <div>
       <Navbar
-        className="navbar bg-dark border-bottom border-body"
-        data-bs-theme="dark"
+        className="navbar"
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.6)" }}
         expand="lg"
+        variant="light"
       >
-        <Container style={{ marginLeft: "-10px" }}>
-          <Navbar.Brand as={Link} to="/HomePage">
-            <Image
-              src={logo}
-              alt="CampusChime Logo"
-              style={{ width: "50px", marginBottom: "5px" }}
-            />{" "}
-            CampusChime
-          </Navbar.Brand>
+        <Navbar.Brand as={Link} to="/homePage" style={{ fontSize: "20px" }}>
+          <img
+            src={logo}
+            alt="CampusChime Logo"
+            style={{ width: "50px", marginBottom: "5px" }}
+          />{" "}
+          CampusChime
+        </Navbar.Brand>
 
-          <Navbar.Toggle aria-controls="navbarNav" />
+        <Navbar.Toggle aria-controls="navbarNav" />
 
-          <Navbar.Collapse id="navbarNav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/HomePage">
-                Home
-              </Nav.Link>
-              <Nav.Link as={Link} to="/AboutUsPageLogin">
-                About Us
-              </Nav.Link>
-              <Nav.Link as={Link} to="/EntrepreneurPage">
-                Entrepreneur
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
+        <Navbar.Collapse id="navbarNav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/HomePage">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/AboutUsPageLogin">
+              About Us
+            </Nav.Link>
+            <Nav.Link as={Link} to="/EntrepreneurPage">
+              Entrepreneur
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
 
         <div className="ms-auto" style={{ marginRight: "30px" }}>
           {IsImageNull ? (
@@ -150,7 +149,7 @@ const HomeNavbar = () => {
           <Button
             variant="outline-danger"
             onClick={handleLogout}
-            style={{ marginTop: "100%" }}
+            style={{ marginTop: "100%", marginLeft: "50px" }}
           >
             Logout Account
           </Button>

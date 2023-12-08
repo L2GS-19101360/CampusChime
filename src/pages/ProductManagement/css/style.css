@@ -182,7 +182,7 @@
 }
 
 /* =============== Home Section =============== */
-.home{
+.home-p{
     position: relative;
     background-color: var(--color_Light1);
     left: 260px;
@@ -190,23 +190,23 @@
     height: 100vh;
     transition: all .5s ease;
 }
-.sidebar.close ~ .home{
+.sidebar.close ~ .home-p{
     left: 78px;
     width: calc(100% - 78px);
 }
-.home .toggle-sidebar{
+.home-p .toggle-sidebar{
     height: 60px;
     display: flex;
     align-items: center;
     width: fit-content;
     cursor: pointer;
 }
-.home .toggle-sidebar i{
+.home-p .toggle-sidebar i{
     font-size: 35px;
     color: var(--color_Dark1);
     margin-left: 15px;
 }
-.home .toggle-sidebar .text{
+.home-p .toggle-sidebar .text{
     font-size: 25px;
     color: var(--color_Dark1);
     font-weight: 600;

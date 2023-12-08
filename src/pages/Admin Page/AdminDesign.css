@@ -3,15 +3,15 @@
 }
 
 .list-group a:hover {
-  background-color: #F0F3FA;
-  color: rgb(0, 0, 0);
+  background-color: #395886;
+  color: rgb(255, 255, 255);
   cursor: pointer;
 }
 
 .list-group a.active {
-  background-color: rgba(232, 215, 211);
-  color: rgb(0, 0, 0);
-  border-color: rgba(232, 215, 211);
+  background-color: #395886;
+  color: rgb(255, 255, 255);
+  border-color: white;
 }
 
 .main-content-open {
