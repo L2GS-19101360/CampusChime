@@ -30,9 +30,6 @@ const MainNavbar = () => {
           <Nav.Link as={Link} to="/AboutUsPage">
             About Us
           </Nav.Link>
-          <Nav.Link as={Link} to="/EntrepreneurPage">
-            Entrepreneur
-          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
 
