@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 
-const ProdFilter = () => {
+const ProdFilter = ({ filters, setFilters }) => {
+  // Function to handle filter changes
+  const handleFilterChange = (filterName, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterName]: value,
+    }));
+  };
+  
   // State to manage filter options
-  const [filters, setFilters] = useState({
+  const [filterOptions, setFilterOptions] = useState({
     category: '',
     minPrice: '',
     maxPrice: '',
@@ -11,13 +19,8 @@ const ProdFilter = () => {
     // Add more filters as needed
   });
 
-  // Function to handle filter changes
-  const handleFilterChange = (filterName, value) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterName]: value,
-    }));
-  };
+
+  
 
   // Function to apply filters and fetch filtered products
   const applyFilters = () => {
