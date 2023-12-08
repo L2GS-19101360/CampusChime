@@ -5,7 +5,7 @@ include 'db_connection.php';
 // Constants for allowed file extensions and max file size
 const ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg'];
 const MAX_FILE_SIZE = 5242880; // 5MB
-const UPLOADS_DIRECTORY = 'files/'; // Directory to store uploaded files
+const UPLOADS_DIRECTORY = 'product_img/'; // Directory to store uploaded files
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -44,12 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Store the uploaded file in the "files" directory
     $fileName = generateUniqueFileName(pathinfo($file['name'], PATHINFO_EXTENSION));
+ 
     $filePath = UPLOADS_DIRECTORY . $fileName;
 
     move_uploaded_file($file['tmp_name'], $filePath);
 
     // Save product information to the database
-    $productData['productFile'] = $filePath;
+    $productData['productFile'] = $fileName;
     saveProductToDatabase($productData, $merchantId);
 
     // Send success response

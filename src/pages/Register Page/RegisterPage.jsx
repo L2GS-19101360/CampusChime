@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import registerImage from "../../assets/register.jpg";
 import "./RegisterDesign.css";
 import { ChevronRight } from "react-bootstrap-icons";
+import axios from "axios";
 
 class RegisterPage extends Component {
   constructor() {
@@ -45,8 +46,25 @@ class RegisterPage extends Component {
   handleGoBack = () => {
     this.props.history.push("/");
   };
+
+  validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   handleRegisterAccount = (event) => {
     event.preventDefault();
+
+    if (!this.validateEmail(this.state.newEmail)) {
+      this.setState({
+        warning: (
+          <div className="alert alert-danger" role="alert">
+            Please enter a valid email address.
+          </div>
+        ),
+      });
+      return;
+    }
 
     if (this.state.newPassword === this.state.conPassword) {
       var xhttp = new XMLHttpRequest();
@@ -68,7 +86,7 @@ class RegisterPage extends Component {
               this.setState({
                 warning: (
                   <div className="alert alert-danger" role="alert">
-                    Email already Exist!
+                    Email already Exists!
                   </div>
                 ),
               });
@@ -77,6 +95,7 @@ class RegisterPage extends Component {
                 position: "top-center",
                 autoClose: 2000,
               });
+
               // Store data in sessionStorage
               sessionStorage.setItem("userId", response.data);
               sessionStorage.setItem("role", response.user_type);
@@ -92,13 +111,31 @@ class RegisterPage extends Component {
                 email: this.state.newEmail,
               };
 
-              this.props.history.push({
-                pathname: "/HomePage",
-                search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
+              // Redirect to the home page
+              this.props.history.push("/homePage");
+
+              // this.props.history.push({
+              //   pathname: "/HomePage",
+              //   search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
+              // });
+
+              // const userEmail = user.email; // Assuming your user object has an 'email' property
+              axios.post("http://localhost:8081/account-registered", {
+                lastName: this.state.newLname,
+                firstName: this.state.newFname,
+                contactNumber: this.state.newContact,
+                email: this.state.newEmail,
               });
             }
           } catch (error) {
             console.error("Error parsing JSON:", error);
+            this.setState({
+              warning: (
+                <div className="alert alert-danger" role="alert">
+                  An error occurred while processing your request.
+                </div>
+              ),
+            });
           }
         }
       };
@@ -359,6 +396,7 @@ class RegisterPage extends Component {
                               </Button>
                             </div>
                           </form>
+
                           <div className="mt-4">
                             Already have an account?{" "}
                             <Link to="/LoginPage">
