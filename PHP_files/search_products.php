@@ -12,18 +12,20 @@ if ($conn->connect_error) {
 }
 
 $searchTerm = $_GET['searchTerm'];
-$filters = $_GET['filters'];
+$filters = json_decode($_GET['filters'], true);
 
 $query = "SELECT * FROM products WHERE product_name LIKE ?";
+$params = array("%$searchTerm%");
+$types = "s";
 
-if ($filters['category']) {
-    $query .= " AND product_category = " . $filters['category'];
+if (!empty($filters['category'])) {
+    $query .= " AND product_category = ?";
+    array_push($params, $filters['category']);
+    $types .= "s";
 }
-// Add more filters as needed
 
 $stmt = $conn->prepare($query);
-$searchTerm = "%$searchTerm%";
-$stmt->bind_param("s", $searchTerm);
+$stmt->bind_param($types, ...$params);
 
 $stmt->execute();
 
