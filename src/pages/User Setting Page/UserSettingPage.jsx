@@ -60,9 +60,9 @@ class UserSettingPage extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   // handleInputChange = (e) => {
   //   this.setState({ [e.target.name]: e.target.value });
@@ -115,8 +115,24 @@ class UserSettingPage extends Component {
       });
   };
 
+  isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!this.isEmailValid(this.state.email)) {
+      this.setState({
+        alertMessage: (
+          <div className="alert alert-danger" role="alert">
+            Please enter a valid email address.
+          </div>
+        ),
+      });
+      return;
+    }
 
     var filename = this.state.user_Image;
     var getId = this.state.id;
@@ -373,11 +389,10 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
+                    className={`ms-2 ${this.state.showPassword
                         ? "bi bi-eye-slash-fill"
                         : "bi bi-eye-fill"
-                    }`}
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
@@ -407,11 +422,10 @@ class UserSettingPage extends Component {
                     }
                   />
                   <i
-                    className={`ms-2 ${
-                      this.state.showPassword
+                    className={`ms-2 ${this.state.showPassword
                         ? "bi bi-eye-slash-fill"
                         : "bi bi-eye-fill"
-                    }`}
+                      }`}
                     onClick={this.togglePasswordVisibility}
                     style={{
                       fontSize: "20px",
