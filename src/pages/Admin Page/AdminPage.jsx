@@ -136,7 +136,7 @@ function AdminPage() {
 
         {/* Main Content */}
         <div
-          className={`col-12 col-md-12 vh-100 main-content-container ${
+          className={`col-12 col-md-12 vh-90 main-content-container  ${
             isSidebarOpen ? "main-content-open" : "collapsed"
           }`}
           style={{

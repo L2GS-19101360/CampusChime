@@ -75,11 +75,6 @@ const EntrepreneurRequest = () => {
             );
           });
 
-          const userEmail = selectedRequest.email; // Use selectedRequest.email instead of user.email
-          axios.post("http://localhost:8081/approve-entrepreneur", {
-            email: userEmail,
-          });
-
           handleClose();
         } else {
           console.error("Error accepting request:", response);
@@ -112,10 +107,7 @@ const EntrepreneurRequest = () => {
             );
           });
 
-          const userEmail = selectedRequest.email; // Use selectedRequest.email instead of user.email
-          axios.post("http://localhost:8081/decline-entrepreneur", {
-            email: userEmail,
-          });
+          const userEmail = selectedRequest.email;
 
           handleClose();
           fetchEntrepRequests();
