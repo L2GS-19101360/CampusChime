@@ -53,6 +53,10 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
                         <Form.Label>Product Description</Form.Label>
                         <Form.Control as="textarea" name="productDescription" value={productData.productDescription} onChange={handleInputChange} />
                     </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Product Description</Form.Label>
+                        <Form.Control type='text' name="productDescription" value={productData.productDescription} onChange={handleInputChange} />
+                    </Form.Group>
                     {/* Add more form fields as needed */}
                     <Button variant="secondary" onClick={onHide}>
                         Close

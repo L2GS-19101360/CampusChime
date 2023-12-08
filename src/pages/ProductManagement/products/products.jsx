@@ -78,11 +78,10 @@ const Products = () => {
     };
     // Function to delete product
      
-  const handleEdit = (product) => {
-    setProductBeingEdited(product);
-    // Open the EditProductModal
-    setShowEditModal(true);
-  };
+    const handleEdit = (product) => {
+      setProductBeingEdited(product);
+      setShowEditModal(true);
+    };
 
   const handleProductUpdated = (updatedProduct) => {
     // Update the product in the products array
@@ -100,6 +99,7 @@ const Products = () => {
             <ResponsiveTable className="table table-striped">
               <thead>
                 <tr>
+                  <th>Product Image</th>
                   <th>Product Name</th>
                   <th>Quantity</th>
                   <th>Price</th>
@@ -110,6 +110,9 @@ const Products = () => {
               <tbody>
               {products.map((product, index) => (
                                 <tr key={index}>
+                                    <td>
+                                      <img src={`http://localhost/campuschime/PHP_files/product_img/${product.product_image}`} alt={product.product_name} style={{ maxWidth: '75px', maxHeight: '75px' }} />  
+                                    </td>
                                     <td>{product.product_name}</td>
                                     <td>{product.product_qty}</td>
                                     <td>{product.original_price}</td>
@@ -127,7 +130,7 @@ const Products = () => {
                 {/* Add more rows as needed */}
               </tbody>
             </ResponsiveTable>
-            <EditProductModal product={productBeingEdited} />
+            <EditProductModal product={productBeingEdited} show={showEditModal} onHide={() => setShowEditModal(false)} onProductUpdated={handleProductUpdated} />
            {/* <EditProductModal product={productBeingEdited} onProductUpdated={handleProductUpdated} />*/}
           </Container>
         </div>

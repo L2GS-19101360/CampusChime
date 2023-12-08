@@ -98,7 +98,7 @@ class App extends Component {
                 become part of a thriving community of student-led ventures.
                 Ready to embark on this journey?
               </p>
-              <Link to="/AbourUsPage">
+              <Link to="/AboutUsPage">
                 <Button variant="outline-primary" size="lg">
                   Learn More
                 </Button>
