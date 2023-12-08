@@ -79,7 +79,7 @@ const SellerProductPage = () => {
     setShowProducts(false);
   };
   return (
-    <div>
+    <div className="">
       <div className="sidebar close">
         {/* ========== Logo ============  */}
         <a href="#" className="logo-box">
@@ -144,7 +144,7 @@ const SellerProductPage = () => {
         </div>
           */}
           </li>
-          {/* -------- Dropdown List Item ------- */}
+          {/* -------- Dropdown List Item 
           <li className="dropdown">
             <div className="title">
               <a href="#" className="link">
@@ -168,6 +168,7 @@ const SellerProductPage = () => {
               </a>
             </div>
           </li>
+          ------- */}
           {/* -------- Non Dropdown List Item ------- */}
           <li>
             <div className="title">
@@ -201,45 +202,6 @@ const SellerProductPage = () => {
             </div>
           </li>
           {/* -------- Dropdown List Item ------- */}
-          <li className="dropdown">
-            <div className="title">
-              <a href="#" className="link">
-                <i className="bx bx-extension" />
-                <span className="name">Plugins</span>
-              </a>
-              <i className="bx bxs-chevron-down" />
-            </div>
-            <div className="submenu">
-              <a href="#" className="link submenu-title">
-                Plugins
-              </a>
-              <a href="#" className="link">
-                UI Face
-              </a>
-              <a href="#" className="link">
-                Pigments
-              </a>
-              <a href="#" className="link">
-                Box Icons
-              </a>
-            </div>
-          </li>
-          {/* -------- Non Dropdown List Item ------- */}
-          <li>
-            <div className="title">
-              <a href="#" className="link">
-                <i className="bx bx-compass" />
-                <span className="name">Explore</span>
-              </a>
-              {/* <i class='bx bxs-chevron-down'></i> */}
-            </div>
-            <div className="submenu">
-              <a href="#" className="link submenu-title">
-                Explore
-              </a>
-              {/* submenu links here  */}
-            </div>
-          </li>
           {/* -------- Non Dropdown List Item ------- */}
           <li>
             <div className="title">
@@ -271,17 +233,39 @@ const SellerProductPage = () => {
               </a>
               {/* submenu links here  */}
             </div>
+            
           </li>
+
+          <li>
+            <div className="title">
+              <a href="#" className="link" onClick={() => window.location.reload()}>
+              <i class='bx bx-exit' ></i>
+                <span className="name">Exit</span>
+              </a>
+              {/* <i class='bx bxs-chevron-down'></i> */}
+            </div>
+            <div className="submenu">
+              <a href="#" className="link submenu-title" onClick={() => window.location.reload()}>
+                Exit
+              </a>
+              {/* submenu links here  */}
+            </div>
+            
+          </li>
+
         </ul>
       </div>
       {/* ============= Home Section =============== */}
-      <section className="home">
+      <section className="home-p">
         <div className="toggle-sidebar">
           <i className="bx bx-menu" />
           <div className="text">Toggle Menu</div>
         </div>
+       
+       
         {showDash && <Dash />}
         {showProducts && <Products />}
+      
       </section>
     </div>
   );
