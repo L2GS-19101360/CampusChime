@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 08, 2023 at 08:56 AM
+-- Generation Time: Dec 08, 2023 at 01:20 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `is_deleted` tinyint(1) DEFAULT '0',
   `is_sale` tinyint(1) DEFAULT '0',
   `is_displayed` tinyint(1) DEFAULT '1',
+  `is_reported` int NOT NULL,
   `product_qty` int DEFAULT '0',
   `original_price` decimal(10,2) NOT NULL,
   `ratings` float DEFAULT '0',
@@ -77,19 +78,20 @@ CREATE TABLE IF NOT EXISTS `products` (
   `product_image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`product_id`),
   KEY `products_ibfk_1` (`merchant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_category`, `product_color`, `product_size`, `date_added`, `is_deleted`, `is_sale`, `is_displayed`, `product_qty`, `original_price`, `ratings`, `number_of_add_to_carts`, `merchant_id`, `product_image`) VALUES
-(1, 'Product 1', 'Description for Product 1', 'Category A', 'Red', 'Medium', '2023-12-07 06:37:26', 0, 0, 1, 10, '29.99', 4.5, 20, 43, 'product1.jpg'),
-(2, 'Product 2', 'Description for Product 2', 'Category B', 'Blue', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 15, '49.99', 3.8, 15, 43, 'product2.jpg'),
-(3, 'Product 3', 'Description for Product 3', 'Category A', 'Green', 'Small', '2023-12-07 06:37:26', 0, 0, 1, 5, '19.99', 4.2, 10, 47, 'product3.jpg'),
-(4, 'Product 4', 'Description for Product 4', 'Category C', 'Yellow', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 8, '39.99', 4, 12, 61, 'product4.jpg'),
-(11, 'Generator', 'Kawasaki Generator 2023 5000W', 'Power Generator', 'white', '1', '2023-12-08 03:36:00', 0, 0, 1, 50, '120000.00', 0, 0, 63, '17020065605331.png'),
-(12, 'MakeShift Product', 'Makeshift', 'DIY', 'WHite', '0', '2023-12-08 08:53:54', 0, 0, 1, 12, '1000.00', 0, 0, 63, '17020256342743.png');
+INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_category`, `product_color`, `product_size`, `date_added`, `is_deleted`, `is_sale`, `is_displayed`, `is_reported`, `product_qty`, `original_price`, `ratings`, `number_of_add_to_carts`, `merchant_id`, `product_image`) VALUES
+(1, 'Product 1', 'Description for Product 1', 'Category A', 'Red', 'Medium', '2023-12-07 06:37:26', 0, 0, 1, 0, 10, '29.99', 4.5, 20, 43, 'product1.jpg'),
+(2, 'Product 2', 'Description for Product 2', 'Category B', 'Blue', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 0, 15, '49.99', 3.8, 15, 43, 'product2.jpg'),
+(3, 'Product 3', 'Description for Product 3', 'Category A', 'Green', 'Small', '2023-12-07 06:37:26', 0, 0, 1, 0, 5, '19.99', 4.2, 10, 47, 'product3.jpg'),
+(4, 'Product 4', 'Description for Product 4', 'Category C', 'Yellow', 'Large', '2023-12-07 06:37:26', 0, 1, 1, 0, 8, '39.99', 4, 12, 61, 'product4.jpg'),
+(11, 'Generator', 'Kawasaki Generator 2023 5000W', 'Power Generator', 'white', '1', '2023-12-08 03:36:00', 1, 0, 1, 0, 50, '120000.00', 0, 0, 63, '17020065605331.png'),
+(12, 'MakeShift Product', 'Makeshift', 'DIY', 'WHite', '0', '2023-12-08 08:53:54', 1, 0, 1, 0, 12, '1000.00', 0, 0, 63, '17020256342743.png'),
+(13, 'Test', 'Test', 'Test', '1', '5', '2023-12-08 12:41:51', 0, 0, 1, 0, 65, '25.00', 0, 0, 63, '17020393118066.png');
 
 -- --------------------------------------------------------
 
