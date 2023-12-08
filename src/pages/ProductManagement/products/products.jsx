@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AddProductModal from './modals/addProduct';
 import axios from 'axios';
+import EditProductModal from './modals/editProduct';
+import $ from 'jquery';
 const Container = styled.div`
   overflow-x: auto;
 `;
@@ -26,6 +28,8 @@ const TableRow = styled.tr`
 const Products = () => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [products, setProducts] = useState([]);
+    const [productBeingEdited, setProductBeingEdited] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
     const user_id = sessionStorage.getItem("userId");
     useEffect(() => {
       fetchProducts();
@@ -55,10 +59,7 @@ const Products = () => {
     const handleRowClick = (index) => {
       setSelectedRow(index === selectedRow ? null : index);
     };
-    const handleEdit = (productId) => {
-      console.log(`Edit product with ID: ${productId}`);
-      // Here you can add the logic to navigate to the edit page
-    };
+    
     const handleDelete = async (productId) => {
       try {
           const response = await axios({
@@ -77,7 +78,18 @@ const Products = () => {
     };
     // Function to delete product
      
-  
+  const handleEdit = (product) => {
+    setProductBeingEdited(product);
+    // Open the EditProductModal
+    setShowEditModal(true);
+  };
+
+  const handleProductUpdated = (updatedProduct) => {
+    // Update the product in the products array
+    setProducts(products.map(product => product.product_id === updatedProduct.product_id ? updatedProduct : product));
+    // Close the EditProductModal
+    setShowEditModal(false);
+  };
     return (
       <div>
         <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabIndex="0">
@@ -106,7 +118,8 @@ const Products = () => {
                                     <span className="badge text-bg-warning p-1 mx-1">Reported: {product.is_reported}</span>
                                     </td>
                                     <td>
-                                        <button className="btn btn-primary m-1 d-inline" onClick={() => handleEdit(product.product_id)}>Edit</button>
+                                        {/*<button className="btn btn-primary m-1 d-inline" onClick={() => handleEdit(product.product_id)}>Edit</button>*/}
+                                        <button className="btn btn-primary m-1 d-inline" onClick={() => handleEdit(product)}>Edit</button>
                                         <button className="btn btn-danger m-1 d-inline" onClick={() => handleDelete(product.product_id)}>Delete</button>
                                     </td>
                                   </tr>
@@ -114,6 +127,8 @@ const Products = () => {
                 {/* Add more rows as needed */}
               </tbody>
             </ResponsiveTable>
+            <EditProductModal product={productBeingEdited} />
+           {/* <EditProductModal product={productBeingEdited} onProductUpdated={handleProductUpdated} />*/}
           </Container>
         </div>
       </div>
@@ -121,4 +136,4 @@ const Products = () => {
    };
    
 
-export default Products;
+   export default Products;

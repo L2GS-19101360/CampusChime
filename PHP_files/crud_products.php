@@ -41,9 +41,18 @@ header("Content-Type: application/json");
     }
 
     // Function to edit product
+  
     function editProduct() {
-        // Write your code here to edit product
+        global $conn;
+        $product = json_decode($_POST['product'], true);
+        $sql = "UPDATE products SET product_name = '{$product['productName']}', product_description = '{$product['productDescription']}', product_category = '{$product['productCategory']}', product_color = '{$product['productColor']}', product_size = '{$product['productSize']}', product_qty = '{$product['productQuantity']}', original_price = '{$product['productPrice']}', sale_price = '{$product['salePrice']}' WHERE product_id = {$product['productId']}";
+        if (mysqli_query($conn, $sql)) {
+            echo json_encode(array("statusCode"=> 200));
+        } else {
+            echo json_encode(array("statusCode"=> 201, "error"=> mysqli_error($conn)));
+        }
     }
+    
 
     // Function to delete product
     function deleteProduct() {
