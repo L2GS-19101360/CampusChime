@@ -47,7 +47,14 @@ header("Content-Type: application/json");
 
     // Function to delete product
     function deleteProduct() {
-        // Write your code here to delete product
+        global $conn;
+        $product_id = $_POST['product_id'];
+        $sql = "UPDATE products SET is_deleted = 1 WHERE product_id = $product_id";
+        if (mysqli_query($conn, $sql)) {
+          echo json_encode(array("statusCode"=> 200));
+      } else {
+          echo json_encode(array("statusCode"=> 201, "error"=> mysqli_error($conn)));
+    }
     }
 
 ?>
