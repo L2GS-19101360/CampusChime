@@ -88,7 +88,7 @@ class ForgetPasswordPage extends Component {
             <Nav className="mr-auto"></Nav>
           </Navbar.Collapse>
         </Navbar>
-        <section className="vh-100" style={{ backgroundColor: "#aeb6c4" }}>
+        <section className="vh-100">
           <div className="container py-5 h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
               <div className="col col-xl-8">
