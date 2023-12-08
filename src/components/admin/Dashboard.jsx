@@ -195,7 +195,7 @@ function Dashboard() {
         </div>
         <i className="bi bi-cart p-3 fs-1"></i>
       </div>
-      <div className="box box5 p-3 bg-white shadow d-flex justify-content-around align-items-center ">
+      <div className="box box5 p-3 bg-white shadow d-flex justify-content-around align-items-center">
         <div>
           <h3 className="fs-2">{totalCustomers}</h3>
           <p className="fs-5">Customers</p>
