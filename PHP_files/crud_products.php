@@ -58,7 +58,7 @@ header("Content-Type: application/json");
     function deleteProduct() {
         global $conn;
         $product_id = $_POST['product_id'];
-        $sql = "UPDATE products SET is_deleted = 1 WHERE product_id = $product_id";
+        $sql = "UPDATE products SET is_deleted = 1, is_displayed = 0 WHERE product_id = $product_id";
         if (mysqli_query($conn, $sql)) {
           echo json_encode(array("statusCode"=> 200));
       } else {

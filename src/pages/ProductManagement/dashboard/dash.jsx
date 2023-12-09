@@ -4,32 +4,27 @@ import axios from 'axios';
 const Dash = () => {
     const [sales, setSales] = useState(0);
     const [addToCart, setAddToCart] = useState(0);
+    const [inventoryCount, setInventoryCount] = useState(0); // Declare inventoryCount state
+    const user_id = sessionStorage.getItem("userId"); // Get the user_id from session storage
+
+
     useEffect(() => {
-    const interval = setInterval(() => {
-        axios.get('http://your-api-url')
+      
+        axios.post('http://localhost/CampusChime/PHP_files/product_management/fetch_inventory_count.php', {
+            merchant_id: user_id
+        })
         .then(response => {
-        let updatedSales = response.data;
-        setSales(updatedSales);
+            let updatedInventoryCount = response.data.total_qty;
+            setInventoryCount(updatedInventoryCount);
         })
         .catch(error => {
             console.error('Error:', error);
         });
-    }, 5000); // Fetch the data every 5 seconds
-    const interval2 = setInterval(() => {
-        axios.get('http://your-api-url')
-            .then(response => {
-            let updatedAdds = response.data;
-            setAddToCart(updatedAdds);
-            })
-            .catch(error => {
-            console.error('Error:', error);
-            });
-        }, 5000); // Fetch the data every 5 seconds
-    
+
     // Clear the intervals on unmount
     return () => {
-        clearInterval(interval);
-        clearInterval(interval2);
+        //clearInterval(interval);
+       // clearInterval(interval2);
     };
     }, []);
     return(
@@ -67,7 +62,7 @@ const Dash = () => {
                 <section className="d-inline">
                 <i className='bx bxs-cabinet bx-md'></i>
                 </section>
-                <p className="card-text d-inline fs-3 align-top px-2">{addToCart}</p>
+                <p className="card-text d-inline fs-3 align-top px-2">{inventoryCount}</p>
             </div>
             </div>
 
