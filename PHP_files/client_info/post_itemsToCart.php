@@ -100,9 +100,14 @@ function getUserDetails($conn, $user_id)
 
 function getProductDetails($conn, $product_id)
 {
-    $stmt = $conn->prepare("SELECT * FROM `products` WHERE `product_id` = :product_id");
+    $stmt = $conn->prepare("SELECT c.*, p.product_name, p.product_image, p.sale_price
+    FROM `cart` c
+    INNER JOIN `products` p ON c.product_id = p.product_id
+    WHERE c.product_id = :product_id");
+
     $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
 ?>
