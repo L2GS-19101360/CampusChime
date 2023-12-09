@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const CartModal = ({ cartItems, onClose }) => {
+const CartModal = () => {
+    const [user_id, setUserId] = useState(() => sessionStorage.getItem("userId"));
  return (
     <div>
-        
+
     </div>
  );
 };
