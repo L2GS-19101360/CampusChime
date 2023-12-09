@@ -45,6 +45,7 @@ header("Content-Type: application/json");
     function editProduct() {
         global $conn;
         $product = json_decode($_POST['product'], true);
+      
         $sql = "UPDATE products SET product_name = '{$product['productName']}', product_description = '{$product['productDescription']}', product_size = '{$product['productSize']}', product_qty = '{$product['productQty']}', original_price = '{$product['originalPrice']}', sale_price = '{$product['salePrice']}' WHERE product_id = {$product['productId']}";
         if (mysqli_query($conn, $sql)) {
             echo json_encode(array("statusCode"=> 200));
