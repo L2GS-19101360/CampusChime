@@ -29,7 +29,6 @@ const ClockComponent = () => {
   };
   const currentDay = daysOfWeek[date.getDay()];
 
-  // Format the date as "Month Day, Year"
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
