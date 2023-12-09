@@ -69,7 +69,7 @@ class LoginPage extends Component {
         sessionStorage.setItem("role", data.role);
         sessionStorage.setItem("userImage", data.user_image);
         sessionStorage.setItem("active_status", data.active_status);
-
+        console.log(data.role);
         toast.success(`Welcome, ${data.firstName} ${data.lastName}`, {
           position: "top-center",
           autoClose: 4000,

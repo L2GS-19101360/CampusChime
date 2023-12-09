@@ -32,7 +32,6 @@
             return;
         }
 
-        // Update the request status using prepared statements
         $query = "UPDATE entrepreneur_requests SET status = ?, decision_date = CURRENT_TIMESTAMP WHERE request_id = ?";
         $stmt = mysqli_prepare($conn, $query);
 
@@ -49,7 +48,6 @@
             return;
         }
 
-        // Check if the request was accepted and update user role accordingly
         if ($status === 'accepted' && isset($data['userId'])) {
             $userId = $data['userId'];
 
@@ -61,17 +59,14 @@
                 return;
             }
 
-            // Define and set the role if needed
             $role = 'entrepreneur';
 
-            // Update user role using prepared statements
             $query = "UPDATE users SET role = ? WHERE user_id = ?";
             $stmt = mysqli_prepare($conn, $query);
 
             // Bind parameters
             mysqli_stmt_bind_param($stmt, "si", $role, $userId);
 
-            // Execute the statement
             $result = mysqli_stmt_execute($stmt);
 
             if (!$result) {
