@@ -23,14 +23,20 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        Object.keys(productData).forEach((key) => {
-            formData.append(key, productData[key]);
-        });
+        formData.append('product', JSON.stringify({
+            productName: productData.product_name,
+            productDescription: productData.product_description,
+            productSize: productData.product_size,
+            productQty: productData.product_qty,
+            originalPrice: productData.original_price,
+            salePrice: productData.sale_price,
+            productId: productData.product_id
+        }));
         formData.append('action', 'edit_product');
         try {
             const response = await axios.post('http://localhost/CampusChime/PHP_files/crud_products.php', formData);
             console.log(response.data);
-            if (response.data.success) {
+            if (response.data.statusCode === 200) {
                 onProductUpdated(productData);
             }
         } catch (error) {
@@ -44,24 +50,35 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
                 <Modal.Title>Edit Product</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3">
+                <Form className="m-5" onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
                         <Form.Label>Product Name</Form.Label>
-                        <Form.Control type="text" name="productName" value={productData.productName} onChange={handleInputChange} />
+                        <Form.Control type="text" name="product_name" value={productData.product_name || ''} onChange={handleInputChange} />
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Product Description</Form.Label>
-                        <Form.Control as="textarea" name="productDescription" value={productData.productDescription} onChange={handleInputChange} />
+                        <Form.Control as="textarea" name="product_description" value={productData.product_description || ''} onChange={handleInputChange} />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Product Description</Form.Label>
-                        <Form.Control type='text' name="productDescription" value={productData.productDescription} onChange={handleInputChange} />
+                        <Form.Label>Product Size</Form.Label>
+                        <Form.Control type='text' name="product_size" value={productData.product_size || ''} onChange={handleInputChange} />
                     </Form.Group>
-                    {/* Add more form fields as needed */}
-                    <Button variant="secondary" onClick={onHide}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Product Quantity</Form.Label>
+                        <Form.Control type='text' name="product_qty" value={productData.product_qty || ''} onChange={handleInputChange} />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Product Original Price</Form.Label>
+                        <Form.Control type='number' step="0.01" name="original_price" value={productData.original_price || ''} onChange={handleInputChange} />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Product Sale Price</Form.Label>
+                        <Form.Control type='text' step="0.01" name="sale_price" value={productData.sale_price || ''} onChange={handleInputChange} />
+                    </Form.Group>
+                    <Button variant="secondary" className="m-1" onClick={onHide}>
                         Close
                     </Button>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" className="m-1" type="submit">
                         Save Changes
                     </Button>
                 </Form>
