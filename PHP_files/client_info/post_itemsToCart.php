@@ -31,7 +31,7 @@
             $quantity = $conn->quote((int)$request->quantity);
 
             // Store.
-            $sql = "INSERT INTO `cart`(`user_id`,`product_id`,`quantity`) VALUES ('{$user_id}','{$product_id}','{$quantity}')";
+            $sql = "INSERT INTO `cart`(`user_id`,`product_id`,`quantity`) VALUES ({$user_id},{$product_id},{$quantity})";
 
             if($conn->query($sql)) {
                 http_response_code(201);
