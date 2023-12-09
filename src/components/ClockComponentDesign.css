@@ -55,7 +55,7 @@ div.am-pm div p {
 
 .am,
 .pm {
-  color: #131212;
+  color: #cd0000;
 }
 
 .clock-container {
@@ -71,7 +71,7 @@ div.am-pm div p {
 /* Active state for AM and PM */
 .am.active,
 .pm.active {
-  color: #0203dd;
+  color: #ffffff;
 }
 
 div.days .day p.active {
