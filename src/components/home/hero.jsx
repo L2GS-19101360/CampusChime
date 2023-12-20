@@ -35,12 +35,8 @@ const HeroForHome = () => {
       setShowHero(false);
       setIsLoading(true);
 
-      // Use a timeout to simulate loading
-      setTimeout(() => {
-        // Navigate to the SellerProductPage
-        history.push("/sellerProductPage");
-        setIsLoading(false);
-      }, 1000);
+      // Navigate to the SellerProductPage
+      history.push("/sellerProductPage");
     }
   };
   const handleCloseSellModal = () => {
