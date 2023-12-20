@@ -1,9 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
-header('Access-Control-Allow-Headers: token, Content-Type');
-header('Content-Type: application/json');
-
 include 'db_connection.php';
 
 try {
@@ -47,6 +42,7 @@ try {
     } else {
         // Invalid JSON or empty data
         http_response_code(400);
+        return;
     }
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
