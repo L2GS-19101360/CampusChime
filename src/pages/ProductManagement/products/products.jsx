@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import AddProductModal from './modals/addProduct';
 import axios from 'axios';
 import EditProductModal from './modals/editProduct';
-import $ from 'jquery';
 const Container = styled.div`
   overflow-x: auto;
 `;

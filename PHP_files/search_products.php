@@ -11,21 +11,32 @@ if ($conn->connect_error) {
     exit();
 }
 
-$searchTerm = $_GET['searchTerm'];
-$filters = json_decode($_GET['filters'], true);
+// Check if 'searchTerm' key is set in $_GET
+$searchTerm = isset($_GET['searchTerm']) ? $_GET['searchTerm'] : '';
+// Check if 'filters' key is set in $_GET and decode it
+$filters = isset($_GET['filters']) ? json_decode($_GET['filters'], true) : array();
 
-$query = "SELECT * FROM products WHERE product_name LIKE ?";
-$params = array("%$searchTerm%");
-$types = "s";
+$query = "SELECT * FROM products WHERE product_name LIKE '%$searchTerm%'";
+$params = array();
 
 if (!empty($filters['category'])) {
     $query .= " AND product_category = ?";
     array_push($params, $filters['category']);
-    $types .= "s";
 }
 
 $stmt = $conn->prepare($query);
-$stmt->bind_param($types, ...$params);
+
+// Check if prepare was successful
+if ($stmt === false) {
+    echo json_encode(array("error" => "Prepare statement failed: " . $conn->error));
+    exit();
+}
+
+// Check if bind_param is successful
+if (!empty($params) && !$stmt->bind_param(str_repeat('s', count($params)), ...$params)) {
+    echo json_encode(array("error" => "Bind_param failed: " . $stmt->error));
+    exit();
+}
 
 $stmt->execute();
 

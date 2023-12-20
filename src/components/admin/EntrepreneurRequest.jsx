@@ -53,7 +53,7 @@ const EntrepreneurRequest = () => {
   const handleAccept = () => {
     axios
       .post(
-        "http://localhost/CampusChime/PHP_files/handle_entrepreneur_request.php",
+        "http://localhost/CampusChime/PHP_files/new_handle_entrepreneur_requests.php",
         {
           action: "update_request_status",
           requestId: selectedRequest.request_id,
@@ -61,6 +61,7 @@ const EntrepreneurRequest = () => {
           status: "accepted",
         }
       )
+
       .then((response) => {
         if (response.data && response.data.success) {
           toast.success("Request was accepted", {
@@ -88,7 +89,7 @@ const EntrepreneurRequest = () => {
   const handleDecline = () => {
     axios
       .post(
-        "http://localhost/CampusChime/PHP_files/handle_entrepreneur_request.php",
+        "http://localhost/CampusChime/PHP_files/handle_entrepreneur_requests.php",
         {
           action: "update_request_status",
           requestId: selectedRequest.request_id,
