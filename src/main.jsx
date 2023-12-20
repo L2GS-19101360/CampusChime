@@ -17,6 +17,7 @@ import AboutUsPage from "./pages/About Us Page/AboutUsPage.jsx";
 import AboutUsPageLogin from "./pages/About Us Page/AboutUsPage(Login).jsx";
 import UserSettingPage from "./pages/User Setting Page/UserSettingPage.jsx";
 import UserSettingPageAdmin from "./pages/User Setting Page/UserSettingPageAdmin.jsx";
+import SellerProductPage from "./pages/ProductManagement/SellerProductManage.jsx"; // Import the SellerProductPage component
 
 import ForgetPasswordPage from "./pages/Forget Password Page/ForgetPasswordPage.jsx";
 import AdminPage from "./pages/Admin Page/AdminPage.jsx";
@@ -82,6 +83,11 @@ root.render(
         path="/adminPage"
         component={AdminPage}
         allowedRoles={["admin"]}
+      />
+      <ProtectedRoute
+        path="/sellerProductPage"
+        component={SellerProductPage} // Include SellerProductPage in routing
+        allowedRoles={["entrepreneur", "admin"]} // Adjust the roles as needed
       />
     </Switch>
     <Footer />

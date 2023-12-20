@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 import axios from "axios";
 import {
   Button,
@@ -25,6 +27,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import ProductModal from "../../components/shop/productModal"; // Import the ProductModal component
 
 const ShopPage = () => {
+  const history = useHistory();
+
   const [user_id] = useState(sessionStorage.getItem("userId"));
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -184,7 +188,7 @@ const ShopPage = () => {
       ? product.sale_price * quantity
       : product.original_price * quantity;
 
-    return totalPrice.toFixed(2); // Fixed to 2 decimal places
+    return totalPrice.toFixed(2);
   };
 
   return (
@@ -193,7 +197,7 @@ const ShopPage = () => {
         <Button
           variant="primary"
           className="position-relative m-4 float-start d-inline"
-          onClick={() => window.location.reload()}
+          onClick={() => history.push("/homePage")}
         >
           <BiArrowBack />
         </Button>
