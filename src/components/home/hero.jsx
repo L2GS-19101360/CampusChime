@@ -1,15 +1,16 @@
 import React, { useState, Suspense } from "react";
-import Shop from "../shop/shop";
-// import SellComponent from './SellComponent';
-import Loader from "../loader/loader";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Shop from "../../pages/Shop Page/ShopPage";
 import SellerProductPage from "../../pages/ProductManagement/SellerProductManage";
 import { Modal, Button, Form } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import Loader from "../loader/loader";
 
 const HeroForHome = () => {
+  const history = useHistory();
+
   // State variables
   const [user_id, setUserId] = useState(() => sessionStorage.getItem("userId"));
   const [showHero, setShowHero] = useState(true);
@@ -22,36 +23,31 @@ const HeroForHome = () => {
   );
 
   const handleShopClick = () => {
-    setShowHero(false);
-    <Suspense fallback={setIsLoading(true)}>
-      {setShowShop(true)}
-      {setIsLoading(false)}
-    </Suspense>;
+    history.push("/ShopPage");
   };
 
-  // Handle click to initiate the selling process
   const handleSellClick = () => {
     setShowHero(false);
 
-    // Check user role and determine the next action
     if (sessionStorage.getItem("role") === "customer") {
       setShowHero(true);
-      setShowEntrepForm(true); // Show the SellRequestModal
+      setShowEntrepForm(true);
     } else {
       setShowHero(false);
-      <Suspense fallback={setIsLoading(true)}>
-        {setShowSellerProductPage(true)}
-        {setIsLoading(false)}
-      </Suspense>;
+      setIsLoading(true);
+
+      // Use a timeout to simulate loading
+      setTimeout(() => {
+        setShowSellerProductPage(true);
+        setIsLoading(false);
+      }, 1000);
     }
   };
 
-  // Close the SellRequestModal
   const handleCloseSellModal = () => {
     setShowEntrepForm(false);
   };
 
-  // Handle sending the request and show a success notification
   const handleSendRequest = (file, productDescription) => {
     if (!file) {
       showNotification("Please select a file before submitting.", "error");
@@ -93,7 +89,6 @@ const HeroForHome = () => {
       });
   };
 
-  // Display a notification using Toastify
   const showNotification = (message, type = "success") => {
     const options = {
       position: "top-center",
@@ -119,20 +114,16 @@ const HeroForHome = () => {
     }
   };
 
-  // SellRequestModal component
   const EntrepRequestModal = ({ onClose, onSendRequest }) => {
     const [file, setFile] = useState("");
     const [productDescription, setProductDescription] = useState("");
 
-    // Handle file change for uploading the document
     const handleFileChange = (event) => {
       setFile(event.target.files[0]);
     };
 
-    // Handle form submission
     const handleSubmit = (event) => {
       event.preventDefault();
-
       onSendRequest(file, productDescription);
     };
 
@@ -162,7 +153,6 @@ const HeroForHome = () => {
               marginTop: "10px",
             }}
           >
-            {/* Form field for uploading a valid Government ID */}
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label
                 style={{
@@ -179,7 +169,6 @@ const HeroForHome = () => {
               </Form.Text>
             </Form.Group>
 
-            {/* Form field for product description */}
             <Form.Group
               controlId="productDescription"
               className="mb-3"
@@ -196,7 +185,6 @@ const HeroForHome = () => {
               />
             </Form.Group>
 
-            {/* Submit button */}
             <Button
               variant="outline-primary"
               type="submit"
@@ -238,7 +226,6 @@ const HeroForHome = () => {
                     type="button"
                     className="btn btn-success btn-lg px-4 me-md-2 fw-bold"
                     onClick={handleShopClick}
-                    //placed it all in handShopClick function
                   >
                     Shop Now!
                   </button>
@@ -265,7 +252,6 @@ const HeroForHome = () => {
       )}
       {isLoading && <Loader></Loader>}
       {showShop && <Shop />}
-      {/* ShowEntrepForm component */}
       {showEntrepForm && (
         <EntrepRequestModal
           onClose={handleCloseSellModal}
@@ -273,9 +259,6 @@ const HeroForHome = () => {
         />
       )}
       {showSellerProductPage && <SellerProductPage />}
-      {/*showSell && <SellComponent />*/}
-
-      {/* Toastify notification container */}
       <ToastContainer />
     </div>
   );

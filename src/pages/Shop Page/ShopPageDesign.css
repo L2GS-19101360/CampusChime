@@ -1,0 +1,13 @@
+.details-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.details-column {
+  width: 48%; /* Adjust the width as needed */
+}
+
+.merchant-image {
+  display: flex;
+  justify-content: center;
+}

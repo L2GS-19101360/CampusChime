@@ -1,5 +1,5 @@
 <?php
-include '../db_connection.php';
+include 'db_connection.php';
 
 $user_id = $_GET['user_id']; // Replace this with the actual user_id
 

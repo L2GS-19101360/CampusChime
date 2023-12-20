@@ -12,6 +12,7 @@ import {
 import LoginPage from "./pages/Login Page/LoginPage.jsx";
 import RegisterPage from "./pages/Register Page/RegisterPage.jsx";
 import HomePage from "./pages/Home Page/HomePage.jsx";
+import ShopPage from "./pages/Shop Page/ShopPage.jsx";
 import AboutUsPage from "./pages/About Us Page/AboutUsPage.jsx";
 import AboutUsPageLogin from "./pages/About Us Page/AboutUsPage(Login).jsx";
 import UserSettingPage from "./pages/User Setting Page/UserSettingPage.jsx";
@@ -24,7 +25,6 @@ import Footer from "./components/footer/footer.jsx";
 const ProtectedRoute = ({ component: Component, allowedRoles, ...rest }) => {
   const isAuthenticated = sessionStorage.getItem("userId") !== null;
   const userRole = sessionStorage.getItem("role");
-  console.log(userRole);
 
   return (
     <Route
@@ -56,6 +56,11 @@ root.render(
       <ProtectedRoute
         path="/homePage"
         component={HomePage}
+        allowedRoles={["entrepreneur", "customer"]}
+      />
+      <ProtectedRoute
+        path="/shopPage"
+        component={ShopPage}
         allowedRoles={["entrepreneur", "customer"]}
       />
       <ProtectedRoute
