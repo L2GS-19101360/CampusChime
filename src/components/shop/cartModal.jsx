@@ -69,6 +69,7 @@ const CartModal = ({ show, handleClose }) => {
       formData.append("total_amount", totalAmount);
       formData.append("order_date", new Date().toISOString());
 
+      console.log(new Date().toISOString());
       // Append cart items to formData
       cartArray.forEach((item, index) => {
         formData.append(
@@ -387,7 +388,11 @@ const CartModal = ({ show, handleClose }) => {
 
                 {/* Checkout button */}
                 <Button
-                  style={{ marginTop: "10%", width: "150px" }}
+                  style={{
+                    marginTop: "10%",
+                    width: "150px",
+                    marginBottom: "10px",
+                  }}
                   variant="outline-dark"
                   onClick={handleCheckoutConfirmation}
                 >

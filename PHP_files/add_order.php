@@ -10,7 +10,7 @@ $orderDate = $_POST['order_date'];
 // Create order
 $insertOrderSql = "INSERT INTO orders (user_id, total_amount, order_date) VALUES (?, ?, ?)";
 $stmtOrder = $conn->prepare($insertOrderSql);
-$stmtOrder->bind_param("isd", $userId, $totalAmount, $orderDate);
+$stmtOrder->bind_param("iss", $userId, $totalAmount, $orderDate);
 
 if ($stmtOrder->execute()) {
     $orderId = $stmtOrder->insert_id;

@@ -25,7 +25,6 @@ const HeroForHome = () => {
   const handleShopClick = () => {
     history.push("/ShopPage");
   };
-
   const handleSellClick = () => {
     setShowHero(false);
 
@@ -38,12 +37,12 @@ const HeroForHome = () => {
 
       // Use a timeout to simulate loading
       setTimeout(() => {
-        setShowSellerProductPage(true);
+        // Navigate to the SellerProductPage
+        history.push("/sellerProductPage");
         setIsLoading(false);
       }, 1000);
     }
   };
-
   const handleCloseSellModal = () => {
     setShowEntrepForm(false);
   };

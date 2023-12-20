@@ -43,7 +43,7 @@ const Products = () => {
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
           });
           const data = response.data;
-          console.log(data);
+          // console.log(data);
           if (Array.isArray(data)) {
               setProducts(data);
           } else {
@@ -90,7 +90,7 @@ const Products = () => {
   };
     return (
       <div>
-        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabIndex="0">
+        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" className="scrollspy-example bg-body-tertiary p-3 rounded-2" tabIndex="0">
           <Container className="container-fluid">
             <AddProductModal />
             <button type="button" className="btn btn-outline-primary my-3"  data-bs-toggle="modal" data-bs-target="#addProductModal">Add Product</button>
@@ -115,7 +115,7 @@ const Products = () => {
                                     <td>{product.product_name}</td>
                                     <td>{product.product_qty}</td>
                                     <td>{product.original_price}</td>
-                                    <td><span class="badge text-bg-success p-1 mx-1">Active: {product.is_displayed}</span>
+                                    <td><span className="badge text-bg-success p-1 mx-1">Active: {product.is_displayed}</span>
                                     <span className="badge text-bg-danger p-1 mx-1">On Sale: {product.is_sale}</span>
                                     <span className="badge text-bg-warning p-1 mx-1">Reported: {product.is_reported}</span>
                                     </td>
