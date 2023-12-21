@@ -8,25 +8,25 @@ const Dash = () => {
     const user_id = sessionStorage.getItem("userId"); // Get the user_id from session storage
 
 
-    useEffect(() => {
+    // useEffect(() => {
       
-        axios.post('http://localhost/CampusChime/PHP_files/product_management/fetch_inventory_count.php', {
-            merchant_id: user_id
-        })
-        .then(response => {
-            let updatedInventoryCount = response.data.total_qty;
-            setInventoryCount(updatedInventoryCount);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    //     axios.post('http://localhost/CampusChime/PHP_files/product_management/fetch_inventory_count.php', {
+    //         merchant_id: user_id
+    //     })
+    //     .then(response => {
+    //         let updatedInventoryCount = response.data.total_qty;
+    //         setInventoryCount(updatedInventoryCount);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //     });
 
-    // Clear the intervals on unmount
-    return () => {
-        //clearInterval(interval);
-       // clearInterval(interval2);
-    };
-    }, []);
+    // // Clear the intervals on unmount
+    // return () => {
+    //     //clearInterval(interval);
+    //    // clearInterval(interval2);
+    // };
+    // }, []);
     return(
         <div>
         <div className="mx-3">
