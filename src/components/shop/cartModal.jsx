@@ -274,7 +274,10 @@ const CartModal = ({ show, handleClose }) => {
             <div className="row">
               {/* Left column for the table */}
               <div className="col-md-8">
-                <Table className="table manage-candidates-top mb-0 text-center">
+                <Table
+                  className="table manage-candidates-top mb-0 text-center"
+                  hover
+                >
                   <thead>
                     <tr>
                       <th className="text-center">Remove</th>
@@ -295,7 +298,7 @@ const CartModal = ({ show, handleClose }) => {
                             className="me-2 btn "
                             style={{
                               fontSize: "14px",
-                              backgroundColor: "white",
+                              backgroundColor: "transparent",
                               border: "none",
                               cursor: "pointer",
                             }}
@@ -345,7 +348,7 @@ const CartModal = ({ show, handleClose }) => {
                             className="me-2 btn "
                             style={{
                               fontSize: "14px",
-                              backgroundColor: "white",
+                              backgroundColor: "transparent",
                               border: "none",
                               cursor: "pointer",
                             }}
