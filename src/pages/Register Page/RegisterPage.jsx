@@ -113,7 +113,13 @@ class RegisterPage extends Component {
 
               // Redirect to the home page
               // this.props.history.push("/homePage");
-
+              this.setState({
+                warning: (
+                  <div class="alert alert-success" role="alert">
+                    Confirmation Email Sent!
+                  </div>
+                ),
+              });
               // this.props.history.push({
               //   pathname: "/HomePage",
               //   search: `?lastName=${userData.lastName}&firstName=${userData.firstName}&email=${userData.email}`,
