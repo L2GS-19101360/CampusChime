@@ -103,7 +103,6 @@ app.get('/activate-account/:email', (req, res) => {
       // Send a response with a script for client-side redirection
       const redirectScript = `
         <script>
-          alert('Account activated successfully!');
           window.location.href = "http://localhost:5173/homePage";
         </script>
       `;
