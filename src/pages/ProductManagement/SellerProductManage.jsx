@@ -1,10 +1,11 @@
 // ProductPage.jsx
 
 import React, { useEffect, useState } from "react";
-/*import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-*/
-import Dash from "./dashboard/dash";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import Orders from "./product_components/orders";
+
+import Dash from "./product_components/dash";
 import Products from "./products/products";
 import "./css/style.css";
 const SellerProductPage = () => {
@@ -59,15 +60,24 @@ const SellerProductPage = () => {
   }, []);
 
   const [showDash, setShowDash] = useState(true);
-  const [showProducts, setShowProducts] = useState(true);
+  const [showProducts, setShowProducts] = useState(false);
+  const [showOrders, setShowOrders] = useState(false);
 
   const handleProductClick = () => {
     setShowDash(false);
     setShowProducts(true);
+    setShowOrders(false);
   };
 
   const handleDashClick = () => {
     setShowDash(true);
+    setShowProducts(false);
+    setShowOrders(false);
+  };
+
+  const handleOrderClick = () => {
+    setShowOrders(true);
+    setShowDash(false);
     setShowProducts(false);
   };
 
@@ -122,8 +132,20 @@ const SellerProductPage = () => {
               </a>
             </div>
           </li>
-
-          {/* -------- Non Dropdown List Item ------- */}
+          {/* -------- Non Dropdown List Item ------- */}{" "}
+          <li>
+            <div className="title">
+              <a href="#" className="link" onClick={handleOrderClick}>
+                <i className="bx bx-pie-chart-alt-2" />
+                <span className="name">Orders</span>
+              </a>
+            </div>
+            <div className="submenu">
+              <a href="#" className="link submenu-title">
+              Orders
+              </a>
+            </div>
+          </li>
           <li>
             <div className="title">
               <a href="#" className="link">
@@ -138,19 +160,6 @@ const SellerProductPage = () => {
             </div>
           </li>
           {/* -------- Non Dropdown List Item ------- */}
-          <li>
-            <div className="title">
-              <a href="#" className="link">
-                <i className="bx bx-pie-chart-alt-2" />
-                <span className="name">Chart</span>
-              </a>
-            </div>
-            <div className="submenu">
-              <a href="#" className="link submenu-title">
-                Chart
-              </a>
-            </div>
-          </li>
           <li>
             <div className="title">
               <a href="#" className="link">
@@ -178,7 +187,6 @@ const SellerProductPage = () => {
               </a>
             </div>
           </li>
-
           <li>
             <div className="title">
               <a
@@ -211,6 +219,7 @@ const SellerProductPage = () => {
 
         {showDash && <Dash />}
         {showProducts && <Products />}
+        {showOrders && <Orders />}
       </section>
     </div>
   );
