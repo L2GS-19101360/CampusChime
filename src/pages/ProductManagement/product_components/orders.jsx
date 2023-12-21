@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Modal, Alert } from "react-bootstrap";
 import LetteredAvatar from "../../../components/LetteredAvater";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedOrderStatus, setSelectedOrderStatus] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showConfirmCompletedModal, setShowConfirmCompletedModal] =
     useState(false);
@@ -13,21 +16,8 @@ const Orders = () => {
   const merchantId = sessionStorage.getItem("userId");
 
   useEffect(() => {
-    // Fetch orders data from the API, including merchantId as a query parameter
-    fetch(
-      `http://localhost/campuschime/PHP_files/get_orders.php?merchantId=${merchantId}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Orders data:", data);
-
-        // Assuming data is an array of orders, update the state
-        setOrders(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching orders:", error);
-      });
-  }, [merchantId]);
+    fetchOrders();
+  }, []); // Update only when the component mounts
 
   const handleViewClick = (order) => {
     setSelectedOrder(order);
@@ -39,31 +29,71 @@ const Orders = () => {
   };
 
   const handleStatusChange = (order, newStatus) => {
-    // If the new status is 'Completed', show the confirmation modal
+    // Set the selected order status in the state
+    setSelectedOrderStatus(newStatus);
+
+    // Open the confirmation modal based on the selected status
     if (newStatus === "Completed") {
       setSelectedOrder(order);
       setShowConfirmCompletedModal(true);
     } else if (newStatus === "Cancelled") {
-      // If the new status is 'Cancelled', show the confirmation modal
       setSelectedOrder(order);
       setShowConfirmCancelledModal(true);
     } else {
-      // If the new status is neither 'Completed' nor 'Cancelled', proceed with the status change
+      // If the status is not "Completed" or "Cancelled", update the order status immediately
       updateOrderStatus(order, newStatus);
     }
   };
-  // Function to update order status
+
   const updateOrderStatus = (order, newStatus) => {
-    // Implement the logic to update the status (e.g., API call)
-    console.log(`Order ID ${order.order_id} status changed to ${newStatus}`);
-    // Close the confirmation modals if they are open
-    setShowConfirmCompletedModal(false);
-    setShowConfirmCancelledModal(false);
-    // Fetch updated orders data after the status change
-    fetchOrders();
+    const orderId = order.order_id;
+
+    fetch(`http://localhost/campuschime/PHP_files/update_order_status.php`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderId: orderId,
+        newStatus: newStatus,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(`Order ID ${orderId} status changed to ${newStatus}`);
+
+        // Show toast notification
+        const toastMessage = `Order ID ${orderId} has been ${newStatus.toLowerCase()}!`;
+
+        const toastOptions = {
+          position: "top-center",
+          autoClose: 2000,
+        };
+
+        // Use toast.success for "Completed", toast.error for "Cancelled", and no toast for "Pending"
+        if (newStatus === "Completed") {
+          toast.success(toastMessage, toastOptions);
+        } else if (newStatus === "Cancelled") {
+          toast.error(toastMessage, toastOptions);
+        }
+        // No toast for "Pending"
+
+        // Close the confirmation modals if they are open
+        setShowConfirmCompletedModal(false);
+        setShowConfirmCancelledModal(false);
+
+        // Update the order status locally
+        const updatedOrders = orders.map((o) =>
+          o.order_id === orderId ? { ...o, order_product_status: newStatus } : o
+        );
+
+        setOrders(updatedOrders);
+      })
+      .catch((error) => {
+        console.error("Error updating order status:", error);
+      });
   };
 
-  // Function to fetch orders data
   const fetchOrders = () => {
     fetch(
       `http://localhost/campuschime/PHP_files/get_orders.php?merchantId=${merchantId}`
@@ -71,6 +101,12 @@ const Orders = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Orders data:", data);
+
+        // Assuming the first order in the list is representative of the overall order status
+        if (data.length > 0) {
+          setSelectedOrderStatus(data[0].order_product_status);
+        }
+
         setOrders(data);
       })
       .catch((error) => {
@@ -99,15 +135,14 @@ const Orders = () => {
             <th className="text-center">Buyer</th>
             <th className="text-center">Status</th>
             <th className="text-center">Date Ordered</th>
+            <th className="text-center">Actions</th>
           </tr>
         </thead>
         <tbody className="text-center">
           {orders.map((order, index) => (
             <tr key={index}>
               <td className="p-1">
-                {/* Product details */}
                 <div className="title d-flex align-items-center">
-                  {/* Add your product image and name here */}
                   <div className="thumb">
                     <img
                       src={`http://localhost/campuschime/PHP_files/product_img/${order.product_image}`}
@@ -134,7 +169,6 @@ const Orders = () => {
                 ₱{calculateTotalPrice(order)}
               </td>
               <td className="align-middle">
-                {/* View Buyer button */}
                 <Button
                   variant="outline-dark"
                   onClick={() => handleViewClick(order)}
@@ -142,36 +176,75 @@ const Orders = () => {
                   View Buyer
                 </Button>
               </td>
-              <td className="align-middle">
-                {/* Status dropdown */}
-                <select
-                  style={{ borderRadius: "0%" }}
-                  value={order.order_product_status}
-                  onChange={(e) => handleStatusChange(order, e.target.value)}
+              <td className="candidate-list align-middle">
+                <div
+                  className="status-border"
+                  style={{
+                    borderRadius: "10px",
+                    padding: "5px",
+                    backgroundColor: "#efefef",
+                    color:
+                      order.order_product_status === "Completed"
+                        ? "green"
+                        : order.order_product_status === "Cancelled"
+                        ? "red"
+                        : "black",
+                    fontWeight: "bold",
+                    display: "inline-block",
+                  }}
                 >
-                  <option value="Pending">Pending</option>
-                  <option value="Cancelled">Cancelled</option>
-                  <option value="Completed">Completed</option>
-                </select>
+                  {order.order_product_status}
+                </div>
               </td>
               <td className="align-middle">
                 {new Date(order.order_date).toLocaleDateString()}
+              </td>
+              <td className="align-middle">
+                <Button
+                  variant={
+                    order.order_product_status === "Pending"
+                      ? "warning"
+                      : "secondary"
+                  }
+                  onClick={() => handleStatusChange(order, "Pending")}
+                  className="me-2"
+                >
+                  Pending
+                </Button>
+                <Button
+                  variant={
+                    order.order_product_status === "Completed"
+                      ? "success"
+                      : "secondary"
+                  }
+                  onClick={() => handleStatusChange(order, "Completed")}
+                  className="me-2"
+                >
+                  Completed
+                </Button>
+                <Button
+                  variant={
+                    order.order_product_status === "Cancelled"
+                      ? "danger"
+                      : "secondary"
+                  }
+                  onClick={() => handleStatusChange(order, "Cancelled")}
+                >
+                  Cancelled
+                </Button>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
 
-      {/* Buyer Info Modal */}
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Buyer Information</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* Render buyer information here */}
           {selectedOrder && (
             <div className="text-center" style={{ marginTop: "20px" }}>
-              {/* User image */}
               <div className="mb-3 d-flex justify-content-center align-items-center">
                 {selectedOrder.buyer_image === "#%&{}>" ? (
                   <LetteredAvatar
@@ -191,8 +264,6 @@ const Orders = () => {
                   />
                 )}
               </div>
-
-              {/* Name, Email, and Contact Number */}
               <div className="mb-3 ">
                 <h5 className="fw-bold">{`${selectedOrder.buyer_firstname} ${selectedOrder.buyer_lastname}`}</h5>
                 <hr style={{ width: "100%" }} />
@@ -214,8 +285,6 @@ const Orders = () => {
         </Modal.Body>
       </Modal>
 
-      {/* Status confirmation modal */}
-      {/* Status confirmation modal for 'Completed' */}
       <Modal
         show={showConfirmCompletedModal}
         onHide={() => setShowConfirmCompletedModal(false)}
@@ -246,7 +315,6 @@ const Orders = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Status confirmation modal for 'Cancelled' */}
       <Modal
         show={showConfirmCancelledModal}
         onHide={() => setShowConfirmCancelledModal(false)}

@@ -1,10 +1,9 @@
-// ProductPage.jsx
-
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Orders from "./product_components/orders";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Dash from "./product_components/dash";
 import Products from "./products/products";
 import "./css/style.css";
@@ -81,6 +80,7 @@ const SellerProductPage = () => {
     setShowProducts(false);
   };
 
+
   return (
     <div className="">
       <div className="sidebar close">
@@ -142,7 +142,7 @@ const SellerProductPage = () => {
             </div>
             <div className="submenu">
               <a href="#" className="link submenu-title">
-              Orders
+                Orders
               </a>
             </div>
           </li>
@@ -212,7 +212,10 @@ const SellerProductPage = () => {
       </div>
       {/* ============= Home Section =============== */}
       <section className="home-p">
-        <div className="toggle-sidebar">
+        <div
+          className="toggle-sidebar"
+          onClick={() => setShowProducts(!showProducts)}
+        >
           <i className="bx bx-menu" />
           <div className="text">Toggle Menu</div>
         </div>
@@ -221,6 +224,7 @@ const SellerProductPage = () => {
         {showProducts && <Products />}
         {showOrders && <Orders />}
       </section>
+      <ToastContainer />
     </div>
   );
 };
