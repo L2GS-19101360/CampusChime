@@ -112,7 +112,7 @@ class RegisterPage extends Component {
               };
 
               // Redirect to the home page
-              this.props.history.push("/homePage");
+              // this.props.history.push("/homePage");
 
               // this.props.history.push({
               //   pathname: "/HomePage",
