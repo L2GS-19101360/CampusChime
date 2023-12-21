@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 app.post('/account-registered', (req, res) => {
   const { email, lastName, firstName, contactNumber } = req.body;
 
-  var transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'campuschime@gmail.com',
@@ -40,7 +40,9 @@ app.post('/account-registered', (req, res) => {
     },
   });
 
-  var mailOptions = {
+  const activationLink = `http://localhost:8081/activate-account/${encodeURIComponent(email)}`;
+
+  const mailOptions = {
     from: 'campuschime@gmail.com',
     to: email,
     subject: 'Account Registration',
@@ -55,6 +57,10 @@ app.post('/account-registered', (req, res) => {
         <li>Contact Number: ${contactNumber}</li>
         <li>Email: ${email}</li>
       </ul>
+      <p>To activate your account on our website, please click the link below:</p>
+      <a href="${activationLink}" style="text-decoration: none;">
+        <button type="button" style="background-color: #28a745; color: #fff; border: 1px solid #218838; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Confirm Account</button>
+      </a>
       <p>If you have any questions or need assistance, feel free to contact us.</p>
       <br>
       <p>Best regards,</p>
@@ -62,13 +68,48 @@ app.post('/account-registered', (req, res) => {
     `,
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
       res.status(500).send('Error sending email');
     } else {
       console.log('Email sent: ' + info.response);
       res.status(200).send('Email sent successfully');
+    }
+  });
+});
+
+app.get('/activate-account/:email', (req, res) => {
+  const { email } = req.params;
+
+  // TODO: Add logic to activate the user's account in your database
+  // You may need to update the user status or perform other necessary actions
+
+  const query = "UPDATE users SET active_status=1 WHERE email=?";
+  const values = [email];
+
+  console.log("SQL Query:", query);
+  console.log("SQL Values:", values);
+
+  database.query(query, values, (err, result) => {
+    if (err) {
+      console.error("Error in SQL query:", err);
+      return res.status(500).json({ error: "Error updating active status." });
+    }
+
+    console.log("Active status updated:", result);
+
+    if (result.affectedRows > 0) {
+      // Send a response with a script for client-side redirection
+      const redirectScript = `
+        <script>
+          alert('Account activated successfully!');
+          window.location.href = "http://localhost:5173/homePage";
+        </script>
+      `;
+      res.send(redirectScript);
+    } else {
+      return res.json({ message: "No active status updated." });
     }
   });
 });
