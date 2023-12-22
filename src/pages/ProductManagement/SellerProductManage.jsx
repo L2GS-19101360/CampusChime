@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dash from "./product_components/dash";
 import Products from "./products/products";
+import ProductHistory from "./product_components/history"; // Import the new component
 import "./css/style.css";
 import HomeNavbar from "../../components/HomeNavbar";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
@@ -64,23 +65,34 @@ const SellerProductPage = () => {
   const [showDash, setShowDash] = useState(true);
   const [showProducts, setShowProducts] = useState(false);
   const [showOrders, setShowOrders] = useState(false);
+  const [showHistory, setShowHistory] = useState(false); // State for showing history component
 
   const handleProductClick = () => {
     setShowDash(false);
     setShowProducts(true);
     setShowOrders(false);
+    setShowHistory(false); // Hide history component
   };
 
   const handleDashClick = () => {
     setShowDash(true);
     setShowProducts(false);
     setShowOrders(false);
+    setShowHistory(false); // Hide history component
   };
 
   const handleOrderClick = () => {
     setShowOrders(true);
     setShowDash(false);
     setShowProducts(false);
+    setShowHistory(false); // Hide history component
+  };
+
+  const handleHistoryClick = () => {
+    setShowHistory(true); // Show history component
+    setShowDash(false);
+    setShowProducts(false);
+    setShowOrders(false);
   };
 
   return (
@@ -119,7 +131,7 @@ const SellerProductPage = () => {
 
           <li>
             <div className="title">
-              <a href="#" className="link">
+              <a href="#" className="link" onClick={handleHistoryClick}>
                 <i className="bx bx-history"></i>
                 <span className="name">History</span>
               </a>
@@ -155,10 +167,11 @@ const SellerProductPage = () => {
           <i className="bx bx-menu"></i>
           <div className="text">Toggle Menu</div>
         </div>
-
         {showDash && <Dash />}
         {showProducts && <Products />}
         {showOrders && <Orders />}
+        {showHistory && <ProductHistory />}{" "}
+        {/* Include the history component */}
       </section>
       <ToastContainer />
     </div>
