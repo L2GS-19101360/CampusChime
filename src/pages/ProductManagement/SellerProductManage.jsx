@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Orders from "./product_components/orders";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dash from "./product_components/dash";
 import Products from "./products/products";
@@ -14,8 +14,6 @@ const SellerProductPage = () => {
   const history = useHistory();
 
   useEffect(() => {
-    setShowDash(true);
-    setShowProducts(false);
     const listItems = document.querySelectorAll(".sidebar-list li");
     const handleItemClick = (item) => {
       let isActive = item.classList.contains("active");
@@ -24,9 +22,9 @@ const SellerProductPage = () => {
         el.classList.remove("active");
       });
 
-      if (isActive) item.classList.remove("active");
-      else item.classList.add("active");
+      if (!isActive) item.classList.add("active");
     };
+
     listItems.forEach((item) => {
       item.addEventListener("click", () => handleItemClick(item));
     });
@@ -85,7 +83,6 @@ const SellerProductPage = () => {
     setShowProducts(false);
   };
 
-
   return (
     <div className="">
       <HomeNavbar />
@@ -98,17 +95,8 @@ const SellerProductPage = () => {
           <li>
             <div className="title">
               <a href="#" className="link" onClick={handleDashClick}>
-                <i className="bx bx-grid-alt" />
+                <i className="bx bx-grid-alt"></i>
                 <span className="name">Dashboard</span>
-              </a>
-            </div>
-            <div className="submenu">
-              <a
-                href="#"
-                className="link submenu-title"
-                onClick={handleDashClick}
-              >
-                Dashboard
               </a>
             </div>
           </li>
@@ -119,80 +107,25 @@ const SellerProductPage = () => {
                 <span className="name">Products</span>
               </a>
             </div>
-            <div className="submenu">
-              <a
-                href="#"
-                className="link submenu-title"
-                onClick={handleProductClick}
-              >
-                Products
-              </a>
-            </div>
-            <div className="submenu">
-              <a
-                href="#"
-                className="link submenu-title"
-                onClick={handleProductClick}
-              >
-                Products
-              </a>
-            </div>
           </li>
-          {/* -------- Non Dropdown List Item ------- */}{" "}
           <li>
             <div className="title">
               <a href="#" className="link" onClick={handleOrderClick}>
-                <i className="bx bx-pie-chart-alt-2" />
+                <i className="bx bx-pie-chart-alt-2"></i>
                 <span className="name">Orders</span>
               </a>
             </div>
-            <div className="submenu">
-              <a href="#" className="link submenu-title">
-                Orders
-              </a>
-            </div>
           </li>
+
           <li>
             <div className="title">
               <a href="#" className="link">
-                <i className="bx bx-line-chart" />
-                <span className="name">Analytics</span>
-              </a>
-            </div>
-            <div className="submenu">
-              <a href="#" className="link submenu-title">
-                Analytics
-              </a>
-            </div>
-          </li>
-          {/* -------- Non Dropdown List Item ------- */}
-          <li>
-            <div className="title">
-              <a href="#" className="link">
-                <i className="bx bx-history" />
+                <i className="bx bx-history"></i>
                 <span className="name">History</span>
               </a>
             </div>
-            <div className="submenu">
-              <a href="#" className="link submenu-title">
-                History
-              </a>
-            </div>
           </li>
-          {/* -------- Non Dropdown List Item ------- */}
-          <li>
-            <div className="title">
-              <a href="#" className="link">
-                <i className="bx bx-cog" />
-                <span className="name">Settings</span>
-              </a>
-            </div>
-            <div className="submenu">
-              <a href="#" className="link submenu-title">
-                Settings
-              </a>
-            </div>
-          </li>
+
           <li>
             <div className="title">
               <a
@@ -218,11 +151,8 @@ const SellerProductPage = () => {
       </div>
       {/* ============= Home Section =============== */}
       <section className="home-p">
-        <div
-          className="toggle-sidebar"
-          onClick={() => setShowProducts(!showProducts)}
-        >
-          <i className="bx bx-menu" />
+        <div className="toggle-sidebar">
+          <i className="bx bx-menu"></i>
           <div className="text">Toggle Menu</div>
         </div>
 
