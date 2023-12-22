@@ -16,6 +16,7 @@ const EntrepreneurRequest = () => {
   useEffect(() => {
     fetchEntrepRequests();
   }, [filter]);
+
   const fetchEntrepRequests = () => {
     axios
       .get(
@@ -67,7 +68,7 @@ const EntrepreneurRequest = () => {
     )
       .then((response) => {
         // Rest of your code
-        location.reload();
+        // location.reload();
       })
       .catch((error) => {
         console.error(error);
@@ -90,7 +91,7 @@ const EntrepreneurRequest = () => {
     )
       .then((response) => {
         // Rest of your code
-        location.reload();
+        // location.reload();
       })
       .catch((error) => {
         console.error(error);
