@@ -25,6 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import ProductModal from "../../components/shop/productModal"; // Import the ProductModal component
+import HomeNavbar from "../../components/HomeNavbar";
 
 const ShopPage = () => {
   const history = useHistory();
@@ -193,6 +194,7 @@ const ShopPage = () => {
 
   return (
     <div>
+      <HomeNavbar />
       <section className="py-0 py-lg-0 bg-dark">
         <Button
           variant="primary"
