@@ -188,7 +188,11 @@ const Orders = () => {
   return (
     <div>
       <h2>Orders</h2>
-      <Table className="table manage-candidates-top mb-0 text-center" hover>
+      <Table
+        className="table manage-candidates-top mb-0 text-center mx-auto"
+        hover
+        style={{ width: "95%" }}
+      >
         <thead>
           <tr>
             <th className="text-center">Remove</th>
