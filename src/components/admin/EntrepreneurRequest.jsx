@@ -60,12 +60,11 @@ const EntrepreneurRequest = () => {
       status: "accepted",
     };
 
-    console.log("Request Data:", requestData);
-
-    axios.post(
-      "http://localhost/campuschime/PHP_files/approve_entrepreneur_request.php",
-      requestData
-    )
+    axios
+      .post(
+        "http://localhost/campuschime/PHP_files/approve_entrepreneur_request.php",
+        requestData
+      )
       .then((response) => {
         const emailData = {
           email: selectedRequest.email,
@@ -81,12 +80,26 @@ const EntrepreneurRequest = () => {
             console.error("Error sending approval email:", emailError);
           });
 
+        toast.success("Request Accepted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
 
-        // Rest of your code
-        // location.reload();
+        // Update the requests state to trigger a re-render
+        setRequests((prevRequests) =>
+          prevRequests.map((request) =>
+            request.user_id === selectedRequest.user_id
+              ? { ...request, status: "accepted" } // Update the status for the accepted request
+              : request
+          )
+        );
+
+        handleClose(); // Close the modal or handle it as needed
       })
       .catch((error) => {
         console.error(error);
+        toast.error("Error accepting request", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
   };
 
@@ -98,12 +111,11 @@ const EntrepreneurRequest = () => {
       status: "declined",
     };
 
-    console.log("Request Data:", requestData);
-
-    axios.post(
-      "http://localhost/campuschime/PHP_files/denied_entrepreneur_request.php",
-      requestData
-    )
+    axios
+      .post(
+        "http://localhost/campuschime/PHP_files/denied_entrepreneur_request.php",
+        requestData
+      )
       .then((response) => {
         const emailData = {
           email: selectedRequest.email,
@@ -119,11 +131,26 @@ const EntrepreneurRequest = () => {
             console.error("Error sending approval email:", emailError);
           });
 
-        // Rest of your code
-        // location.reload();
+        toast.error("Request Declined ", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+
+        // Update the requests state to trigger a re-render
+        setRequests((prevRequests) =>
+          prevRequests.map((request) =>
+            request.user_id === selectedRequest.user_id
+              ? { ...request, status: "declined" } // Update the status for the declined request
+              : request
+          )
+        );
+
+        handleClose(); // Close the modal or handle it as needed
       })
       .catch((error) => {
         console.error(error);
+        toast.error("Error declining request", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
   };
 
@@ -231,8 +258,8 @@ const EntrepreneurRequest = () => {
                               request.status === "accepted"
                                 ? "green"
                                 : request.status === "pending"
-                                  ? "#636363"
-                                  : "red",
+                                ? "#636363"
+                                : "red",
                             fontWeight: "bold",
                             display: "inline-block",
                           }}
