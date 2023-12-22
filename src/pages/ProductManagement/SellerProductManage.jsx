@@ -7,8 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Dash from "./product_components/dash";
 import Products from "./products/products";
 import "./css/style.css";
+import HomeNavbar from "../../components/HomeNavbar";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const SellerProductPage = () => {
+  const history = useHistory();
+
   useEffect(() => {
     const listItems = document.querySelectorAll(".sidebar-list li");
     const handleItemClick = (item) => {
@@ -81,6 +85,7 @@ const SellerProductPage = () => {
 
   return (
     <div className="">
+      <HomeNavbar />
       <div className="sidebar close">
         <a href="#" className="logo-box">
           <i className="bx bxs-bar-chart-alt-2"></i>
@@ -126,10 +131,19 @@ const SellerProductPage = () => {
               <a
                 href="#"
                 className="link"
-                onClick={() => window.location.reload()}
+                onClick={() => history.push("/homePage")}
               >
                 <i className="bx bx-exit"></i>
                 <span className="name">Exit</span>
+              </a>
+            </div>
+            <div className="submenu">
+              <a
+                href="#"
+                className="link submenu-title"
+                onClick={() => history.push("/homePage")}
+              >
+                Exit
               </a>
             </div>
           </li>

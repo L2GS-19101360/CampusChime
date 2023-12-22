@@ -16,6 +16,7 @@ const EntrepreneurRequest = () => {
   useEffect(() => {
     fetchEntrepRequests();
   }, [filter]);
+
   const fetchEntrepRequests = () => {
     axios
       .get(
@@ -50,7 +51,7 @@ const EntrepreneurRequest = () => {
     setShow(false);
     setSelectedRequest(null);
   };
-  
+
   const handleAccept = () => {
     const requestData = {
       action: "update_request_status",
@@ -58,16 +59,31 @@ const EntrepreneurRequest = () => {
       userId: selectedRequest.user_id,
       status: "accepted",
     };
-  
+
     console.log("Request Data:", requestData);
-  
+
     axios.post(
       "http://localhost/campuschime/PHP_files/approve_entrepreneur_request.php",
       requestData
     )
       .then((response) => {
+        const emailData = {
+          email: selectedRequest.email,
+        };
+
+        axios
+          .post("http://localhost:8081/approve-entrepreneur", emailData)
+          .then((emailResponse) => {
+            // Handle email response if needed
+            console.log(emailResponse.data);
+          })
+          .catch((emailError) => {
+            console.error("Error sending approval email:", emailError);
+          });
+
+
         // Rest of your code
-        location.reload();
+        // location.reload();
       })
       .catch((error) => {
         console.error(error);
@@ -81,16 +97,30 @@ const EntrepreneurRequest = () => {
       userId: selectedRequest.user_id,
       status: "declined",
     };
-  
+
     console.log("Request Data:", requestData);
-  
+
     axios.post(
       "http://localhost/campuschime/PHP_files/denied_entrepreneur_request.php",
       requestData
     )
       .then((response) => {
+        const emailData = {
+          email: selectedRequest.email,
+        };
+
+        axios
+          .post("http://localhost:8081/decline-entrepreneur", emailData)
+          .then((emailResponse) => {
+            // Handle email response if needed
+            console.log(emailResponse.data);
+          })
+          .catch((emailError) => {
+            console.error("Error sending approval email:", emailError);
+          });
+
         // Rest of your code
-        location.reload();
+        // location.reload();
       })
       .catch((error) => {
         console.error(error);
@@ -201,8 +231,8 @@ const EntrepreneurRequest = () => {
                               request.status === "accepted"
                                 ? "green"
                                 : request.status === "pending"
-                                ? "#636363"
-                                : "red",
+                                  ? "#636363"
+                                  : "red",
                             fontWeight: "bold",
                             display: "inline-block",
                           }}

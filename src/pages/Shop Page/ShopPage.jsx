@@ -25,6 +25,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import ProductModal from "../../components/shop/productModal"; // Import the ProductModal component
+import HomeNavbar from "../../components/HomeNavbar";
+import $ from 'jquery';
 
 const ShopPage = () => {
   const history = useHistory();
@@ -39,6 +41,8 @@ const ShopPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showCartModal, setShowCartModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [searchInput, setSearchInput] = useState('');
+
   useEffect(() => {
     fetchAllVisibleProducts();
 
@@ -149,7 +153,7 @@ const ShopPage = () => {
     const defaultQuantity = 1;
     const quantityInCart = isInCart
       ? cartItems.find((item) => item.product_id === product.product_id)
-          .quantity
+        .quantity
       : defaultQuantity;
 
     setQuantity(quantityInCart);
@@ -171,8 +175,8 @@ const ShopPage = () => {
 
   const filteredProducts = Array.isArray(products)
     ? products.filter((product) =>
-        product.product_name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      product.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     : [];
   const handleQuantityChange = (amount) => {
     const newQuantity = quantity + amount;
@@ -191,8 +195,25 @@ const ShopPage = () => {
     return totalPrice.toFixed(2);
   };
 
+  const handleSearchInput = () => {
+    console.log(searchInput);
+  
+    // Split the search input into an array of keywords
+    const keywords = searchInput.trim().toLowerCase().split(' ');
+  
+    // Update the filteredProducts based on the keywords
+    const updatedFilteredProducts = products.filter((product) =>
+      keywords.every(keyword =>
+        product.product_name.toLowerCase().includes(keyword)
+      )
+    );
+  
+    setProducts(updatedFilteredProducts);
+  };
+
   return (
     <div>
+      <HomeNavbar />
       <section className="py-0 py-lg-0 bg-dark">
         <Button
           variant="primary"
@@ -201,7 +222,7 @@ const ShopPage = () => {
         >
           <BiArrowBack />
         </Button>
-        <Button
+        {/* <Button
           variant="primary"
           className="position-relative m-4 float-end d-inline"
         >
@@ -212,14 +233,14 @@ const ShopPage = () => {
           >
             0
           </Badge>
-        </Button>
+        </Button> */}
         <CartModal
           show={showCartModal}
           handleClose={() => setShowCartModal(false)}
         />
         <Button
           variant="primary"
-          className="position-relative my-4 float-end d-inline"
+          className="position-relative m-4 float-end d-inline"
           onClick={handleOpenCartModal}
         >
           <TbShoppingCart size={20} />
@@ -245,8 +266,15 @@ const ShopPage = () => {
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="search-icon"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
                 />
-                <span className="input-group-text" id="search-icon">
+                <span
+                  className="input-group-text"
+                  id="search-icon"
+                  style={{cursor: 'pointer;'}}
+                  onClick={() => handleSearchInput()}
+                >
                   <FaSearch />
                 </span>
               </div>
@@ -255,7 +283,7 @@ const ShopPage = () => {
         </header>
       </section>
 
-      <ProdFilter filters={filters} setFilters={setFilters} />
+      {/* <ProdFilter filters={filters} setFilters={setFilters} /> */}
 
       <Container
         className="mt-5"

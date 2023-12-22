@@ -29,13 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Update the decision_date with the current timestamp
             $currentTimestamp = date("Y-m-d H:i:s");
             $query = "UPDATE entrepreneur_requests SET status='$status', decision_date='$currentTimestamp' WHERE user_id='$userId' AND request_id='$requestId'";
+            $user_query = "UPDATE users SET role='entrepreneur' WHERE user_id='$userId'";
 
-            if (mysqli_query($conn, $query)) {
-                $retVal = "Request status updated successfully.";
+            mysqli_query($conn, $query); // Update status in entrepreneur_requests table
+
+            if (mysqli_query($conn, $user_query)) { // Update user role in users table
+                $retVal = "Request status and user role updated successfully.";
                 $status = 200;
                 $data = 1;
             } else {
-                $retVal = "Error updating request status: " . mysqli_error($conn);
+                $retVal = "Error updating user role: " . mysqli_error($conn);
             }
         } else {
             $retVal = "Invalid request data.";
