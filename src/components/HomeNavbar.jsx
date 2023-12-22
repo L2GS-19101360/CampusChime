@@ -29,7 +29,6 @@ const HomeNavbar = () => {
   const userImage = sessionStorage.getItem("userImage");
 
   var IsImageNull = userImage === "#%&{}>";
-  console.log(IsImageNull);
   return (
     <div>
       <Navbar
