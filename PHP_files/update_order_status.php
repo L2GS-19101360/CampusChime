@@ -9,12 +9,13 @@ $data = json_decode(file_get_contents("php://input"));
 if ($data) {
     $orderId = $data->orderId;
     $newStatus = $data->newStatus;
+    $productId = $data->productId; // Assuming you have a product identifier in your data
 
-    // Validate or sanitize $orderId and $newStatus as needed
+    // Validate or sanitize $orderId, $newStatus, and $productId as needed
     // Example: You might want to check if $orderId is an integer
 
-    // Your SQL query to update the status in the order_product table
-    $sql = "UPDATE order_products SET status = ? WHERE order_id = ?";
+    // Your SQL query to update the status in the order_products table for the specific product
+    $sql = "UPDATE order_products SET status = ? WHERE order_id = ? AND product_id = ?";
 
     // Prepare the query
     $stmt = $conn->prepare($sql);
@@ -24,7 +25,7 @@ if ($data) {
         echo json_encode(['success' => false, 'error' => 'Failed to prepare query: ' . $conn->error]);
     } else {
         // Bind the parameters
-        $stmt->bind_param('si', $newStatus, $orderId);
+        $stmt->bind_param('sii', $newStatus, $orderId, $productId);
 
         // Execute the query
         if ($stmt->execute()) {
@@ -42,3 +43,4 @@ if ($data) {
 
 // Close the connection
 $conn->close();
+?>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Modal, Alert } from "react-bootstrap";
+import { BsTrash } from "react-icons/bs";
 import LetteredAvatar from "../../../components/LetteredAvater";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -13,6 +15,9 @@ const Orders = () => {
     useState(false);
   const [showConfirmCancelledModal, setShowConfirmCancelledModal] =
     useState(false);
+  const [showConfirmPendingModal, setShowConfirmPendingModal] = useState(false);
+  const [showConfirmRemoveModal, setShowConfirmRemoveModal] = useState(false);
+
   const merchantId = sessionStorage.getItem("userId");
 
   useEffect(() => {
@@ -27,43 +32,46 @@ const Orders = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-
   const handleStatusChange = (order, newStatus) => {
-    // Set the selected order status in the state
     setSelectedOrderStatus(newStatus);
 
     // Open the confirmation modal based on the selected status
-    if (newStatus === "Completed") {
+    if (newStatus === "completed") {
       setSelectedOrder(order);
       setShowConfirmCompletedModal(true);
-    } else if (newStatus === "Cancelled") {
+    } else if (newStatus === "cancelled") {
       setSelectedOrder(order);
       setShowConfirmCancelledModal(true);
+    } else if (newStatus === "pending") {
+      setSelectedOrder(order);
+      setShowConfirmPendingModal(true);
     } else {
-      // If the status is not "Completed" or "Cancelled", update the order status immediately
+      // If the status is not "Completed", "Cancelled", or "Pending", update the order status immediately
       updateOrderStatus(order, newStatus);
     }
+  };
+
+  const handleRemoveOrder = (order) => {
+    setSelectedOrder(order);
+    setShowConfirmRemoveModal(true);
   };
 
   const updateOrderStatus = (order, newStatus) => {
     const orderId = order.order_id;
 
-    fetch(`http://localhost/campuschime/PHP_files/update_order_status.php`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    // Identify the selected product within the order
+    const selectedProduct = order.product_id; // Replace with the actual property that uniquely identifies the product
+
+    axios
+      .post("http://localhost/campuschime/PHP_files/update_order_status.php", {
         orderId: orderId,
         newStatus: newStatus,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(`Order ID ${orderId} status changed to ${newStatus}`);
-
+        dateSent: order.date_sent,
+        productId: selectedProduct,
+      })
+      .then((response) => {
         // Show toast notification
-        const toastMessage = `Order ID ${orderId} has been ${newStatus.toLowerCase()}!`;
+        const toastMessage = `Order ID ${orderId}, Product ID ${selectedProduct} is ${newStatus.toLowerCase()}!`;
 
         const toastOptions = {
           position: "top-center",
@@ -71,21 +79,28 @@ const Orders = () => {
         };
 
         // Use toast.success for "Completed", toast.error for "Cancelled", and no toast for "Pending"
-        if (newStatus === "Completed") {
+        if (newStatus === "completed") {
           toast.success(toastMessage, toastOptions);
-        } else if (newStatus === "Cancelled") {
+        } else if (newStatus === "cancelled") {
           toast.error(toastMessage, toastOptions);
+        } else {
+          toast.warning(toastMessage, toastOptions);
         }
-        // No toast for "Pending"
 
         // Close the confirmation modals if they are open
         setShowConfirmCompletedModal(false);
         setShowConfirmCancelledModal(false);
+        setShowConfirmPendingModal(false);
+        setShowConfirmRemoveModal(false);
 
-        // Update the order status locally
-        const updatedOrders = orders.map((o) =>
-          o.order_id === orderId ? { ...o, order_product_status: newStatus } : o
-        );
+        // Update the order status locally only for the selected product
+        const updatedOrders = orders.map((o) => {
+          if (o.order_id === orderId && o.product_id === selectedProduct) {
+            return { ...o, order_product_status: newStatus };
+          } else {
+            return o;
+          }
+        });
 
         setOrders(updatedOrders);
       })
@@ -93,21 +108,69 @@ const Orders = () => {
         console.error("Error updating order status:", error);
       });
   };
+  const removeOrder = (order) => {
+    const orderId = order.order_id;
+    const productId = order.product_id;
+    const merchantId = sessionStorage.getItem("userId");
+
+    axios
+      .post(`http://localhost/campuschime/PHP_files/remove_order.php`, {
+        orderId: orderId,
+        productId: productId,
+        quantity: order.quantity,
+        status: order.order_product_status,
+        removalDate: new Date().toISOString(),
+        removedByMerchantId: merchantId,
+        // Include other relevant fields as needed
+      })
+      .then((response) => {
+        if (response.data.success) {
+          // Show toast notification
+          const toastMessage = `Product ID ${productId} has been removed`;
+
+          const toastOptions = {
+            position: "top-center",
+            autoClose: 2000,
+          };
+
+          toast.error(toastMessage, toastOptions);
+
+          // Close the confirmation modal
+          setShowConfirmRemoveModal(false);
+
+          // Update the orders locally by filtering out the removed product
+          const updatedOrders = orders.map((o) =>
+            o.order_id === orderId
+              ? {
+                  ...o,
+                  products: o.products
+                    ? o.products.filter((p) => p.product_id !== productId)
+                    : [],
+                }
+              : o
+          );
+
+          setOrders(updatedOrders);
+        } else {
+          console.error("Error removing product:", response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error removing product:", error);
+      });
+  };
 
   const fetchOrders = () => {
-    fetch(
-      `http://localhost/campuschime/PHP_files/get_orders.php?merchantId=${merchantId}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Orders data:", data);
-
+    axios
+      .get(
+        `http://localhost/campuschime/PHP_files/get_orders.php?merchantId=${merchantId}`
+      )
+      .then((response) => {
         // Assuming the first order in the list is representative of the overall order status
-        if (data.length > 0) {
-          setSelectedOrderStatus(data[0].order_product_status);
+        if (response.data.length > 0) {
+          setSelectedOrderStatus(response.data[0].order_product_status);
         }
-
-        setOrders(data);
+        setOrders(response.data);
       })
       .catch((error) => {
         console.error("Error fetching orders:", error);
@@ -128,6 +191,7 @@ const Orders = () => {
       <Table className="table manage-candidates-top mb-0 text-center" hover>
         <thead>
           <tr>
+            <th className="text-center">Remove</th>
             <th className="text-center">Product</th>
             <th className="text-center">Quantity</th>
             <th className="text-center">Price</th>
@@ -135,12 +199,28 @@ const Orders = () => {
             <th className="text-center">Buyer</th>
             <th className="text-center">Status</th>
             <th className="text-center">Date Ordered</th>
+            <th className="text-center">Date Finished</th>
             <th className="text-center">Actions</th>
           </tr>
         </thead>
         <tbody className="text-center">
           {orders.map((order, index) => (
             <tr key={index}>
+              <td className="align-middle">
+                {/* Delete icon */}
+                <div
+                  className="me-2 btn "
+                  style={{
+                    fontSize: "14px",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleRemoveOrder(order)}
+                >
+                  <BsTrash size={20} color="#a73137" />
+                </div>
+              </td>
               <td className="p-1">
                 <div className="title d-flex align-items-center">
                   <div className="thumb">
@@ -184,11 +264,11 @@ const Orders = () => {
                     padding: "5px",
                     backgroundColor: "#efefef",
                     color:
-                      order.order_product_status === "Completed"
+                      order.order_product_status === "completed"
                         ? "green"
-                        : order.order_product_status === "Cancelled"
+                        : order.order_product_status === "cancelled"
                         ? "red"
-                        : "black",
+                        : " ",
                     fontWeight: "bold",
                     display: "inline-block",
                   }}
@@ -200,35 +280,41 @@ const Orders = () => {
                 {new Date(order.order_date).toLocaleDateString()}
               </td>
               <td className="align-middle">
+                {order.date_sent
+                  ? new Date(order.date_sent).toLocaleDateString()
+                  : "Not available"}
+              </td>
+
+              <td className="align-middle">
                 <Button
                   variant={
-                    order.order_product_status === "Pending"
+                    order.order_product_status === "pending"
                       ? "warning"
                       : "secondary"
                   }
-                  onClick={() => handleStatusChange(order, "Pending")}
+                  onClick={() => handleStatusChange(order, "pending")}
                   className="me-2"
                 >
                   Pending
                 </Button>
                 <Button
                   variant={
-                    order.order_product_status === "Completed"
+                    order.order_product_status === "completed"
                       ? "success"
                       : "secondary"
                   }
-                  onClick={() => handleStatusChange(order, "Completed")}
+                  onClick={() => handleStatusChange(order, "completed")}
                   className="me-2"
                 >
                   Completed
                 </Button>
                 <Button
                   variant={
-                    order.order_product_status === "Cancelled"
+                    order.order_product_status === "cancelled"
                       ? "danger"
                       : "secondary"
                   }
-                  onClick={() => handleStatusChange(order, "Cancelled")}
+                  onClick={() => handleStatusChange(order, "cancelled")}
                 >
                   Cancelled
                 </Button>
@@ -308,7 +394,7 @@ const Orders = () => {
           </Button>
           <Button
             variant="success"
-            onClick={() => updateOrderStatus(selectedOrder, "Completed")}
+            onClick={() => updateOrderStatus(selectedOrder, "completed")}
           >
             Confirm
           </Button>
@@ -338,8 +424,63 @@ const Orders = () => {
           </Button>
           <Button
             variant="danger"
-            onClick={() => updateOrderStatus(selectedOrder, "Cancelled")}
+            onClick={() => updateOrderStatus(selectedOrder, "cancelled")}
           >
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showConfirmPendingModal}
+        onHide={() => setShowConfirmPendingModal(false)}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Order Pending</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Alert variant="warning">
+            Are you sure you want to set this order as pending?
+          </Alert>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirmPendingModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="warning"
+            onClick={() => updateOrderStatus(selectedOrder, "pending")}
+          >
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showConfirmRemoveModal}
+        onHide={() => setShowConfirmRemoveModal(false)}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Remove Order</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Alert variant="danger">
+            Are you sure you want to remove this order?
+          </Alert>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirmRemoveModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={() => removeOrder(selectedOrder)}>
             Confirm
           </Button>
         </Modal.Footer>

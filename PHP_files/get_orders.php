@@ -31,7 +31,8 @@ $sql = "SELECT
             m.contactnumber AS merchant_contactnumber,
             m.user_image AS merchant_image,
             op.quantity,
-            op.status AS order_product_status
+            op.status AS order_product_status,
+            op.date_sent  -- Include the date_sent column
         FROM
             orders o
             JOIN order_products op ON o.order_id = op.order_id
