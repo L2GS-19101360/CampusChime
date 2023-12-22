@@ -23,7 +23,7 @@ if (
     $removal_date = $data->removalDate;
     $removed_by_merchant_id = intval($data->removedByMerchantId);
 
-    // Remove the product from the order_products table
+    // Your SQL query to remove the product from the order_products table
     $deleteSql = "DELETE FROM order_products WHERE order_id = '$order_id' AND product_id = '$product_id'";
 
     if ($conn->query($deleteSql) === TRUE) {
@@ -32,9 +32,9 @@ if (
                       VALUES ('$order_id', '$product_id', '$quantity', '$status', '$removal_date', '$removed_by_merchant_id')";
 
         if ($conn->query($insertSql) === TRUE) {
-            echo json_encode(["success" => true, "message" => "Order marked as moved to history successfully"]);
+            echo json_encode(["success" => true, "message" => "Product marked as moved to history successfully"]);
         } else {
-            echo json_encode(["success" => false, "message" => "Error moving order to history: " . $conn->error]);
+            echo json_encode(["success" => false, "message" => "Error moving product to history: " . $conn->error]);
         }
     } else {
         echo json_encode(["success" => false, "message" => "Error removing product from order: " . $conn->error]);

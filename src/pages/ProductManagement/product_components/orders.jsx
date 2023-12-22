@@ -59,17 +59,19 @@ const Orders = () => {
   const updateOrderStatus = (order, newStatus) => {
     const orderId = order.order_id;
 
+    // Identify the selected product within the order
+    const selectedProduct = order.product_id; // Replace with the actual property that uniquely identifies the product
+
     axios
-      .post(`http://localhost/campuschime/PHP_files/update_order_status.php`, {
+      .post("http://localhost/campuschime/PHP_files/update_order_status.php", {
         orderId: orderId,
         newStatus: newStatus,
         dateSent: order.date_sent,
+        productId: selectedProduct,
       })
       .then((response) => {
-        console.log(`Order ID ${orderId} status changed to ${newStatus}`);
-
         // Show toast notification
-        const toastMessage = `Order ID ${orderId} is ${newStatus.toLowerCase()}!`;
+        const toastMessage = `Order ID ${orderId}, Product ID ${selectedProduct} is ${newStatus.toLowerCase()}!`;
 
         const toastOptions = {
           position: "top-center",
@@ -90,10 +92,15 @@ const Orders = () => {
         setShowConfirmCancelledModal(false);
         setShowConfirmPendingModal(false);
         setShowConfirmRemoveModal(false);
-        // Update the order status locally
-        const updatedOrders = orders.map((o) =>
-          o.order_id === orderId ? { ...o, order_product_status: newStatus } : o
-        );
+
+        // Update the order status locally only for the selected product
+        const updatedOrders = orders.map((o) => {
+          if (o.order_id === orderId && o.product_id === selectedProduct) {
+            return { ...o, order_product_status: newStatus };
+          } else {
+            return o;
+          }
+        });
 
         setOrders(updatedOrders);
       })
@@ -103,23 +110,13 @@ const Orders = () => {
   };
   const removeOrder = (order) => {
     const orderId = order.order_id;
+    const productId = order.product_id;
     const merchantId = sessionStorage.getItem("userId");
-
-    // Log data before sending
-    console.log("Data to be sent:", {
-      orderId: orderId,
-      productId: order.product_id,
-      quantity: order.quantity,
-      status: order.order_product_status,
-      removalDate: new Date().toISOString(),
-      removedByMerchantId: merchantId,
-      // Include other relevant fields as needed
-    });
 
     axios
       .post(`http://localhost/campuschime/PHP_files/remove_order.php`, {
         orderId: orderId,
-        productId: order.product_id,
+        productId: productId,
         quantity: order.quantity,
         status: order.order_product_status,
         removalDate: new Date().toISOString(),
@@ -127,13 +124,9 @@ const Orders = () => {
         // Include other relevant fields as needed
       })
       .then((response) => {
-        console.log("Response from server:", response.data);
-
         if (response.data.success) {
-          console.log(`Order ID ${orderId} removed successfully`);
-
           // Show toast notification
-          const toastMessage = `Order ID ${orderId} has been moved to history`;
+          const toastMessage = `Product ID ${productId} has been removed`;
 
           const toastOptions = {
             position: "top-center",
@@ -141,18 +134,29 @@ const Orders = () => {
           };
 
           toast.error(toastMessage, toastOptions);
-        } else {
-          console.error("Error removing order:", response.data.message);
-        }
 
-        // Close the confirmation modal
-        setShowConfirmRemoveModal(false);
-        // Update the orders locally by filtering out the removed order
-        const updatedOrders = orders.filter((o) => o.order_id !== orderId);
-        setOrders(updatedOrders);
+          // Close the confirmation modal
+          setShowConfirmRemoveModal(false);
+
+          // Update the orders locally by filtering out the removed product
+          const updatedOrders = orders.map((o) =>
+            o.order_id === orderId
+              ? {
+                  ...o,
+                  products: o.products
+                    ? o.products.filter((p) => p.product_id !== productId)
+                    : [],
+                }
+              : o
+          );
+
+          setOrders(updatedOrders);
+        } else {
+          console.error("Error removing product:", response.data.message);
+        }
       })
       .catch((error) => {
-        console.error("Error removing order:", error);
+        console.error("Error removing product:", error);
       });
   };
 
@@ -166,7 +170,6 @@ const Orders = () => {
         if (response.data.length > 0) {
           setSelectedOrderStatus(response.data[0].order_product_status);
         }
-        console.log(response.data);
         setOrders(response.data);
       })
       .catch((error) => {
