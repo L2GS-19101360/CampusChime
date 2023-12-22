@@ -42,6 +42,7 @@ const ShopPage = () => {
   const [showCartModal, setShowCartModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [searchInput, setSearchInput] = useState('');
+  const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
     fetchAllVisibleProducts();
@@ -196,19 +197,36 @@ const ShopPage = () => {
   };
 
   const handleSearchInput = () => {
-    console.log(searchInput);
-  
-    // Split the search input into an array of keywords
-    const keywords = searchInput.trim().toLowerCase().split(' ');
-  
-    // Update the filteredProducts based on the keywords
-    const updatedFilteredProducts = products.filter((product) =>
-      keywords.every(keyword =>
-        product.product_name.toLowerCase().includes(keyword)
-      )
-    );
-  
-    setProducts(updatedFilteredProducts);
+    // Reset the noResults state
+    setNoResults(false);
+
+    // Make sure searchInput is not empty before sending the request
+    if (searchInput.trim() !== '') {
+      // Prepare filters object if needed
+      const filtersObject = {
+        category: filters.category,
+      };
+
+      // Make an HTTP request to the backend
+      axios
+        .get(`http://localhost/campuschime/PHP_files/search_products.php`, {
+          params: {
+            searchTerm: searchInput,
+            filters: JSON.stringify(filtersObject),
+          },
+        })
+        .then((response) => response.data)
+        .then((data) => {
+          setProducts(data);
+
+          // Check if the search results are empty
+          setNoResults(data.length === 0);
+        })
+        .catch((error) => {
+          console.error("Error searching products:", error);
+          // Handle error if needed
+        });
+    }
   };
 
   return (
@@ -272,7 +290,7 @@ const ShopPage = () => {
                 <span
                   className="input-group-text"
                   id="search-icon"
-                  style={{cursor: 'pointer;'}}
+                  style={{ cursor: 'pointer;' }}
                   onClick={() => handleSearchInput()}
                 >
                   <FaSearch />
@@ -289,6 +307,13 @@ const ShopPage = () => {
         className="mt-5"
         style={{ marginLeft: "auto", marginRight: "auto" }}
       >
+        {/* Warning message for no search results */}
+        {noResults && (
+          <div className="alert alert-danger mt-3" role="alert">
+            No Products Found!
+          </div>
+        )}
+        <br/>
         <Row
           xs={1}
           md={3}
