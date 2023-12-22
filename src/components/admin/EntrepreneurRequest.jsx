@@ -50,36 +50,24 @@ const EntrepreneurRequest = () => {
     setShow(false);
     setSelectedRequest(null);
   };
+  
   const handleAccept = () => {
-    axios
-      .post(
-        "http://localhost/CampusChime/PHP_files/new_handle_entrepreneur_requests.php",
-        {
-          action: "update_request_status",
-          requestId: selectedRequest.request_id,
-          userId: selectedRequest.user_id,
-          status: "accepted",
-        }
-      )
-
+    const requestData = {
+      action: "update_request_status",
+      requestId: selectedRequest.request_id,
+      userId: selectedRequest.user_id,
+      status: "accepted",
+    };
+  
+    console.log("Request Data:", requestData);
+  
+    axios.post(
+      "http://localhost/campuschime/PHP_files/approve_entrepreneur_request.php",
+      requestData
+    )
       .then((response) => {
-        if (response.data && response.data.success) {
-          toast.success("Request was accepted", {
-            position: "top-center",
-            autoClose: 2000,
-          });
-
-          // Update local state
-          setRequests((prevRequests) => {
-            return prevRequests.filter(
-              (request) => request.request_id !== selectedRequest.request_id
-            );
-          });
-
-          handleClose();
-        } else {
-          console.error("Error accepting request:", response);
-        }
+        // Rest of your code
+        location.reload();
       })
       .catch((error) => {
         console.error(error);
@@ -87,34 +75,22 @@ const EntrepreneurRequest = () => {
   };
 
   const handleDecline = () => {
-    axios
-      .post(
-        "http://localhost/CampusChime/PHP_files/handle_entrepreneur_requests.php",
-        {
-          action: "update_request_status",
-          requestId: selectedRequest.request_id,
-          status: "declined",
-        }
-      )
+    const requestData = {
+      action: "update_request_status",
+      requestId: selectedRequest.request_id,
+      userId: selectedRequest.user_id,
+      status: "declined",
+    };
+  
+    console.log("Request Data:", requestData);
+  
+    axios.post(
+      "http://localhost/campuschime/PHP_files/denied_entrepreneur_request.php",
+      requestData
+    )
       .then((response) => {
-        if (response.data && response.data.success) {
-          toast.error("Request was declined", {
-            position: "top-center",
-            autoClose: 2000,
-          });
-          setRequests((prevRequests) => {
-            return prevRequests.filter(
-              (request) => request.request_id === selectedRequest.request_id
-            );
-          });
-
-          const userEmail = selectedRequest.email;
-
-          handleClose();
-          fetchEntrepRequests();
-        } else {
-          console.error("Error declining request:", response);
-        }
+        // Rest of your code
+        location.reload();
       })
       .catch((error) => {
         console.error(error);
