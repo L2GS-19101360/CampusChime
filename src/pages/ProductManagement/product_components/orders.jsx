@@ -21,7 +21,10 @@ const Orders = () => {
   const merchantId = sessionStorage.getItem("userId");
 
   useEffect(() => {
-    fetchOrders();
+    const intervalId = setInterval(fetchOrders, 200); // fetchOrders will be called every 5 seconds
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []); // Update only when the component mounts
 
   const handleViewClick = (order) => {

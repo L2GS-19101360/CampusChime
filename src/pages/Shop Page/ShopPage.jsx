@@ -44,6 +44,7 @@ const ShopPage = () => {
   const [searchInput, setSearchInput] = useState('');
   const [noResults, setNoResults] = useState(false);
 
+
   useEffect(() => {
     fetchAllVisibleProducts();
 
@@ -58,20 +59,21 @@ const ShopPage = () => {
         .then((response) => response.data)
         .then((count) => setCartCount(count));
 
-      // Fetch and set cart items
-      axios
-      .get(
-        `http://localhost/CampusChime/PHP_files/get_cart.php?user_id=${userId}`
-      )
-      .then((response) => response.data)
-      .then((cartData) => {
-        setCartItems(cartData.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching cart data:", error);
-      });  
+       
     }, 200); // Fetches every 200 milliseconds
     
+    // Fetch and set cart items
+    axios
+    .get(
+      `http://localhost/CampusChime/PHP_files/get_cart.php?user_id=${userId}`
+    )
+    .then((response) => response.data)
+    .then((cartData) => {
+      setCartItems(cartData.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching cart data:", error);
+    }); 
       return () => clearInterval(intervalId);
   }, [searchTerm, filters, cartCount]);
 
