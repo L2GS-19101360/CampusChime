@@ -46,12 +46,12 @@ const ShopPage = () => {
 
 
   useEffect(() => {
-    
+    fetchAllVisibleProducts();
 
     const userId = sessionStorage.getItem("userId");
     
     const intervalId = setInterval(() => {
-      fetchAllVisibleProducts();
+      
       // Fetch and set cart count
       axios
         .get(

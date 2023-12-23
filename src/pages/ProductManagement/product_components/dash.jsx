@@ -15,12 +15,14 @@ const Dash = () => {
             fetchActiveOrders();
             fetchInventoryCount();
             fetchProductsOnSale();
+
             axios
             .get(
               `http://localhost/CampusChime/PHP_files/fetch4dash_numOfAddToCart.php?merchant_id=${user_id}`
             )
             .then((response) => response.data)
             .then((count) => setAddToCartCount(count));
+                
           }, 200);
             // Fetch and set cart count
           
