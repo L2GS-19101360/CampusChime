@@ -46,11 +46,12 @@ const ShopPage = () => {
 
 
   useEffect(() => {
-    fetchAllVisibleProducts();
+    
 
     const userId = sessionStorage.getItem("userId");
     
     const intervalId = setInterval(() => {
+      fetchAllVisibleProducts();
       // Fetch and set cart count
       axios
         .get(
@@ -61,7 +62,7 @@ const ShopPage = () => {
 
        
     }, 200); // Fetches every 200 milliseconds
-    
+
     // Fetch and set cart items
     axios
     .get(
