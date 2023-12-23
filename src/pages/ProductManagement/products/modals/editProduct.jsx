@@ -23,8 +23,8 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { product_qty, original_price, sale_price } = productData;
-        if (isNaN(product_qty) || isNaN(original_price) || isNaN(sale_price)) {
-            alert("Invalid input. Changes are not made.");
+        if (isNaN(product_qty) || isNaN(original_price) || isNaN(sale_price) || sale_price < 0 || product_qty < 0 || product_qty < 0) {
+            alert("Invalid input. Changes are not made. Check your inputs.\n Tip : number can not be negative");
             return;
         }
         if(sale_price > original_price){
