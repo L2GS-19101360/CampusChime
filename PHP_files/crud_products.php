@@ -45,12 +45,24 @@ header("Content-Type: application/json");
     function editProduct() {
         global $conn;
         $product = json_decode($_POST['product'], true);
-      
-        $sql = "UPDATE products SET product_name = '{$product['productName']}', product_description = '{$product['productDescription']}', product_size = '{$product['productSize']}', product_qty = '{$product['productQty']}', original_price = '{$product['originalPrice']}', sale_price = '{$product['salePrice']}' WHERE product_id = {$product['productId']}";
-        if (mysqli_query($conn, $sql)) {
-            echo json_encode(array("statusCode"=> 200));
+
+        $originalPrice = floatval($product['originalPrice']);
+        $salePrice = floatval($product['salePrice']);
+        $prodQty = intval($product['productQty']);
+        
+        // Input validation
+        if (!is_numeric($originalPrice) || $originalPrice < 0 || !is_numeric($salePrice) || $salePrice < 0 || !is_numeric($prodQty) || $prodQty < 0) {
+            echo json_encode(array("statusCode"=> 400, "error"=> "Invalid input"));
+            return;
         } else {
-            echo json_encode(array("statusCode"=> 201, "error"=> mysqli_error($conn)));
+            $saleStatus = ($originalPrice - $salePrice <= 0) ? 1 : 0;
+            
+            $sql = "UPDATE products SET product_name = '{$product['productName']}', product_description = '{$product['productDescription']}', product_size = '{$product['productSize']}', product_qty = '{$product['productQty']}', original_price = '{$product['originalPrice']}', sale_price = '{$product['salePrice']}', is_sale = '{$saleStatus}' WHERE product_id = {$product['productId']}";
+            if (mysqli_query($conn, $sql)) {
+                echo json_encode(array("statusCode"=> 200));
+            } else {
+                echo json_encode(array("statusCode"=> 201, "error"=> mysqli_error($conn)));
+            }
         }
     }
 

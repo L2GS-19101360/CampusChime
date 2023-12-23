@@ -22,6 +22,11 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const { product_qty, original_price, sale_price } = productData;
+        if (isNaN(product_qty) || isNaN(original_price) || isNaN(sale_price)) {
+            alert("Invalid input. Changes are not made.");
+            return;
+        }
         const formData = new FormData();
         formData.append('product', JSON.stringify({
             productName: productData.product_name,
@@ -65,7 +70,7 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Product Quantity</Form.Label>
-                        <Form.Control type='text' name="product_qty" value={productData.product_qty || ''} onChange={handleInputChange} />
+                        <Form.Control type='number' name="product_qty" value={productData.product_qty || ''} onChange={handleInputChange} />
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Product Original Price</Form.Label>
@@ -73,7 +78,7 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Product Sale Price</Form.Label>
-                        <Form.Control type='text' step="0.01" name="sale_price" value={productData.sale_price || ''} onChange={handleInputChange} />
+                        <Form.Control type='number' step="0.01" name="sale_price" value={productData.sale_price || ''} onChange={handleInputChange} />
                     </Form.Group>
                     <Button variant="secondary" className="m-1" onClick={onHide}>
                         Close
