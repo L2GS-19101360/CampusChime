@@ -41,7 +41,10 @@ const CartModal = ({ show, handleClose }) => {
   };
 
   useEffect(() => {
-    fetchData();
+    const intervalId = setInterval(fetchData, 200); // fetchData will be called every 3 milliseconds
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, [user_id]);
 
   const totalItems = cartArray.reduce(

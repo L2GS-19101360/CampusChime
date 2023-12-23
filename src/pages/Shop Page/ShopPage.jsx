@@ -48,17 +48,18 @@ const ShopPage = () => {
     fetchAllVisibleProducts();
 
     const userId = sessionStorage.getItem("userId");
+    
+    const intervalId = setInterval(() => {
+      // Fetch and set cart count
+      axios
+        .get(
+          `http://localhost/CampusChime/PHP_files/fetch_num_cart.php?user_id=${userId}`
+        )
+        .then((response) => response.data)
+        .then((count) => setCartCount(count));
 
-    // Fetch and set cart count
-    axios
-      .get(
-        `http://localhost/CampusChime/PHP_files/fetch_num_cart.php?user_id=${userId}`
-      )
-      .then((response) => response.data)
-      .then((count) => setCartCount(count));
-
-    // Fetch and set cart items
-    axios
+      // Fetch and set cart items
+      axios
       .get(
         `http://localhost/CampusChime/PHP_files/get_cart.php?user_id=${userId}`
       )
@@ -68,7 +69,10 @@ const ShopPage = () => {
       })
       .catch((error) => {
         console.error("Error fetching cart data:", error);
-      });
+      });  
+    }, 200); // Fetches every 200 milliseconds
+    
+      return () => clearInterval(intervalId);
   }, [searchTerm, filters, cartCount]);
 
   // Separate useEffect to update quantity when the modal is shown
