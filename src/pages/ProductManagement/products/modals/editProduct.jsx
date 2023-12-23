@@ -23,12 +23,12 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { product_qty, original_price, sale_price } = productData;
-        if (isNaN(product_qty) || isNaN(original_price) || isNaN(sale_price) || sale_price < 0 || product_qty < 0 || product_qty < 0) {
+        if (isNaN(product_qty) || isNaN(original_price) || isNaN(sale_price) || parseFloat(sale_price) < 0.00 || parseFloat(product_qty) < 0.00 || parseFloat(original_price) < 0.00) {
             alert("Invalid input. Changes are not made. Check your inputs.\n Tip : number can not be negative");
             return;
         }
-        if(sale_price > original_price){
-            alert("Caution: Sale price is greater than the original price! Please change original price if you want to increase the price.");
+        if(parseFloat(sale_price) > parseFloat(original_price)){
+            alert("Caution: Sale price is greater than the original price! Please change original price if you want to increase the price by changing the original price instead.");
             return;
         }
         const formData = new FormData();
