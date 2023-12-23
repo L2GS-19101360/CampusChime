@@ -27,6 +27,10 @@ const EditProductModal = ({ product, onProductUpdated, show, onHide }) => {
             alert("Invalid input. Changes are not made.");
             return;
         }
+        if(sale_price > original_price){
+            alert("Caution: Sale price is greater than the original price! Please change original price if you want to increase the price.");
+            return;
+        }
         const formData = new FormData();
         formData.append('product', JSON.stringify({
             productName: productData.product_name,

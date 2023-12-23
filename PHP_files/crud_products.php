@@ -49,14 +49,18 @@ header("Content-Type: application/json");
         $originalPrice = floatval($product['originalPrice']);
         $salePrice = floatval($product['salePrice']);
         $prodQty = intval($product['productQty']);
+        $prodDiff = $originalPrice - $salePrice;
+        $saleStatus = ($prodDiff > 0 && $prodDiff < $originalPrice) ? 1 : 0;
         
+        error_log("originalPrice: $originalPrice");
+        error_log("salePrice: $salePrice");
+        error_log("saleStatus: $saleStatus");
         // Input validation
         if (!is_numeric($originalPrice) || $originalPrice < 0 || !is_numeric($salePrice) || $salePrice < 0 || !is_numeric($prodQty) || $prodQty < 0) {
             echo json_encode(array("statusCode"=> 400, "error"=> "Invalid input"));
             return;
         } else {
-            $saleStatus = ($originalPrice - $salePrice <= 0) ? 1 : 0;
-            
+           
             $sql = "UPDATE products SET product_name = '{$product['productName']}', product_description = '{$product['productDescription']}', product_size = '{$product['productSize']}', product_qty = '{$product['productQty']}', original_price = '{$product['originalPrice']}', sale_price = '{$product['salePrice']}', is_sale = '{$saleStatus}' WHERE product_id = {$product['productId']}";
             if (mysqli_query($conn, $sql)) {
                 echo json_encode(array("statusCode"=> 200));
