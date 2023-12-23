@@ -31,7 +31,12 @@ const Products = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const user_id = sessionStorage.getItem("userId");
     useEffect(() => {
-      fetchProducts();
+      const intervalId = setInterval(() => {
+        fetchProducts();
+      }, 100);
+
+        // Cleanup function to clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
     }, []);
 
     const fetchProducts = async () => {
