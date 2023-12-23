@@ -44,6 +44,6 @@ npm start
 cd CampusChime
 
 # Pull the latest changes from the main branch
-git pull origin main
+git pull origin temp
 
 http://localhost/CampusChime/PHP_files/(your PHP file)
